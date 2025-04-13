@@ -19,6 +19,8 @@ public class GameObject {
     public void a(float f) {
     }
 
-    public void a(g gVar) {
+    // public void a(g gVar) {
+    public void draw(GameManager gameManager) {
+
     }
 }

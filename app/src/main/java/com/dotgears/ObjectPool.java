@@ -55,7 +55,7 @@ public class ObjectPool {
             // if (this.a[i].a && this.a[i].b) {
             if (this.objects[i].isActive && this.objects[i].isVisible) {
                 // this.a[i].b(gVar);
-                this.objects[i].b(gameManager);
+                this.objects[i].draw(gameManager);
             }
         }
     }
