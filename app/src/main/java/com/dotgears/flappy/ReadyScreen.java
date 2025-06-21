@@ -1,48 +1,59 @@
 package com.dotgears.flappy;
 
-import com.dotgears.g;
-import com.dotgears.i;
-import com.dotgears.m;
-import com.dotgears.r;
+import com.dotgears.AtlasSprite;
+import com.dotgears.GameManager;
+import com.dotgears.GameObject;
+import com.dotgears.Transition;
 
+/* renamed from: com.dotgears.flappy.f */
 /* loaded from: classes.dex */
-// public class f extends m {
-public class ReadyScreen extends m {
-    int state;
-    public i readyText = g.D.b("text_ready");
-    public i tutorialText = g.D.b("tutorial");
-    public r transition = new r();
+public class ReadyScreen extends GameObject {
 
-    public void a() {
-        this.F = true;
-        this.G = true;
-        this.transition.a(0.0f, 1.0f, 0, 0.5f);
+    /* renamed from: d */
+    int state;
+
+    /* renamed from: b */
+    public AtlasSprite readyText = GameManager.instance.findSpriteByName("text_ready");
+
+    /* renamed from: c */
+    public AtlasSprite tutorialText = GameManager.instance.findSpriteByName("tutorial");
+
+    /* renamed from: a */
+    public Transition transition = new Transition();
+
+    /* renamed from: a */
+    public void run() {
+        this.isActive = true;
+        this.isVisible = true;
+        this.transition.start(0.0f, 1.0f, 0, 0.5f);
         this.state = 0;
     }
 
-    @Override // com.dotgears.m
-    public void a(float f) {
-        this.transition.a(f);
+    @Override // com.dotgears.GameObject
+    /* renamed from: a */
+    public void update(float f) {
+        this.transition.update(f);
         switch (this.state) {
             case com.google.android.gms.e.MapAttrs_mapType /* 0 */:
-                if (this.transition.g) {
+                if (this.transition.isActive) {
                     this.state = 1;
                     break;
                 }
                 break;
             case com.google.android.gms.e.MapAttrs_cameraTargetLat /* 2 */:
-                if (this.transition.g) {
-                    this.F = true;
-                    this.G = false;
+                if (this.transition.isActive) {
+                    this.isActive = true;
+                    this.isVisible = false;
                     break;
                 }
                 break;
         }
     }
 
-    @Override // com.dotgears.m
-    public void a(g gVar) {
-        gVar.a(this.readyText, (288 - this.readyText.b) >> 1, 146, this.transition.a);
-        gVar.a(this.tutorialText, (288 - this.tutorialText.b) >> 1, 220, this.transition.a);
+    @Override // com.dotgears.GameObject
+    /* renamed from: a */
+    public void draw(GameManager gameManager) {
+        gameManager.drawSprite(this.readyText, (288 - this.readyText.width) >> 1, 146, this.transition.value);
+        gameManager.drawSprite(this.tutorialText, (288 - this.tutorialText.width) >> 1, 220, this.transition.value);
     }
 }

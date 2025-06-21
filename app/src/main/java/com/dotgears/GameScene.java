@@ -4,72 +4,125 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import com.dotgears.flappybird.R;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.region.TextureRegion;
 
+/* renamed from: com.dotgears.c */
 /* loaded from: classes.dex */
-public class GameScene extends org.andengine.c.b.e implements org.andengine.c.b.c {
-    public static org.andengine.c.d.a[] sprites;
+public class GameScene extends Scene implements IOnSceneTouchListener {
+
+    /* renamed from: a */
+    public static Sprite[] sprites;
+
+    /* renamed from: c */
     static int spriteCount;
+
+    /* renamed from: d */
     public GameActivity gameActivity;
+
+    /* renamed from: e */
     public int highScore;
+
+    /* renamed from: b */
     public final int MAX_SPRITES = 50;
+
+    /* renamed from: f */
     float[] touchX = new float[10];
+
+    /* renamed from: g */
     float[] touchY = new float[10];
+
+    /* renamed from: h */
     boolean isTouched = false;
+
+    /* renamed from: i */
     int touchPointX = 0;
+
+    /* renamed from: j */
     int touchPointY = 0;
 
-    public GameScene(GameActivity gameActivity, org.andengine.opengl.c.c.c textureRegion) {
+    public GameScene(GameActivity gameActivity, TextureRegion textureRegion) {
         this.gameActivity = gameActivity;
         this.highScore = gameActivity.getSharedPreferences("FlappyBird", 0).getInt("score", 0);
-        GameManager.instance = new com.dotgears.flappy.GameWorld(this.highScore, 0, gameActivity.getApplication().getResources().openRawResource(R.raw.atlas));
+        GameManager.instance = new com.dotgears.flappy.GameScene(this.highScore, 0, gameActivity.getApplication().getResources().openRawResource(R.raw.atlas));
         GameManager.instance.initialize();
-        Random.setSeed((int) System.currentTimeMillis());
-        sprites = new org.andengine.c.d.a[50];
+        MathHelper.setSeed((int) System.currentTimeMillis());
+        sprites = new Sprite[50];
         for (int i = 0; i < 50; i++) {
-            sprites[i] = new org.andengine.c.d.a(0.0f, 0.0f, textureRegion.i(), gameActivity.x().g());
-            sprites[i].a(false);
-            b(sprites[i]);
+            sprites[i] = new Sprite(0.0f, 0.0f, textureRegion.deepCopy(), gameActivity.getEngine().getVertexBufferObjectManager());
+            sprites[i].setVisible(false);
+            attachChild(sprites[i]);
         }
-        a((org.andengine.c.b.c) this);
+        setOnSceneTouchListener((IOnSceneTouchListener) this);
     }
 
+    /* renamed from: a */
     public static void drawSprite(int x, int y, int width, int height, float u, float v, float u2, float v2, float alpha) {
-        org.andengine.c.d.a sprite = sprites[spriteCount];
-        sprite.b(x, y, width, height, u, v, u2, v2);
-        sprite.b(alpha);
-        sprite.a(true);
+        Sprite sprite = sprites[spriteCount];
+        sprite.setPosition(x, y);
+        sprite.setSize(width, height);
+
+        var textureX = u*1024;
+        var textureY = v*1024;
+        var textureWidth = u2*1024 - textureX;
+        var textureHeight = v2*1024 - textureY;
+        sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
+
+        sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
+        sprite.setAlpha(alpha);
+        sprite.setVisible(true);
         spriteCount++;
     }
 
+    /* renamed from: a */
     public static void drawRotatedSprite(int x, int y, int width, int height, float u, float v, float u2, float v2, float alpha, float rotation) {
-        org.andengine.c.d.a sprite = sprites[spriteCount];
-        Random.a(x, y, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
-        float rotX1 = Random.rotatedX - x;
-        float rotY1 = Random.rotatedY - y;
-        Random.a(x, height, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
-        float rotX2 = Random.rotatedX - x;
-        float rotY2 = Random.rotatedY - y;
-        Random.a(width, y, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
-        float rotX3 = Random.rotatedX - x;
-        float rotY3 = Random.rotatedY - y;
-        Random.a(width, height, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
-        sprite.a(x, y, width, height, u, v, u2, v2, rotX1, rotY1, rotX2, rotY2, rotX3, rotY3, Random.rotatedX - x, Random.rotatedY - y);
-        sprite.b(alpha);
-        sprite.a(true);
+        Sprite sprite = sprites[spriteCount];
+        MathHelper.rotate(x, y, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
+        float rotX1 = MathHelper.rotatedX - x;
+        float rotY1 = MathHelper.rotatedY - y;
+        MathHelper.rotate(x, height, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
+        float rotX2 = MathHelper.rotatedX - x;
+        float rotY2 = MathHelper.rotatedY - y;
+        MathHelper.rotate(width, y, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
+        float rotX3 = MathHelper.rotatedX - x;
+        float rotY3 = MathHelper.rotatedY - y;
+        MathHelper.rotate(width, height, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
+
+//        sprite.setTextureCoordinates(x, y, width, height, u, v, u2, v2, rotX1, rotY1, rotX2, rotY2, rotX3, rotY3, MathHelper.rotatedX - x, MathHelper.rotatedY - y);
+        sprite.setPosition(x, y);
+        sprite.setSize(width, height);
+        sprite.setRotation(rotation);
+
+        var textureX = u*1024;
+        var textureY = v*1024;
+        var textureWidth = u2*1024 - textureX;
+        var textureHeight = v2*1024 - textureY;
+        sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
+
+        sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
+
+        sprite.setAlpha(alpha);
+        sprite.setVisible(true);
         spriteCount++;
     }
 
-    public void clearSprites() {
+//    @Override // org.andengine.entity.Entity
+    /* renamed from: a */
+    public void allocateChildren() {
         for (int i = 0; i < 50; i++) {
-            sprites[i].a(false);
+            sprites[i].setVisible(false);
         }
         spriteCount = 0;
     }
 
-    @Override // org.andengine.c.b.e, org.andengine.c.a
-    protected void a(float deltaTime) {
-        super.a(deltaTime);
-        clearSprites();
+    @Override // org.andengine.entity.b.Scene, org.andengine.entity.Entity
+    /* renamed from: a */
+    protected void onManagedUpdate(float deltaTime) {
+        super.onManagedUpdate(deltaTime);
+        allocateChildren();
         GameManager.instance.processTouchInput(this.touchX, this.touchY);
         if (this.isTouched) {
             GameManager.instance.handleTouch(this.touchPointX, this.touchPointY);
@@ -82,7 +135,7 @@ public class GameScene extends org.andengine.c.b.e implements org.andengine.c.b.
                 case com.google.android.gms.e.MapAttrs_mapType /* 0 */:
                     int score = (int) GameManager.instance.callbackParams[i];
                     if (this.gameActivity.isSignedIn()) {
-                        this.gameActivity.gameHelper.b().a("CgkI5J2sk6QXEAIQAA", score);
+                        this.gameActivity.gameHelper.getGamesClient().submitScore("CgkI5J2sk6QXEAIQAA", score);
                     }
                     if (score > this.highScore) {
                         SharedPreferences.Editor edit = this.gameActivity.getSharedPreferences("FlappyBird", 0).edit();
@@ -96,7 +149,7 @@ public class GameScene extends org.andengine.c.b.e implements org.andengine.c.b.
                     }
                 case com.google.android.gms.e.MapAttrs_cameraBearing /* 1 */:
                     if (this.gameActivity.isSignedIn()) {
-                        this.gameActivity.startActivityForResult(this.gameActivity.getGamesClient().a("CgkI5J2sk6QXEAIQAA"), 1);
+                        this.gameActivity.startActivityForResult(this.gameActivity.getGamesClient().getLeaderboardIntent("CgkI5J2sk6QXEAIQAA"), 1);
                         break;
                     } else {
                         this.gameActivity.beginUserInitiatedSignIn();
@@ -135,21 +188,22 @@ public class GameScene extends org.andengine.c.b.e implements org.andengine.c.b.
         }
     }
 
-    @Override // org.andengine.c.b.c
-    public boolean a(org.andengine.c.b.e scene, org.andengine.input.a.a event) {
-        if (event.f()) {
+    @Override // org.andengine.entity.b.IOnSceneTouchListener
+    /* renamed from: a */
+    public boolean onSceneTouchEvent(Scene scene, TouchEvent touchEvent) {
+        if (touchEvent.isActionDown()) {
             if (GameManager.instance != null) {
                 this.isTouched = true;
-                this.touchPointX = (int) event.b();
-                this.touchPointY = (int) event.c();
+                this.touchPointX = (int) touchEvent.getX();
+                this.touchPointY = (int) touchEvent.getY();
             }
-            this.touchX[event.d() % 10] = event.b();
-            this.touchY[event.d() % 10] = event.c();
-        } else if (event.g() || event.j() || event.i()) {
+            this.touchX[touchEvent.getPointerID() % 10] = touchEvent.getX();
+            this.touchY[touchEvent.getPointerID() % 10] = touchEvent.getY();
+        } else if (touchEvent.isActionUp() || touchEvent.isActionOutside() || touchEvent.isActionCancel()) {
             GameManager gameManager = GameManager.instance;
-            this.touchX[event.d() % 10] = -100.0f;
-            this.touchY[event.d() % 10] = -100.0f;
+            this.touchX[touchEvent.getPointerID() % 10] = -100.0f;
+            this.touchY[touchEvent.getPointerID() % 10] = -100.0f;
         }
         return true;
     }
-} 
+}

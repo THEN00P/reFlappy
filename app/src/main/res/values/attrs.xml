@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="mapType">
+        <enum name="none" value="0" />
+        <enum name="normal" value="1" />
+        <enum name="satellite" value="2" />
+        <enum name="terrain" value="3" />
+        <enum name="hybrid" value="4" />
+    </attr>
+    <attr name="cameraBearing" format="float">
+    </attr>
+    <attr name="cameraTargetLat" format="float">
+    </attr>
+    <attr name="cameraTargetLng" format="float">
+    </attr>
+    <attr name="cameraTilt" format="float">
+    </attr>
+    <attr name="cameraZoom" format="float">
+    </attr>
+    <attr name="uiCompass" format="boolean">
+    </attr>
+    <attr name="uiRotateGestures" format="boolean">
+    </attr>
+    <attr name="uiScrollGestures" format="boolean">
+    </attr>
+    <attr name="uiTiltGestures" format="boolean">
+    </attr>
+    <attr name="uiZoomControls" format="boolean">
+    </attr>
+    <attr name="uiZoomGestures" format="boolean">
+    </attr>
+    <attr name="useViewLifecycle" format="boolean">
+    </attr>
+    <attr name="zOrderOnTop" format="boolean">
+    </attr>
+</resources>

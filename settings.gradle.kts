@@ -19,5 +19,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Flappy Bird"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "flappybird"
 include(":app")
+include(":andEngine")

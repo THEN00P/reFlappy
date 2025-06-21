@@ -1,20 +1,18 @@
 package com.dotgears;
 
+/* renamed from: com.dotgears.a */
 /* loaded from: classes.dex */
-// public class a implements Runnable {
-public class GameAdHideRunnable implements Runnable {
-    // public GameActivity a;
-    public GameActivity gameActivity;
+class GameAdHideRunnable implements Runnable {
 
-    // public a(GameActivity gameActivity) {
-    public GameAdHideRunnable(GameActivity gameActivity) {
-        // this.a = gameActivity;
+    /* renamed from: a */
+    final /* synthetic */ GameActivity gameActivity;
+
+    GameAdHideRunnable(GameActivity gameActivity) {
         this.gameActivity = gameActivity;
     }
 
     @Override // java.lang.Runnable
     public void run() {
-        // this.a.a.setVisibility(8);
-        this.gameActivity.adView.setVisibility(8);
+        this.gameActivity.adView.setVisibility(4);
     }
 }

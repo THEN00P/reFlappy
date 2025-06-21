@@ -1,40 +1,48 @@
 package com.dotgears.flappy;
 
-import com.dotgears.g;
-import com.dotgears.i;
-import com.dotgears.m;
-import com.dotgears.r;
+import com.dotgears.AtlasSprite;
+import com.dotgears.GameManager;
+import com.dotgears.GameObject;
+import com.dotgears.Transition;
 
+/* renamed from: com.dotgears.flappy.e */
 /* loaded from: classes.dex */
-// public class e extends m {
-public class GameOverScreen extends m {
-    // public int c;
-    public int positionY;
-    // public float d;
-    public float velocity;
-    // public float e;
-    public float gravity;
-    // public int f;
-    public int state;
-    // public i b = g.D.b("text_game_over");
-    public i gameOverText = g.D.b("text_game_over");
-    // public r a = new r();
-    public r transition = new r();
+public class GameOverScreen extends GameObject {
 
-    public void a() {
-        this.F = true;
-        this.G = true;
-        this.transition.a(0.0f, 1.0f, 11, 1.0f);
+    /* renamed from: c */
+    public int positionY;
+
+    /* renamed from: d */
+    public float velocity;
+
+    /* renamed from: e */
+    public float gravity;
+
+    /* renamed from: f */
+    public int state;
+
+    /* renamed from: b */
+    public AtlasSprite gameOverText = GameManager.instance.findSpriteByName("text_game_over");
+
+    /* renamed from: a */
+    public Transition transition = new Transition();
+
+    /* renamed from: a */
+    public void run() {
+        this.isActive = true;
+        this.isVisible = true;
+        this.transition.start(0.0f, 1.0f, 11, 1.0f);
         this.positionY = -1;
         this.velocity = -2.0f;
         this.gravity = 0.25f;
         this.state = 0;
-        GameScene.instance.c(10, 0);
+        GameScene.instance.registerCallback(10, 0);
     }
 
-    @Override // com.dotgears.m
-    public void a(float f) {
-        this.transition.a(f);
+    @Override // com.dotgears.GameObject
+    /* renamed from: a */
+    public void update(float deltaTime) {
+        this.transition.update(deltaTime);
         if (this.positionY < 0) {
             this.positionY = (int) (this.positionY + this.velocity);
             this.velocity += this.gravity;
@@ -43,15 +51,15 @@ public class GameOverScreen extends m {
         }
         switch (this.state) {
             case com.google.android.gms.e.MapAttrs_mapType /* 0 */:
-                if (this.transition.g) {
+                if (this.transition.isActive) {
                     this.state = 1;
-                    g.D.C.a(g.D.y, g.D.z, 10, 20, 30, 40);
-                    GameScene.instance.c(10, 0);
+                    GameManager.instance.scorePanel.show(GameManager.instance.gameState, GameManager.instance.bestScore, 10, 20, 30, 40);
+                    GameScene.instance.registerCallback(10, 0);
                     break;
                 }
                 break;
             case com.google.android.gms.e.MapAttrs_cameraBearing /* 1 */:
-                if (g.D.C.k == 2) {
+                if (GameManager.instance.scorePanel.state == 2) {
                     this.state = 2;
                     break;
                 }
@@ -59,8 +67,9 @@ public class GameOverScreen extends m {
         }
     }
 
-    @Override // com.dotgears.m
-    public void a(g gVar) {
-        gVar.a(this.gameOverText, (288 - this.gameOverText.b) >> 1, this.positionY + 130, this.transition.a);
+    @Override // com.dotgears.GameObject
+    /* renamed from: a */
+    public void draw(GameManager gameManager) {
+        gameManager.drawSprite(this.gameOverText, (288 - this.gameOverText.width) >> 1, this.positionY + 130, this.transition.value);
     }
 }

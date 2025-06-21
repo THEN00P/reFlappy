@@ -1,26 +1,20 @@
 package com.dotgears;
 
+/* renamed from: com.dotgears.m */
 /* loaded from: classes.dex */
-// public class m {
 public class GameObject {
-    // public boolean a;
-    public boolean isActive;
-    // public boolean b;
-    public boolean isVisible;
 
-    // public m() {
-    public GameObject() {
-        // this.a = false;
-        this.isActive = false;
-        // this.b = true;
-        this.isVisible = true;
+    /* renamed from: F */
+    public boolean isActive = false;
+
+    /* renamed from: G */
+    public boolean isVisible = false;
+
+    /* renamed from: a */
+    public void update(float deltaTime) {
     }
 
-    public void a(float f) {
-    }
-
-    // public void a(g gVar) {
+    /* renamed from: a */
     public void draw(GameManager gameManager) {
-
     }
 }

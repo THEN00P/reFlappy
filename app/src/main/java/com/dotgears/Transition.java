@@ -1,164 +1,129 @@
 package com.dotgears;
 
+/* renamed from: com.dotgears.r */
 /* loaded from: classes.dex */
-// public class r {
 public class Transition {
-    // public float a;
-    public float value;
-    // public float b;
+
+    /* renamed from: b */
+    public float currentValue;
+
+    /* renamed from: c */
     public float startValue;
-    // public float c;
+
+    /* renamed from: d */
     public float endValue;
-    // public int d;
+
+    /* renamed from: e */
+    public float distance;
+
+    /* renamed from: f */
     public int type;
-    // public float e;
-    public float duration;
-    // public float f;
-    public float timer;
-    // public boolean g;
-    public boolean isActive;
 
-    // public r() {
-    public Transition() {
-        // this.a = 0.0f;
-        this.value = 0.0f;
-        // this.g = true;
-        this.isActive = true;
-    }
+    /* renamed from: h */
+    private int duration;
 
-    // public void a(float f) {
-    public void update(float delta) {
-        // if (this.d == 0) {
-        if (this.type == 0) {
-            // this.a = this.b + ((this.c - this.b) * (this.f / this.e));
-            this.value = this.startValue + ((this.endValue - this.startValue) * (this.timer / this.duration));
-            // this.f += f;
-            this.timer += delta;
-            // if (this.f >= this.e) {
-            if (this.timer >= this.duration) {
-                // this.f = this.e;
-                this.timer = this.duration;
-                // this.a = this.c;
-                this.value = this.endValue;
-            }
-        } else {
-            // switch (this.d) {
-            switch (this.type) {
-                case 1:
-                    // this.a = this.b + ((this.c - this.b) * (((float) Math.sin((((double) this.f) * 3.141592653589793d) / ((double) (this.e * 2.0f)))) / 1.0f));
-                    this.value = this.startValue + ((this.endValue - this.startValue) * (((float) Math.sin((((double) this.timer) * 3.141592653589793d) / ((double) (this.duration * 2.0f)))) / 1.0f));
-                    break;
-                case 2:
-                    // this.a = this.c - ((this.c - this.b) * ((float) Math.cos((((double) this.f) * 3.141592653589793d) / ((double) (this.e * 2.0f)))));
-                    this.value = this.endValue - ((this.endValue - this.startValue) * ((float) Math.cos((((double) this.timer) * 3.141592653589793d) / ((double) (this.duration * 2.0f)))));
-                    break;
-                case 3:
-                    // float f2 = this.f / this.e;
-                    float progress = this.timer / this.duration;
-                    // this.a = this.b + ((this.c - this.b) * (f2 * f2));
-                    this.value = this.startValue + ((this.endValue - this.startValue) * (progress * progress));
-                    break;
-                case 4:
-                    // float f3 = this.f / this.e;
-                    float progress2 = this.timer / this.duration;
-                    // this.a = this.b + ((this.c - this.b) * (1.0f - ((1.0f - f3) * (1.0f - f3))));
-                    this.value = this.startValue + ((this.endValue - this.startValue) * (1.0f - ((1.0f - progress2) * (1.0f - progress2))));
-                    break;
-                case 5:
-                    // float f4 = this.f / (this.e / 2.0f);
-                    float progress3 = this.timer / (this.duration / 2.0f);
-                    // if (f4 < 1.0f) {
-                    if (progress3 < 1.0f) {
-                        // this.a = this.b + ((this.c - this.b) * 0.5f * (f4 * f4));
-                        this.value = this.startValue + ((this.endValue - this.startValue) * 0.5f * (progress3 * progress3));
-                        break;
-                    } else {
-                        // f4 -= 1.0f;
-                        progress3 -= 1.0f;
-                        // this.a = this.b + ((this.c - this.b) * (1.0f - (0.5f * ((f4 - 2.0f) * f4))));
-                        this.value = this.startValue + ((this.endValue - this.startValue) * (1.0f - (0.5f * ((progress3 - 2.0f) * progress3))));
-                        break;
-                    }
-                case 6:
-                    // float f5 = this.f / this.e;
-                    float progress4 = this.timer / this.duration;
-                    // this.a = this.b + ((this.c - this.b) * (f5 * f5 * f5));
-                    this.value = this.startValue + ((this.endValue - this.startValue) * (progress4 * progress4 * progress4));
-                    break;
-                case 7:
-                    // float f6 = this.f / this.e;
-                    float progress5 = this.timer / this.duration;
-                    // f6 -= 1.0f;
-                    progress5 -= 1.0f;
-                    // this.a = this.b + ((this.c - this.b) * ((f6 * f6 * f6) + 1.0f));
-                    this.value = this.startValue + ((this.endValue - this.startValue) * ((progress5 * progress5 * progress5) + 1.0f));
-                    break;
-                case 8:
-                    // float f7 = this.f / (this.e / 2.0f);
-                    float progress6 = this.timer / (this.duration / 2.0f);
-                    // if (f7 < 1.0f) {
-                    if (progress6 < 1.0f) {
-                        // this.a = this.b + ((this.c - this.b) * 0.5f * (f7 * f7 * f7));
-                        this.value = this.startValue + ((this.endValue - this.startValue) * 0.5f * (progress6 * progress6 * progress6));
-                        break;
-                    } else {
-                        // f7 -= 2.0f;
-                        progress6 -= 2.0f;
-                        // this.a = this.b + ((this.c - this.b) * 0.5f * ((f7 * f7 * f7) + 2.0f));
-                        this.value = this.startValue + ((this.endValue - this.startValue) * 0.5f * ((progress6 * progress6 * progress6) + 2.0f));
-                        break;
-                    }
-                case 9:
-                    // float f8 = this.f / this.e;
-                    float progress7 = this.timer / this.duration;
-                    // this.a = this.b + ((this.c - this.b) * (1.0f - ((float) Math.sqrt(1.0d - ((double) (f8 * f8))))));
-                    this.value = this.startValue + ((this.endValue - this.startValue) * (1.0f - ((float) Math.sqrt(1.0d - ((double) (progress7 * progress7))))));
-                    break;
-                case 10:
-                    // float f9 = this.f / this.e;
-                    float progress8 = this.timer / this.duration;
-                    // this.a = this.b + ((this.c - this.b) * ((float) Math.sqrt(1.0d - ((double) ((1.0f - f9) * (1.0f - f9))))));
-                    this.value = this.startValue + ((this.endValue - this.startValue) * ((float) Math.sqrt(1.0d - ((double) ((1.0f - progress8) * (1.0f - progress8))))));
-                    break;
-                case 11:
-                    // float f10 = this.f / (this.e / 2.0f);
-                    float progress9 = this.timer / (this.duration / 2.0f);
-                    // if (f10 < 1.0f) {
-                    if (progress9 < 1.0f) {
-                        // this.a = this.b + ((this.c - this.b) * 0.5f * (1.0f - ((float) Math.sqrt(1.0d - ((double) (f10 * f10))))));
-                        this.value = this.startValue + ((this.endValue - this.startValue) * 0.5f * (1.0f - ((float) Math.sqrt(1.0d - ((double) (progress9 * progress9))))));
-                        break;
-                    } else {
-                        // f10 -= 2.0f;
-                        progress9 -= 2.0f;
-                        // this.a = this.b + ((this.c - this.b) * (0.5f * (((float) Math.sqrt(1.0d - ((double) (f10 * f10)))) + 1.0f)));
-                        this.value = this.startValue + ((this.endValue - this.startValue) * (0.5f * (((float) Math.sqrt(1.0d - ((double) (progress9 * progress9)))) + 1.0f)));
-                        break;
-                    }
-            }
-            // this.f += f;
-            this.timer += delta;
-            // if (this.f >= this.e) {
-            if (this.timer >= this.duration) {
-                // this.f = this.e;
-                this.timer = this.duration;
-                // this.a = this.c;
-                this.value = this.endValue;
-            }
+    /* renamed from: i */
+    private int currentPercent;
+
+    /* renamed from: j */
+    private float durationFactor;
+
+    /* renamed from: g */
+    public boolean isActive = true;
+
+    /* renamed from: a */
+    public float value = 0.0f;
+
+    /* renamed from: a */
+    public void update(float deltaTime) {
+        if (this.isActive) {
+            return;
+        }
+        this.currentPercent++;
+        this.currentValue = this.currentPercent * this.durationFactor;
+        switch (this.type) {
+            case com.google.android.gms.e.MapAttrs_cameraBearing /* 1 */:
+                this.currentValue = MathHelper.getQuadraticEaseOut((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_cameraTargetLat /* 2 */:
+                this.currentValue = MathHelper.getQuadraticEaseOut2((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_cameraTargetLng /* 3 */:
+                this.currentValue = MathHelper.getQuadraticEaseInOut((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_cameraTilt /* 4 */:
+                this.currentValue = MathHelper.getCubicEaseIn((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_cameraZoom /* 5 */:
+                this.currentValue = MathHelper.getCubicEaseOut((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_uiCompass /* 6 */:
+                this.currentValue = MathHelper.getCubicEaseInOut((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_uiRotateGestures /* 7 */:
+                this.currentValue = MathHelper.getQuartEaseIn((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_uiScrollGestures /* 8 */:
+                this.currentValue = MathHelper.getQuartEaseOut((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_uiTiltGestures /* 9 */:
+                this.currentValue = MathHelper.getQuartEaseInOut((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_uiZoomControls /* 10 */:
+                this.currentValue = MathHelper.getQuintEaseIn((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_uiZoomGestures /* 11 */:
+                this.currentValue = MathHelper.getQuintEaseOut((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_useViewLifecycle /* 12 */:
+                this.currentValue = MathHelper.getQuintEaseInOut((int) (this.currentValue * 100.0f));
+                break;
+            case com.google.android.gms.e.MapAttrs_zOrderOnTop /* 13 */:
+                this.currentValue = MathHelper.getSineEaseIn((int) (this.currentValue * 100.0f));
+                break;
+            case 14:
+                this.currentValue = MathHelper.getSineEaseOut((int) (this.currentValue * 100.0f));
+                break;
+            case 15:
+                this.currentValue = MathHelper.getSineEaseInOut((int) (this.currentValue * 100.0f));
+                break;
+            case 16:
+                this.currentValue = MathHelper.getSineEaseIn2((int) (this.currentValue * 100.0f));
+                break;
+            case 17:
+                this.currentValue = MathHelper.getSineEaseOut2((int) (this.currentValue * 100.0f));
+                break;
+            case 18:
+                this.currentValue = MathHelper.getSineEaseInOut2((int) (this.currentValue * 100.0f));
+                break;
+            case 19:
+                this.currentValue = MathHelper.getElasticEaseIn((int) (this.currentValue * 100.0f));
+                break;
+            case 20:
+                this.currentValue = MathHelper.getElasticEaseOut((int) (this.currentValue * 100.0f));
+                break;
+            case 21:
+                this.currentValue = MathHelper.getElasticEaseInOut((int) (this.currentValue * 100.0f));
+                break;
+        }
+        this.value = (this.currentValue * this.distance) + this.startValue;
+        if (this.currentPercent == this.duration) {
+            this.isActive = true;
+            this.value = this.endValue;
+            this.currentValue = 1.0f;
         }
     }
 
-    // public void a(float f, float f2, int i, float f3) {
-    public void start(float startVal, float endVal, int transitionType, float durationVal) {
-        // this.b = f;
-        this.startValue = startVal;
-        // this.c = f2;
-        this.endValue = endVal;
-        // this.d = i;
-        this.type = transitionType;
-        // this.e = f3;
-        this.duration = durationVal;
-        // this.f = 0.0f;
-        this.timer = 0.0f;
+    /* renamed from: a */
+    public void start(float pStartValue, float pEndValue, int pType, float pFactor) {
+        this.startValue = pStartValue;
+        this.endValue = pEndValue;
+        this.distance = this.endValue - this.startValue;
+        this.duration = (int) (60.0f * pFactor);
+        this.durationFactor = 1.0f / this.duration;
+        this.currentPercent = 0;
+        this.type = pType;
+        this.isActive = false;
+        this.value = this.startValue;
     }
 }

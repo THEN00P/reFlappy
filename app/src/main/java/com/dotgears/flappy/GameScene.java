@@ -1,172 +1,209 @@
 package com.dotgears.flappy;
 
-import com.dotgears.g;
-import com.dotgears.h;
-import com.dotgears.i;
-import com.dotgears.j;
-import com.dotgears.l;
-import com.dotgears.m;
+import com.dotgears.AtlasSprite;
+import com.dotgears.Button;
+import com.dotgears.FontRenderer;
+import com.dotgears.GameManager;
+import com.dotgears.GameObject;
+import com.dotgears.MathHelper;
+import com.dotgears.ScoreRenderer;
 import java.io.InputStream;
 
+/* renamed from: com.dotgears.flappy.c */
 /* loaded from: classes.dex */
-// public class c extends g {
-public class GameScene extends g {
-    // boolean H;
+public class GameScene extends GameManager {
+
+    /* renamed from: H */
     boolean isInMenu;
-    // boolean I;
+
+    /* renamed from: I */
     boolean isGameOver;
-    // a J;
+
+    /* renamed from: J */
     Bird bird;
-    // com.dotgears.f K;
-    com.dotgears.f playButton;
-    // com.dotgears.f L;
-    com.dotgears.f okButton;
-    // com.dotgears.f M;
-    com.dotgears.f pauseButton;
-    // com.dotgears.f N;
-    com.dotgears.f resumeButton;
-    // com.dotgears.f O;
-    com.dotgears.f menuButton;
-    // com.dotgears.f P;
-    com.dotgears.f scoreButton;
-    // com.dotgears.f Q;
-    com.dotgears.f shareButton;
-    // com.dotgears.f R;
-    com.dotgears.f rateButton;
-    // l S;
-    l scoreNumberRenderer;
-    // i T;
-    i backgroundSprite;
-    // i U;
-    i bgDaySprite;
-    // i V;
-    i bgNightSprite;
-    // i W;
-    i bgForestSprite;
-    // i X;
-    i landSprite;
-    // i Y;
-    i pipeUpSprite;
-    // i Z;
-    i pipeDownSprite;
-    // i aa;
-    i titleSprite;
-    // i ab;
-    i copyrightSprite;
-    // int ac;
+
+    /* renamed from: K */
+    Button playButton;
+
+    /* renamed from: L */
+    Button okButton;
+
+    /* renamed from: M */
+    Button pauseButton;
+
+    /* renamed from: N */
+    Button resumeButton;
+
+    /* renamed from: O */
+    Button menuButton;
+
+    /* renamed from: P */
+    Button scoreButton;
+
+    /* renamed from: Q */
+    Button shareButton;
+
+    /* renamed from: R */
+    Button rateButton;
+
+    /* renamed from: S */
+    ScoreRenderer scoreNumberRenderer;
+
+    /* renamed from: T */
+    AtlasSprite backgroundSprite;
+
+    /* renamed from: U */
+    AtlasSprite bgDaySprite;
+
+    /* renamed from: V */
+    AtlasSprite bgNightSprite;
+
+    /* renamed from: W */
+    AtlasSprite bgForestSprite;
+
+    /* renamed from: X */
+    AtlasSprite landSprite;
+
+    /* renamed from: Y */
+    AtlasSprite pipeUpSprite;
+
+    /* renamed from: Z */
+    AtlasSprite pipeDownSprite;
+
+    /* renamed from: aa */
+    AtlasSprite titleSprite;
+
+    /* renamed from: ab */
+    AtlasSprite copyrightSprite;
+
+    /* renamed from: ac */
     int landOffset;
-    // int ad;
+
+    /* renamed from: ad */
     int pipe1Height;
-    // int ae;
+
+    /* renamed from: ae */
     int pipe2Height;
-    // int af;
+
+    /* renamed from: af */
     int pipe3Height;
-    // int ag;
+
+    /* renamed from: ag */
     int pipe1X;
-    // int ah;
+
+    /* renamed from: ah */
     int pipe2X;
-    // int ai;
+
+    /* renamed from: ai */
     int pipe3X;
-    // int aj;
+
+    /* renamed from: aj */
     int pipeSpacing;
-    // int ak;
+
+    /* renamed from: ak */
     int pipeCountdown;
-    // f al;
+
+    /* renamed from: al */
     ReadyScreen readyScreen;
-    // e am;
+
+    /* renamed from: am */
     GameOverScreen gameOverScreen;
-    // h an;
-    ScoreFont scoreFont;
-    // int ao;
+
+    /* renamed from: an */
+    FontRenderer scoreFont;
+
+    /* renamed from: ao */
     int gameSpeed;
-    // private boolean ap;
-    private boolean soundEnabled;
-    
-    // Static instance for access from other classes
-    public static GameScene instance;
 
-    public GameScene(int i, int i2, InputStream inputStream) {
-        super(i, i2, inputStream);
-        this.soundEnabled = true;
-        instance = this;
+    /* renamed from: ap */
+    private boolean initialized;
+
+    public GameScene(int highScore, int currentScore, InputStream inputStream) {
+        super(highScore, currentScore, inputStream);
+        this.initialized = true;
     }
 
-    public static boolean a(int i, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
-        return i + i3 >= i5 && i <= i5 + i7 && i2 + i4 >= i6 && i2 <= i6 + i8;
+    /* renamed from: a */
+    public static boolean checkCollision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2) {
+        return x1 + width1 >= x2 && x1 <= x2 + width2 && y1 + height1 >= y2 && y1 <= y2 + height2;
     }
 
-    @Override // com.dotgears.g
-    public void a(int i, int i2) {
+    @Override // com.dotgears.GameManager
+    /* renamed from: a */
+    public void handleTouch(int x, int y) {
         if (this.isInMenu) {
             return;
         }
-        if (i < this.pauseButton.b - 20 || i > this.pauseButton.b + this.pauseButton.d + 20 || i2 < this.pauseButton.c - 20 || i2 > this.pauseButton.c + this.pauseButton.e + 20) {
+        if (x < this.pauseButton.posX - 20 || x > this.pauseButton.posX + this.pauseButton.width + 20 || y < this.pauseButton.posY - 20 || y > this.pauseButton.posY + this.pauseButton.height + 20) {
             if (!this.bird.isReady) {
                 if (this.gameSpeed > 0) {
                     this.bird.b();
                 }
-            } else if (this.readyScreen.F && this.readyScreen.state == 1) {
+            } else if (this.readyScreen.isActive && this.readyScreen.state == 1) {
                 this.readyScreen.state = 2;
-                this.readyScreen.transition.a(1.0f, 0.0f, 0, 0.5f);
+                this.readyScreen.transition.start(1.0f, 0.0f, 0, 0.5f);
                 this.bird.isReady = false;
                 this.bird.b();
             }
         }
     }
 
-    @Override // com.dotgears.g
-    public void a(int i, int i2, int i3, int i4) {
-        if (!this.isInMenu || i4 < 482 - this.copyrightSprite.c || i4 > 482) {
+    @Override // com.dotgears.GameManager
+    /* renamed from: a */
+    public void handleTouchAt(int x1, int y1, int x2, int y2) {
+        if (!this.isInMenu || y2 < 482 - this.copyrightSprite.height || y2 > 482) {
             return;
         }
-        a(7, (m) null, 5);
+        scheduleCallback(7, (GameObject) null, 5);
     }
 
-    @Override // com.dotgears.g
-    public void a(int i, m mVar) {
-        switch (i) {
+    @Override // com.dotgears.GameManager
+    /* renamed from: a */
+    public void handleCallbackCompletion(int callbackId, GameObject gameObject) {
+        switch (callbackId) {
             case com.google.android.gms.e.MapAttrs_cameraTargetLat /* 2 */:
                 this.isGameOver = true;
-                c(0, this.currentScore);
-                this.gameOverScreen.a();
-                c(8, 0);
+                registerCallback(0, this.gameState);
+                this.gameOverScreen.run();
+                registerCallback(8, 0);
                 break;
             case com.google.android.gms.e.MapAttrs_cameraTargetLng /* 3 */:
-                c(11, 0);
+                registerCallback(11, 0);
                 break;
             case com.google.android.gms.e.MapAttrs_cameraTilt /* 4 */:
-                c(13, 0);
+                registerCallback(13, 0);
                 break;
             case com.google.android.gms.e.MapAttrs_cameraZoom /* 5 */:
-                e();
-                this.playButton.F = false;
-                this.scoreButton.F = false;
-                this.rateButton.F = false;
+                resetGameState();
+                this.playButton.isActive = false;
+                this.scoreButton.isActive = false;
+                this.rateButton.isActive = false;
                 this.isInMenu = false;
-                a(false, 0, 0.5f);
+                startFade(false, 0, 0.5f);
                 this.landOffset = 0;
-                this.bird.a();
+                this.bird.init();
                 this.gameSpeed = 2;
                 this.pipeCountdown = 1;
-                this.currentScore = 0;
-                this.readyScreen.a();
-                this.A++;
-                c(7, 0);
+                this.gameState = 0;
+                this.readyScreen.run();
+                this.currentScore++;
+                registerCallback(7, 0);
                 break;
             case com.google.android.gms.e.MapAttrs_uiCompass /* 6 */:
-                e();
-                a(false, 0, 0.5f);
-                c(6, 0);
+                resetGameState();
+                startFade(false, 0, 0.5f);
+                registerCallback(6, 0);
                 break;
             case com.google.android.gms.e.MapAttrs_uiRotateGestures /* 7 */:
-                c(3, 0);
+                registerCallback(3, 0);
                 break;
         }
     }
 
-    @Override // com.dotgears.g
-    public void b(float f) {
-        a(this.backgroundSprite, 0, 0, 1.0f);
+    @Override // com.dotgears.GameManager
+    /* renamed from: b */
+    public void updateState(float deltaTime) {
+        drawSprite(this.backgroundSprite, 0, 0, 1.0f);
         this.landOffset -= this.gameSpeed;
         if (this.landOffset <= -24) {
             this.landOffset = 0;
@@ -175,203 +212,205 @@ public class GameScene extends g {
             this.pipe1X -= this.gameSpeed;
             this.pipe2X -= this.gameSpeed;
             this.pipe3X -= this.gameSpeed;
-            if (this.gameSpeed > 0 && this.pipeCountdown <= 0 && (this.pipe1X == this.bird.b || this.pipe1X == this.bird.b - 1)) {
-                this.currentScore++;
-                c(9, 0);
+            if (this.gameSpeed > 0 && this.pipeCountdown <= 0 && (this.pipe1X == this.bird.x || this.pipe1X == this.bird.x - 1)) {
+                this.gameState++;
+                registerCallback(9, 0);
             }
-            if (this.pipe1X < (-this.pipeUpSprite.b)) {
+            if (this.pipe1X < (-this.pipeUpSprite.width)) {
                 this.pipe1X = this.pipe2X;
                 this.pipe1Height = this.pipe2Height;
                 this.pipe2X = this.pipe3X;
                 this.pipe2Height = this.pipe3Height;
-                this.pipe3X = this.pipe2X + this.pipeSpacing + this.pipeUpSprite.b;
-                this.pipe3Height = j.a(180, 360);
+                this.pipe3X = this.pipe2X + this.pipeSpacing + this.pipeUpSprite.width;
+                this.pipe3Height = MathHelper.randomRange(180, 360);
                 if (this.pipeCountdown > 0) {
                     this.pipeCountdown--;
                     if (this.pipeCountdown == 0) {
-                        this.pipe2X = -this.pipeUpSprite.b;
-                        this.pipe1X = -this.pipeUpSprite.b;
+                        this.pipe2X = -this.pipeUpSprite.width;
+                        this.pipe1X = -this.pipeUpSprite.width;
                     }
                 }
             }
         }
-        this.bird.a(f);
+        this.bird.update(deltaTime);
         if (this.isInMenu) {
-            a(this.titleSprite, (288 - this.titleSprite.b) >> 1, 150, 1.0f);
-            this.bird.b = (288 - this.bird.e) >> 1;
-            this.bird.c = this.titleSprite.c + 150 + 20;
-            this.bird.a(this);
-            a(this.landSprite, this.landOffset, 512 - this.landSprite.c, 1.0f);
+            drawSprite(this.titleSprite, (288 - this.titleSprite.width) >> 1, 150, 1.0f);
+            this.bird.x = (288 - this.bird.width) >> 1;
+            this.bird.y = this.titleSprite.height + 150 + 20;
+            this.bird.draw(this);
+            drawSprite(this.landSprite, this.landOffset, 512 - this.landSprite.height, 1.0f);
         } else {
-            if (this.bird.c >= 400 - this.bird.f && this.gameSpeed > 0) {
-                c(1.0f);
-                a(4, 0.5f);
+            if (this.bird.y >= 400 - this.bird.height && this.gameSpeed > 0) {
+                startScreenShake(1.0f);
+                handleCallback(4, 0.5f);
                 this.gameSpeed = 0;
-                c(12, 0);
-                a(2, this.C, 1000);
+                registerCallback(12, 0);
+                scheduleCallback(2, this.scorePanel, 1000);
             }
             if (!this.bird.isDead && this.pipeCountdown <= 0 && this.gameSpeed > 0) {
-                if (a(this.bird.b, this.bird.c, this.bird.e, this.bird.f, this.pipe1X, (this.pipe1Height - this.pipeDownSprite.c) - 96, this.pipeDownSprite.b, this.pipeDownSprite.c)) {
-                    c(1.0f);
-                    a(4, 0.5f);
+                if (checkCollision(this.bird.x, this.bird.y, this.bird.width, this.bird.height, this.pipe1X, (this.pipe1Height - this.pipeDownSprite.height) - 96, this.pipeDownSprite.width, this.pipeDownSprite.height)) {
+                    startScreenShake(1.0f);
+                    handleCallback(4, 0.5f);
                     this.gameSpeed = 0;
-                    c(12, 0);
-                    a(3, (m) null, 500);
-                    a(2, this.C, 1000);
-                } else if (a(this.bird.b, this.bird.c, this.bird.e, this.bird.f, this.pipe1X, this.pipe1Height, this.pipeUpSprite.b, this.pipeUpSprite.c)) {
-                    c(1.0f);
-                    a(4, 0.5f);
+                    registerCallback(12, 0);
+                    scheduleCallback(3, (GameObject) null, 500);
+                    scheduleCallback(2, this.scorePanel, 1000);
+                } else if (checkCollision(this.bird.x, this.bird.y, this.bird.width, this.bird.height, this.pipe1X, this.pipe1Height, this.pipeUpSprite.width, this.pipeUpSprite.height)) {
+                    startScreenShake(1.0f);
+                    handleCallback(4, 0.5f);
                     this.bird.isDead = true;
                     this.gameSpeed = 0;
-                    c(12, 0);
-                    a(3, (m) null, 500);
-                    a(2, this.C, 1000);
+                    registerCallback(12, 0);
+                    scheduleCallback(3, (GameObject) null, 500);
+                    scheduleCallback(2, this.scorePanel, 1000);
                 }
-                if (a(this.bird.b, this.bird.c, this.bird.e, this.bird.f, this.pipe2X, (this.pipe2Height - this.pipeDownSprite.c) - 96, this.pipeDownSprite.b, this.pipeDownSprite.c)) {
-                    c(1.0f);
-                    a(4, 0.5f);
+                if (checkCollision(this.bird.x, this.bird.y, this.bird.width, this.bird.height, this.pipe2X, (this.pipe2Height - this.pipeDownSprite.height) - 96, this.pipeDownSprite.width, this.pipeDownSprite.height)) {
+                    startScreenShake(1.0f);
+                    handleCallback(4, 0.5f);
                     this.bird.isDead = true;
                     this.gameSpeed = 0;
-                    c(12, 0);
-                    a(3, (m) null, 500);
-                    a(2, this.C, 1000);
-                } else if (a(this.bird.b, this.bird.c, this.bird.e, this.bird.f, this.pipe2X, this.pipe2Height, this.pipeUpSprite.b, this.pipeUpSprite.c)) {
-                    c(1.0f);
-                    a(4, 0.5f);
+                    registerCallback(12, 0);
+                    scheduleCallback(3, (GameObject) null, 500);
+                    scheduleCallback(2, this.scorePanel, 1000);
+                } else if (checkCollision(this.bird.x, this.bird.y, this.bird.width, this.bird.height, this.pipe2X, this.pipe2Height, this.pipeUpSprite.width, this.pipeUpSprite.height)) {
+                    startScreenShake(1.0f);
+                    handleCallback(4, 0.5f);
                     this.bird.isDead = true;
                     this.gameSpeed = 0;
-                    c(12, 0);
-                    a(3, (m) null, 500);
-                    a(2, this.C, 1000);
+                    registerCallback(12, 0);
+                    scheduleCallback(3, (GameObject) null, 500);
+                    scheduleCallback(2, this.scorePanel, 1000);
                 }
             }
             if (this.pipeCountdown <= 0) {
-                a(this.pipeUpSprite, this.pipe1X, this.pipe1Height, 1.0f);
-                a(this.pipeDownSprite, this.pipe1X, (this.pipe1Height - this.pipeDownSprite.c) - 96, 1.0f);
-                a(this.pipeUpSprite, this.pipe2X, this.pipe2Height, 1.0f);
-                a(this.pipeDownSprite, this.pipe2X, (this.pipe2Height - this.pipeDownSprite.c) - 96, 1.0f);
+                drawSprite(this.pipeUpSprite, this.pipe1X, this.pipe1Height, 1.0f);
+                drawSprite(this.pipeDownSprite, this.pipe1X, (this.pipe1Height - this.pipeDownSprite.height) - 96, 1.0f);
+                drawSprite(this.pipeUpSprite, this.pipe2X, this.pipe2Height, 1.0f);
+                drawSprite(this.pipeDownSprite, this.pipe2X, (this.pipe2Height - this.pipeDownSprite.height) - 96, 1.0f);
                 if (this.pipe3X < 288) {
-                    a(this.pipeUpSprite, this.pipe3X, this.pipe3Height, 1.0f);
-                    a(this.pipeDownSprite, this.pipe3X, (this.pipe3Height - this.pipeDownSprite.c) - 96, 1.0f);
+                    drawSprite(this.pipeUpSprite, this.pipe3X, this.pipe3Height, 1.0f);
+                    drawSprite(this.pipeDownSprite, this.pipe3X, (this.pipe3Height - this.pipeDownSprite.height) - 96, 1.0f);
                 }
             }
-            if (this.C.F && this.C.k == 2 && !this.playButton.F) {
-                this.playButton.a((288 - ((this.playButton.d + this.scoreButton.d) + 16)) >> 1, 340);
-                this.scoreButton.a(this.playButton.b + this.playButton.d + 16, 340);
+            if (this.scorePanel.isActive && this.scorePanel.state == 2 && !this.playButton.isActive) {
+                this.playButton.setPosition((288 - ((this.playButton.width + this.scoreButton.width) + 16)) >> 1, 340);
+                this.scoreButton.setPosition(this.playButton.posX + this.playButton.width + 16, 340);
             }
-            if (this.gameOverScreen.F) {
-                this.gameOverScreen.a(f);
-                this.gameOverScreen.a(this);
+            if (this.gameOverScreen.isActive) {
+                this.gameOverScreen.update(deltaTime);
+                this.gameOverScreen.draw(this);
             } else {
-                this.scoreFont.a(144, 100, 6, 1.0f);
-                this.scoreFont.a(this.currentScore, 20);
-                this.scoreFont.a(this);
+                this.scoreFont.setPosition(144, 100, 6, 1.0f);
+                this.scoreFont.setNumber(this.gameState, 20);
+                this.scoreFont.render(this);
             }
-            this.bird.a(this);
-            a(this.landSprite, this.landOffset, 512 - this.landSprite.c, 1.0f);
+            this.bird.draw(this);
+            drawSprite(this.landSprite, this.landOffset, 512 - this.landSprite.height, 1.0f);
         }
-        if (this.readyScreen.F) {
-            this.readyScreen.a(f);
-            this.readyScreen.a(this);
+        if (this.readyScreen.isActive) {
+            this.readyScreen.update(deltaTime);
+            this.readyScreen.draw(this);
         }
         if (this.isInMenu) {
-            a(this.copyrightSprite, (288 - this.copyrightSprite.b) >> 1, 432 - this.copyrightSprite.c, 1.0f);
+            drawSprite(this.copyrightSprite, (288 - this.copyrightSprite.width) >> 1, 432 - this.copyrightSprite.height, 1.0f);
         }
-        if (this.playButton.F) {
-            this.playButton.a(f);
-            this.playButton.a(this);
-            this.scoreButton.a(f);
-            this.scoreButton.a(this);
-            if (this.playButton.h) {
-                a(true, 5, 0.5f);
-                c(10, 0);
+        if (this.playButton.isActive) {
+            this.playButton.update(deltaTime);
+            this.playButton.draw(this);
+            this.scoreButton.update(deltaTime);
+            this.scoreButton.draw(this);
+            if (this.playButton.isJustReleased) {
+                startFade(true, 5, 0.5f);
+                registerCallback(10, 0);
             }
-            if (this.scoreButton.h) {
-                c(1, 0);
-                c(10, 0);
+            if (this.scoreButton.isJustReleased) {
+                registerCallback(1, 0);
+                registerCallback(10, 0);
             }
-            if (this.rateButton.F) {
-                this.rateButton.a(f);
-                this.rateButton.a(this);
-                if (this.rateButton.h) {
-                    c(2, 0);
+            if (this.rateButton.isActive) {
+                this.rateButton.update(deltaTime);
+                this.rateButton.draw(this);
+                if (this.rateButton.isJustReleased) {
+                    registerCallback(2, 0);
                 }
             }
         }
     }
 
-    @Override // com.dotgears.g
-    public void c() {
+    @Override // com.dotgears.GameManager
+    /* renamed from: c */
+    public void startGame() {
         this.scoreFont = new ScoreFont();
-        this.playButton = new com.dotgears.f();
-        this.playButton.a("button_play");
-        this.scoreButton = new com.dotgears.f();
-        this.scoreButton.a("button_score");
-        this.okButton = new com.dotgears.f();
-        this.okButton.a("button_ok");
-        this.menuButton = new com.dotgears.f();
-        this.menuButton.a("button_menu");
-        this.pauseButton = new com.dotgears.f();
-        this.pauseButton.a("button_pause");
-        this.resumeButton = new com.dotgears.f();
-        this.resumeButton.a("button_resume");
-        this.shareButton = new com.dotgears.f();
-        this.shareButton.a("button_share");
-        this.rateButton = new com.dotgears.f();
-        this.rateButton.a("button_rate");
-        this.scoreNumberRenderer = new l("number_score");
-        this.bgDaySprite = b("bg_day");
-        this.bgNightSprite = b("bg_night");
-        this.bgForestSprite = b("bg_forest");
-        this.landSprite = b("land");
-        this.pipeUpSprite = b("pipe_up");
-        this.pipeDownSprite = b("pipe_down");
-        this.titleSprite = b("title");
-        this.copyrightSprite = b("brand_copyright");
-        this.pipeSpacing = (288 - ((this.pipeUpSprite.b * 3) / 2)) / 2;
-        this.pipe1X = this.pipeSpacing - (this.pipeUpSprite.b >> 1);
+        this.playButton = new Button();
+        this.playButton.setSprite("button_play");
+        this.scoreButton = new Button();
+        this.scoreButton.setSprite("button_score");
+        this.okButton = new Button();
+        this.okButton.setSprite("button_ok");
+        this.menuButton = new Button();
+        this.menuButton.setSprite("button_menu");
+        this.pauseButton = new Button();
+        this.pauseButton.setSprite("button_pause");
+        this.resumeButton = new Button();
+        this.resumeButton.setSprite("button_resume");
+        this.shareButton = new Button();
+        this.shareButton.setSprite("button_share");
+        this.rateButton = new Button();
+        this.rateButton.setSprite("button_rate");
+        this.scoreNumberRenderer = new ScoreRenderer("number_score");
+        this.bgDaySprite = findSpriteByName("bg_day");
+        this.bgNightSprite = findSpriteByName("bg_night");
+        this.bgForestSprite = findSpriteByName("bg_forest");
+        this.landSprite = findSpriteByName("land");
+        this.pipeUpSprite = findSpriteByName("pipe_up");
+        this.pipeDownSprite = findSpriteByName("pipe_down");
+        this.titleSprite = findSpriteByName("title");
+        this.copyrightSprite = findSpriteByName("brand_copyright");
+        this.pipeSpacing = (288 - ((this.pipeUpSprite.width * 3) / 2)) / 2;
+        this.pipe1X = this.pipeSpacing - (this.pipeUpSprite.width >> 1);
         this.pipe1Height = 274;
-        this.pipe2X = this.pipe1X + this.pipeSpacing + this.pipeUpSprite.b;
+        this.pipe2X = this.pipe1X + this.pipeSpacing + this.pipeUpSprite.width;
         this.pipe2Height = 274;
-        this.pipe3X = this.pipe2X + this.pipeSpacing + this.pipeUpSprite.b;
+        this.pipe3X = this.pipe2X + this.pipeSpacing + this.pipeUpSprite.width;
         this.pipe3Height = 274;
         this.bird = new Bird();
-        this.bird.a();
+        this.bird.init();
         this.readyScreen = new ReadyScreen();
         this.gameOverScreen = new GameOverScreen();
         this.isInMenu = true;
-        a(6, this, 1);
+        scheduleCallback(6, this, 1);
     }
 
-    public void e() {
-        if (j.a() % 10 > 3) {
+    /* renamed from: e */
+    public void resetGameState() {
+        if (MathHelper.nextRandom() % 10 > 3) {
             this.backgroundSprite = this.bgDaySprite;
         } else {
             this.backgroundSprite = this.bgNightSprite;
         }
-        this.emittersPool.b();
-        this.playButton.a((288 - ((this.playButton.d + this.scoreButton.d) + 16)) >> 1, 340);
-        this.scoreButton.a(this.playButton.b + this.playButton.d + 16, 340);
-        this.rateButton.a((288 - this.rateButton.d) >> 1, 270);
-        this.readyScreen.F = false;
-        this.gameOverScreen.F = false;
-        this.C.F = false;
-        this.C.G = false;
-        this.okButton.F = false;
-        this.okButton.G = false;
-        this.menuButton.F = false;
-        this.menuButton.G = false;
-        this.pauseButton.F = false;
-        this.pauseButton.G = false;
-        this.resumeButton.F = false;
-        this.resumeButton.G = false;
-        this.shareButton.F = false;
-        this.shareButton.G = false;
+        this.emitterPool.hideAll();
+        this.playButton.setPosition((288 - ((this.playButton.width + this.scoreButton.width) + 16)) >> 1, 340);
+        this.scoreButton.setPosition(this.playButton.posX + this.playButton.width + 16, 340);
+        this.rateButton.setPosition((288 - this.rateButton.width) >> 1, 270);
+        this.readyScreen.isActive = false;
+        this.gameOverScreen.isActive = false;
+        this.scorePanel.isActive = false;
+        this.scorePanel.isVisible = false;
+        this.okButton.isActive = false;
+        this.okButton.isVisible = false;
+        this.menuButton.isActive = false;
+        this.menuButton.isVisible = false;
+        this.pauseButton.isActive = false;
+        this.pauseButton.isVisible = false;
+        this.resumeButton.isActive = false;
+        this.resumeButton.isVisible = false;
+        this.shareButton.isActive = false;
+        this.shareButton.isVisible = false;
         this.isInMenu = true;
         this.landOffset = 0;
-        this.bird.a();
+        this.bird.init();
         this.gameSpeed = 2;
         this.pipeCountdown = 1;
-        this.currentScore = 0;
+        this.gameState = 0;
     }
 }

@@ -3,10 +3,11 @@ package com.dotgears.flappy;
 import android.content.Intent;
 import com.dotgears.GameActivity;
 
+/* renamed from: com.dotgears.flappy.d */
 /* loaded from: classes.dex */
-// class d implements Runnable {
 class SplashScreenRunnable implements Runnable {
-    // final /* synthetic */ SplashScreen a;
+
+    /* renamed from: a */
     final /* synthetic */ SplashScreen splashScreen;
 
     SplashScreenRunnable(SplashScreen splashScreen) {

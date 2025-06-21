@@ -7,142 +7,201 @@ import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
 import com.google.ads.AdView;
+import com.google.android.gms.games.GamesClient;
+import com.google.example.games.basegameutils.GameHelper;
 import java.io.IOException;
+import org.andengine.audio.sound.Sound;
+import org.andengine.audio.sound.SoundFactory;
+import org.andengine.engine.Engine;
+import org.andengine.engine.LimitedFPSEngine;
+import org.andengine.engine.camera.Camera;
+import org.andengine.engine.options.EngineOptions;
+import org.andengine.engine.options.ScreenOrientation;
+import org.andengine.engine.options.WakeLockOptions;
+import org.andengine.engine.options.resolutionpolicy.CropResolutionPolicy;
+import org.andengine.entity.scene.Scene;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.view.RenderSurfaceView;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 /* loaded from: classes.dex */
-public class GameActivity extends SimpleBaseGameActivity implements com.google.example.games.basegameutils.b {
+public class GameActivity extends SimpleBaseGameActivity implements GameHelper.GameHelperListener {
+
+    /* renamed from: a */
     public AdView adView;
-    public org.andengine.a.c.a soundPoint;
-    public org.andengine.a.c.a soundDie;
-    public org.andengine.a.c.a soundHit;
-    public org.andengine.a.c.a soundSwooshing;
-    public org.andengine.a.c.a soundWing;
-    protected com.google.example.games.basegameutils.a gameHelper;
-    protected int requestCode = 1;
+
+    /* renamed from: b */
+    public Sound soundPoint;
+
+    /* renamed from: c */
+    public Sound soundDie;
+
+    /* renamed from: d */
+    public Sound soundHit;
+
+    /* renamed from: e */
+    public Sound soundSwoosh;
+
+    /* renamed from: f */
+    public Sound soundWing;
+
+    /* renamed from: g */
+    protected GameHelper gameHelper;
+
+    /* renamed from: h */
+    protected int gameHelperClientCount = 1;
+
+    /* renamed from: i */
     protected String logTag = "BaseGameActivity";
+
+    /* renamed from: j */
     protected boolean debugLog = false;
-    private org.andengine.b.a.a camera;
-    private org.andengine.opengl.c.c.c textureRegion;
-    private String[] scopeArray;
+
+    /* renamed from: m */
+    private Camera camera;
+
+    /* renamed from: n */
+    private TextureRegion textureRegion;
+
+    /* renamed from: o */
+    private String[] gameHelperScopes;
 
     @Override // org.andengine.ui.activity.BaseGameActivity
-    public org.andengine.b.a a(org.andengine.b.c.b bVar) {
-        return new org.andengine.b.e(bVar, 60);
+    /* renamed from: a */
+    public Engine onCreateEngine(EngineOptions engineOptions) {
+        return new LimitedFPSEngine(engineOptions, 60);
     }
 
     @Override // org.andengine.ui.a
-    public org.andengine.b.c.b a() {
-        this.camera = new org.andengine.b.a.a(0.0f, 0.0f, 288.0f, 512.0f);
-        org.andengine.b.c.b engineOptions = new org.andengine.b.c.b(true, org.andengine.b.c.e.PORTRAIT_FIXED, new org.andengine.b.c.a.b(288.0f, 512.0f), this.camera);
-        engineOptions.d().b(true).a(true);
-        engineOptions.e().a(true);
-        engineOptions.c().a(true);
-        engineOptions.a(org.andengine.b.c.h.SCREEN_ON);
+    /* renamed from: a */
+    public EngineOptions onCreateEngineOptions() {
+        this.camera = new Camera(0.0f, 0.0f, 288.0f, 512.0f);
+        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new CropResolutionPolicy(288.0f, 512.0f), this.camera);
+        engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
+        engineOptions.getRenderOptions().setDithering(true);
+        engineOptions.getTouchOptions().setNeedsMultiTouch(true);
+        engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
         return engineOptions;
     }
 
     @Override // org.andengine.ui.activity.BaseGameActivity
-    protected void b() {
+    protected void onSetContentView() {
         RelativeLayout relativeLayout = new RelativeLayout(this);
         ViewGroup.LayoutParams layoutParams = new FrameLayout.LayoutParams(-1, -1);
-        this.l = new RenderSurfaceView(this);
-        this.l.a(this.k, this);
-        RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams((ViewGroup.MarginLayoutParams) BaseGameActivity.B());
+        this.mRenderSurfaceView = new RenderSurfaceView(this);
+        this.mRenderSurfaceView.setRenderer(this.mEngine, this);
+        RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams((ViewGroup.MarginLayoutParams) BaseGameActivity.createSurfaceViewLayoutParams());
         layoutParams2.addRule(13);
-        relativeLayout.addView(this.l, layoutParams2);
+        relativeLayout.addView(this.mRenderSurfaceView, layoutParams2);
         FrameLayout frameLayout = new FrameLayout(this);
-        this.adView = new AdView(this, com.google.ads.g.a, "a152df006159b75");
+        this.adView = new AdView(this, AdSize.SMART_BANNER, "a152df006159b75");
         this.adView.refreshDrawableState();
         frameLayout.addView(this.adView, new FrameLayout.LayoutParams(-2, -2, 49));
         relativeLayout.addView(frameLayout);
-        this.adView.a(new com.google.ads.d());
+        this.adView.loadAd(new AdRequest());
         setContentView(relativeLayout, layoutParams);
     }
 
+    @Override
     public void hideAd() {
         runOnUiThread(new GameAdHideRunnable(this));
     }
 
+    /* renamed from: d */
     public void showAd() {
         runOnUiThread(new GameAdShowRunnable(this));
     }
 
+    /* renamed from: e */
     public void playSoundPoint() {
-        this.soundPoint.d();
+        this.soundPoint.play();
     }
 
+    /* renamed from: f */
     public void playSoundDie() {
-        this.soundDie.d();
+        this.soundDie.play();
     }
 
+    /* renamed from: g */
     public void playSoundHit() {
-        this.soundHit.d();
+        this.soundHit.play();
     }
 
+    /* renamed from: h */
     public void playSoundSwooshing() {
-        this.soundSwooshing.d();
+        this.soundSwoosh.play();
     }
 
+    /* renamed from: i */
     public void playSoundWing() {
-        this.soundWing.d();
+        this.soundWing.play();
     }
 
-    @Override // com.google.example.games.basegameutils.b
-    public void j() {
+    @Override // com.google.example.games.basegameutils.GameHelperListener
+    /* renamed from: j */
+    public void onSignInFailed() {
     }
 
-    @Override // com.google.example.games.basegameutils.b
-    public void k() {
+    @Override // com.google.example.games.basegameutils.GameHelperListener
+    /* renamed from: k */
+    public void onSignInSucceeded() {
     }
 
     @Override // org.andengine.ui.activity.SimpleBaseGameActivity
-    protected void l() {
-        org.andengine.opengl.c.a.a.b.a("gfx/");
-        org.andengine.opengl.c.a.a.a aVar = new org.andengine.opengl.c.a.a.a(y(), 1024, 1024, org.andengine.opengl.c.f.i);
-        this.textureRegion = org.andengine.opengl.c.a.a.b.a(aVar, this, "atlas.png", 0, 0);
-        aVar.i();
-        org.andengine.a.c.b.a("sounds/");
+    /* renamed from: l */
+    protected void onCreateResources() {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        BitmapTextureAtlas textureAtlas = new BitmapTextureAtlas(getTextureManager(), 1024, 1024, TextureOptions.DEFAULT);
+        this.textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, this, "atlas.png", 0, 0);
+        textureAtlas.load();
+        SoundFactory.setAssetBasePath("sounds/");
         try {
-            this.soundPoint = org.andengine.a.c.b.a(this.k.i(), this, "sfx_point.ogg");
-            this.soundDie = org.andengine.a.c.b.a(this.k.i(), this, "sfx_die.ogg");
-            this.soundHit = org.andengine.a.c.b.a(this.k.i(), this, "sfx_hit.ogg");
-            this.soundSwooshing = org.andengine.a.c.b.a(this.k.i(), this, "sfx_swooshing.ogg");
-            this.soundWing = org.andengine.a.c.b.a(this.k.i(), this, "sfx_wing.ogg");
+            this.soundPoint = SoundFactory.createSoundFromAsset(this.mEngine.getSoundManager(), this, "sfx_point.ogg");
+            this.soundDie = SoundFactory.createSoundFromAsset(this.mEngine.getSoundManager(), this, "sfx_die.ogg");
+            this.soundHit = SoundFactory.createSoundFromAsset(this.mEngine.getSoundManager(), this, "sfx_hit.ogg");
+            this.soundSwoosh = SoundFactory.createSoundFromAsset(this.mEngine.getSoundManager(), this, "sfx_swooshing.ogg");
+            this.soundWing = SoundFactory.createSoundFromAsset(this.mEngine.getSoundManager(), this, "sfx_wing.ogg");
         } catch (IOException e) {
         }
     }
 
     @Override // org.andengine.ui.activity.SimpleBaseGameActivity
-    protected org.andengine.c.b.e m() {
+    /* renamed from: m */
+    protected Scene onCreateScene() {
         return new GameScene(this, this.textureRegion);
     }
 
-    protected com.google.android.gms.games.c getGamesClient() {
-        return this.gameHelper.b();
+    /* renamed from: n */
+    protected GamesClient getGamesClient() {
+        return this.gameHelper.getGamesClient();
     }
 
+    /* renamed from: o */
     public boolean isSignedIn() {
-        return this.gameHelper.c();
+        return this.gameHelper.isSignedIn();
     }
 
     @Override // android.app.Activity
     protected void onActivityResult(int i, int i2, Intent intent) {
         super.onActivityResult(i, i2, intent);
-        this.gameHelper.a(i, i2, intent);
+        this.gameHelper.onActivityResult(i, i2, intent);
     }
 
     @Override // org.andengine.ui.activity.BaseGameActivity, android.app.Activity
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        this.gameHelper = new com.google.example.games.basegameutils.a(this);
+        this.gameHelper = new GameHelper(this);
         if (this.debugLog) {
-            this.gameHelper.a(this.debugLog, this.logTag);
+            this.gameHelper.enableDebugLog(this.debugLog, this.logTag);
         }
-        this.gameHelper.a(this, this.requestCode, this.scopeArray);
+        this.gameHelper.setup(this, this.gameHelperClientCount, this.gameHelperScopes);
     }
 
     @Override // org.andengine.ui.activity.BaseGameActivity, android.app.Activity
@@ -163,16 +222,17 @@ public class GameActivity extends SimpleBaseGameActivity implements com.google.e
     @Override // android.app.Activity
     protected void onStart() {
         super.onStart();
-        this.gameHelper.a(this);
+        this.gameHelper.onStart(this);
     }
 
     @Override // android.app.Activity
     protected void onStop() {
         super.onStop();
-        this.gameHelper.d();
+        this.gameHelper.onStop();
     }
 
+    /* renamed from: p */
     public void beginUserInitiatedSignIn() {
-        this.gameHelper.f();
+        this.gameHelper.beginUserInitiatedSignIn();
     }
 }

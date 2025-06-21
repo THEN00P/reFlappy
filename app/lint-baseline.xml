@@ -1,0 +1,1071 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.9.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.9.1)" variant="all" version="8.9.1">
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="                        edit.commit();"
+        errorLine2="                             ~~~~~~~~">
+        <location
+            file="src/main/java/com/dotgears/GameScene.java"
+            line="119"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="CustomSplashScreen"
+        message="The application should not provide its own launch screen"
+        errorLine1="public class SplashScreen extends Activity {"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/dotgears/flappy/SplashScreen.java"
+            line="9"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="            android:label=&quot;@string/app_name&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="24"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="            android:label=&quot;@string/app_name&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="36"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="LockedOrientationActivity"
+        message="Expecting `android:screenOrientation=&quot;unspecified&quot;` or `&quot;fullSensor&quot;` for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices"
+        errorLine1="            android:screenOrientation=&quot;portrait&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="25"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="LockedOrientationActivity"
+        message="Expecting `android:screenOrientation=&quot;unspecified&quot;` or `&quot;fullSensor&quot;` for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices"
+        errorLine1="            android:screenOrientation=&quot;portrait&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="37"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="DiscouragedApi"
+        message="Should not restrict activity to fixed orientation. This may not be suitable for different form factors, causing the app to be letterboxed."
+        errorLine1="            android:screenOrientation=&quot;portrait&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="25"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="DiscouragedApi"
+        message="Should not restrict activity to fixed orientation. This may not be suitable for different form factors, causing the app to be letterboxed."
+        errorLine1="            android:screenOrientation=&quot;portrait&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="37"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="DiscouragedApi"
+        message="Use of this function is discouraged because resource reflection makes it harder to perform build optimizations and compile-time verification of code. It is much more efficient to retrieve resources by identifier (e.g. `R.foo.bar`) than by name (e.g. `getIdentifier(&quot;bar&quot;, &quot;foo&quot;, null)`)."
+        errorLine1="            int res_id = res.getIdentifier(&quot;app_id&quot;, &quot;string&quot;, pkgName);"
+        errorLine2="                             ~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/google/example/games/basegameutils/GameHelper.java"
+            line="1107"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;common_google_play_services_network_error_title&quot; is not translated in &quot;be&quot; (Belarusian)"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_network_error_title&quot;>Network Error&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="12"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;common_google_play_services_network_error_text&quot; is not translated in &quot;be&quot; (Belarusian)"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_network_error_text&quot;>A data connection is required to connect to Google Play services.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="13"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;common_google_play_services_invalid_account_title&quot; is not translated in &quot;be&quot; (Belarusian)"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_invalid_account_title&quot;>Invalid Account&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;common_google_play_services_invalid_account_text&quot; is not translated in &quot;be&quot; (Belarusian)"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_invalid_account_text&quot;>The specified account does not exist on this device. Please choose a different account.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;gamehelper_sign_in_failed&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;pt&quot; (Portuguese), &quot;bg&quot; (Bulgarian), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sr&quot; (Serbian), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;cs&quot; (Czech), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;th&quot; (Thai), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;gamehelper_sign_in_failed&quot;>Failed to sign in. Please check your network connection and try again.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="28"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;gamehelper_app_misconfigured&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;pt&quot; (Portuguese), &quot;bg&quot; (Bulgarian), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sr&quot; (Serbian), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;cs&quot; (Czech), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;th&quot; (Thai), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;gamehelper_app_misconfigured&quot;>The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="29"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;gamehelper_license_failed&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;pt&quot; (Portuguese), &quot;bg&quot; (Bulgarian), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sr&quot; (Serbian), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;cs&quot; (Czech), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;th&quot; (Thai), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;gamehelper_license_failed&quot;>License check failed.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="30"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;gamehelper_unknown_error&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;pt&quot; (Portuguese), &quot;bg&quot; (Bulgarian), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sr&quot; (Serbian), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;cs&quot; (Czech), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;th&quot; (Thai), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;gamehelper_unknown_error&quot;>Unknown error.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="31"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;app_id&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;pt&quot; (Portuguese), &quot;bg&quot; (Bulgarian), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sr&quot; (Serbian), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;cs&quot; (Czech), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;th&quot; (Thai), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;app_id&quot;>799978229476&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="32"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;app_name&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;pt&quot; (Portuguese), &quot;bg&quot; (Bulgarian), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sr&quot; (Serbian), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;cs&quot; (Czech), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;th&quot; (Thai), &quot;ja&quot; (Japanese), &quot;tl&quot; (Tagalog), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;app_name&quot;>Flappy Bird&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="33"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `drawable-hdpi`.">
+        <location
+            file="src/main/res/drawable-hdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `drawable-ldpi`.">
+        <location
+            file="src/main/res/drawable-ldpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `drawable-mdpi`.">
+        <location
+            file="src/main/res/drawable-mdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `drawable-xhdpi`.">
+        <location
+            file="src/main/res/drawable-xhdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `drawable-xxhdpi`.">
+        <location
+            file="src/main/res/drawable-xxhdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `drawable-xxxhdpi`.">
+        <location
+            file="src/main/res/drawable-xxxhdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values-hdpi`.">
+        <location
+            file="src/main/res/values-hdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values-ldpi`.">
+        <location
+            file="src/main/res/values-ldpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values-mdpi`.">
+        <location
+            file="src/main/res/values-mdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values-xhdpi`.">
+        <location
+            file="src/main/res/values-xhdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values-xxhdpi`.">
+        <location
+            file="src/main/res/values-xxhdpi-v4"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v4`) is unnecessary; `minSdkVersion` is 21. Merge all the resources in this folder into `values-xxxhdpi`.">
+        <location
+            file="src/main/res/values-xxxhdpi-v4"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `#000000` with a theme that also paints a background (inferred theme is `@style/AppTheme`)"
+        errorLine1="    android:background=&quot;#000000&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_splash.xml"
+            line="3"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.activity_splash` appears to be unused"
+        errorLine1="&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_splash.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_dark_text_default` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_dark_text_default&quot;>@android:color/white&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="3"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_dark_text_pressed` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_dark_text_pressed&quot;>@android:color/white&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="4"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_dark_text_disabled` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_dark_text_disabled&quot;>#ffaaaaaa&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="5"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_dark_text_focused` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_dark_text_focused&quot;>@android:color/white&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="6"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_light_text_default` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_light_text_default&quot;>#ff737373&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="7"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_light_text_pressed` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_light_text_pressed&quot;>@android:color/white&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="8"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_light_text_disabled` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_light_text_disabled&quot;>#ffaaaaaa&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="9"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_light_text_focused` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_light_text_focused&quot;>#ff737373&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="10"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_default_background` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_signin_btn_default_background&quot;>#ffdd4b39&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="11"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_action_bar_splitter` appears to be unused"
+        errorLine1="    &lt;color name=&quot;common_action_bar_splitter&quot;>#d2d2d2&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="12"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_dark` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/common_signin_btn_icon_dark.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_disabled_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_disabled_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_disabled_focus_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_disabled_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_disabled_focus_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_disabled_focus_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_disabled_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_disabled_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_focus_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_focus_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_focus_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_light` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/common_signin_btn_icon_light.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_normal_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_normal_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_normal_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_normal_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_pressed_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_pressed_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_icon_pressed_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_pressed_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_text_dark` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/color/common_signin_btn_text_dark.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_dark` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/common_signin_btn_text_dark.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_disabled_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_disabled_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_disabled_focus_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_disabled_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_disabled_focus_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_disabled_focus_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_disabled_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_disabled_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_focus_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_focus_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_focus_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.common_signin_btn_text_light` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/color/common_signin_btn_text_light.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_light` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/common_signin_btn_text_light.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_normal_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_normal_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_normal_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_normal_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_pressed_dark` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_pressed_dark.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.common_signin_btn_text_pressed_light` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_pressed_light.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_plusone_medium_off_client` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/ic_plusone_medium_off_client.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_plusone_small_off_client` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/ic_plusone_small_off_client.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_plusone_standard_off_client` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/ic_plusone_standard_off_client.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_plusone_tall_off_client` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi-v4/ic_plusone_tall_off_client.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.splash` appears to be unused">
+        <location
+            file="src/main/res/drawable/splash.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_install_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_install_title&quot;>Get Google Play services&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="3"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_install_text_phone` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_install_text_phone&quot;>This app won\&apos;t run without Google Play services, which are missing from your phone.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="4"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_install_text_tablet` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_install_text_tablet&quot;>This app won\&apos;t run without Google Play services, which are missing from your tablet.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="5"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_install_button` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_install_button&quot;>Get Google Play services&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="6"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_enable_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_enable_title&quot;>Enable Google Play services&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_enable_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_enable_text&quot;>This app won\&apos;t work unless you enable Google Play services.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="8"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_enable_button` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_enable_button&quot;>Enable Google Play services&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="9"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_update_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_update_title&quot;>Update Google Play services&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="10"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_update_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_update_text&quot;>This app won\&apos;t run unless you update Google Play services.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="11"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_network_error_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_network_error_title&quot;>Network Error&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="12"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_network_error_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_network_error_text&quot;>A data connection is required to connect to Google Play services.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="13"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_invalid_account_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_invalid_account_title&quot;>Invalid Account&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_invalid_account_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_invalid_account_text&quot;>The specified account does not exist on this device. Please choose a different account.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_unknown_issue` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_unknown_issue&quot;>Unknown issue with Google Play services.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="16"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_unsupported_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_unsupported_title&quot;>Google Play services&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="17"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_unsupported_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_unsupported_text&quot;>Google Play services, which some of your applications rely on, is not supported by your device. Please contact the manufacturer for assistance.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="18"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_google_play_services_update_button` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_google_play_services_update_button&quot;>Update&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="19"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_signin_button_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_signin_button_text&quot;>Sign in&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="20"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.common_signin_button_text_long` appears to be unused"
+        errorLine1="    &lt;string name=&quot;common_signin_button_text_long&quot;>Sign in with Google&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="21"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.auth_client_using_bad_version_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;auth_client_using_bad_version_title&quot;>An application attempted to use a bad version of Google Play Services.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="22"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.auth_client_needs_enabling_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;auth_client_needs_enabling_title&quot;>An application requires Google Play Services to be enabled.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="23"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.auth_client_needs_installation_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;auth_client_needs_installation_title&quot;>An application requires installation of Google Play Services.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="24"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.auth_client_needs_update_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;auth_client_needs_update_title&quot;>An application requires an update for Google Play Services.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="25"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.auth_client_play_services_err_notification_msg` appears to be unused"
+        errorLine1="    &lt;string name=&quot;auth_client_play_services_err_notification_msg&quot;>Google Play services error&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="26"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.auth_client_requested_by_msg` appears to be unused"
+        errorLine1="    &lt;string name=&quot;auth_client_requested_by_msg&quot;>Requested by %1$s&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="27"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/splash.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/splash.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_icon_disabled_focus_dark.png, common_signin_btn_icon_disabled_focus_light.png">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_disabled_focus_light.png"/>
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_disabled_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_icon_disabled_focus_dark.png, common_signin_btn_icon_disabled_focus_light.png">
+        <location
+            file="src/main/res/drawable-mdpi-v4/common_signin_btn_icon_disabled_focus_light.png"/>
+        <location
+            file="src/main/res/drawable-mdpi-v4/common_signin_btn_icon_disabled_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_icon_disabled_focus_dark.png, common_signin_btn_icon_disabled_focus_light.png">
+        <location
+            file="src/main/res/drawable-xhdpi-v4/common_signin_btn_icon_disabled_focus_light.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi-v4/common_signin_btn_icon_disabled_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_icon_disabled_dark.png, common_signin_btn_icon_disabled_light.png">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_disabled_light.png"/>
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_icon_disabled_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_icon_disabled_dark.png, common_signin_btn_icon_disabled_light.png">
+        <location
+            file="src/main/res/drawable-mdpi-v4/common_signin_btn_icon_disabled_light.png"/>
+        <location
+            file="src/main/res/drawable-mdpi-v4/common_signin_btn_icon_disabled_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_icon_disabled_dark.png, common_signin_btn_icon_disabled_light.png">
+        <location
+            file="src/main/res/drawable-xhdpi-v4/common_signin_btn_icon_disabled_light.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi-v4/common_signin_btn_icon_disabled_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_text_disabled_focus_dark.png, common_signin_btn_text_disabled_focus_light.png">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_disabled_focus_light.png"/>
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_disabled_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_text_disabled_focus_dark.png, common_signin_btn_text_disabled_focus_light.png">
+        <location
+            file="src/main/res/drawable-mdpi-v4/common_signin_btn_text_disabled_focus_light.png"/>
+        <location
+            file="src/main/res/drawable-mdpi-v4/common_signin_btn_text_disabled_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_text_disabled_focus_dark.png, common_signin_btn_text_disabled_focus_light.png">
+        <location
+            file="src/main/res/drawable-xhdpi-v4/common_signin_btn_text_disabled_focus_light.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi-v4/common_signin_btn_text_disabled_focus_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_text_disabled_dark.png, common_signin_btn_text_disabled_light.png">
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_disabled_light.png"/>
+        <location
+            file="src/main/res/drawable-hdpi-v4/common_signin_btn_text_disabled_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_text_disabled_dark.png, common_signin_btn_text_disabled_light.png">
+        <location
+            file="src/main/res/drawable-mdpi-v4/common_signin_btn_text_disabled_light.png"/>
+        <location
+            file="src/main/res/drawable-mdpi-v4/common_signin_btn_text_disabled_dark.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: common_signin_btn_text_disabled_dark.png, common_signin_btn_text_disabled_light.png">
+        <location
+            file="src/main/res/drawable-xhdpi-v4/common_signin_btn_text_disabled_light.png"/>
+        <location
+            file="src/main/res/drawable-xhdpi-v4/common_signin_btn_text_disabled_dark.png"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_splash.xml"
+            line="6"
+            column="6"/>
+    </issue>
+
+</issues>

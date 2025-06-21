@@ -1,10 +1,12 @@
 package com.dotgears.flappy;
 
-import com.dotgears.h;
+import com.dotgears.FontRenderer;
 
+/* renamed from: com.dotgears.flappy.b */
 /* loaded from: classes.dex */
-public class ScoreFont extends h {
-    // float m;
+public class ScoreFont extends FontRenderer {
+
+    /* renamed from: m */
     float scoreAlpha;
 
     public ScoreFont() {
