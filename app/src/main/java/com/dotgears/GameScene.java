@@ -62,8 +62,19 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
     /* renamed from: a */
     public static void drawSprite(int x, int y, int width, int height, float u, float v, float u2, float v2, float alpha) {
         Sprite sprite = sprites[spriteCount];
-        sprite.setPosition(x, y);
-        sprite.setSize(width, height);
+
+//        This region was probably compiler optimised or andengine was modified
+//        <editor-fold desc="Unwrapped setTextureCoordinates">
+        var wNew = width - x;
+        var hNew = height - y;
+
+        sprite.setPosition(x + (wNew / 2f), y + (hNew / 2f));
+
+//        couldn't find a better solution for the upside down stuff so we just flip the camera
+        sprite.setSize(wNew, hNew * -1);
+//        sprite.setSize(wNew, hNew);
+
+        sprite.setRotation(0);
 
         var textureX = u*1024;
         var textureY = v*1024;
@@ -72,6 +83,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
         sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
 
         sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
+//        </editor-fold>
+
+//        sprite.setTextureCoordinates(x, y, width, height, u, v, u2, v2);
         sprite.setAlpha(alpha);
         sprite.setVisible(true);
         spriteCount++;
@@ -91,10 +105,20 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
         float rotY3 = MathHelper.rotatedY - y;
         MathHelper.rotate(width, height, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
 
-//        sprite.setTextureCoordinates(x, y, width, height, u, v, u2, v2, rotX1, rotY1, rotX2, rotY2, rotX3, rotY3, MathHelper.rotatedX - x, MathHelper.rotatedY - y);
-        sprite.setPosition(x, y);
-        sprite.setSize(width, height);
-        sprite.setRotation(rotation);
+//        This region was probably compiler optimised or andengine was modified
+//        <editor-fold desc="Unwrapped setTextureCoordinates">
+        var wNew = width - x;
+        var hNew = height - y;
+
+        sprite.setPosition(x + (wNew / 2f), y + (hNew / 2f));
+
+//        couldn't find a better solution for the upside down stuff so we just flip the camera
+        sprite.setSize(wNew, hNew * -1);
+//        sprite.setSize(wNew, hNew);
+
+//        couldn't find a better solution for the upside down stuff so we also invert rotation
+        sprite.setRotation(rotation * -1);
+//        sprite.setRotation(rotation);
 
         var textureX = u*1024;
         var textureY = v*1024;
@@ -103,7 +127,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
         sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
 
         sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
+//        </editor-fold>
 
+//        sprite.setTextureCoordinates(x, y, width, height, u, v, u2, v2, rotX1, rotY1, rotX2, rotY2, rotX3, rotY3, MathHelper.rotatedX - x, MathHelper.rotatedY - y);
         sprite.setAlpha(alpha);
         sprite.setVisible(true);
         spriteCount++;
