@@ -87,7 +87,7 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
     @Override // org.andengine.ui.a
     /* renamed from: a */
     public EngineOptions onCreateEngineOptions() {
-//        couldn't find a better solution for the upside down stuff so we just flip the camera
+//      TODO:  couldn't find a better solution for the upside down stuff so we just flip the camera
         this.camera = new Camera(0.0f, 512.0f, 288.0f, -512.0f);
 //        this.camera = new Camera(0.0f, 0.0f, 288.0f, 512.0f);
         EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new CropResolutionPolicy(288.0f, 512.0f), this.camera);

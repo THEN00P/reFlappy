@@ -70,7 +70,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 
         sprite.setPosition(x + (wNew / 2f), y + (hNew / 2f));
 
-//        couldn't find a better solution for the upside down stuff so we just flip the camera
+//       TODO: couldn't find a better solution for the upside down stuff so we just flip the camera
         sprite.setSize(wNew, hNew * -1);
 //        sprite.setSize(wNew, hNew);
 
@@ -112,11 +112,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 
         sprite.setPosition(x + (wNew / 2f), y + (hNew / 2f));
 
-//        couldn't find a better solution for the upside down stuff so we just flip the camera
+//        TODO: couldn't find a better solution for the upside down stuff so we just flip the camera
         sprite.setSize(wNew, hNew * -1);
 //        sprite.setSize(wNew, hNew);
 
-//        couldn't find a better solution for the upside down stuff so we also invert rotation
+//        TODO: couldn't find a better solution for the upside down stuff so we also invert rotation
         sprite.setRotation(rotation * -1);
 //        sprite.setRotation(rotation);
 
