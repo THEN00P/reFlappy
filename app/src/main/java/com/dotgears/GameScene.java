@@ -65,8 +65,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 
 //        This region was probably compiler optimised or andengine was modified
 //        <editor-fold desc="Unwrapped setTextureCoordinates">
-        var wNew = width - x;
-        var hNew = height - y;
+        float wNew = width - x;
+        float hNew = height - y;
 
         sprite.setPosition(x + (wNew / 2f), y + (hNew / 2f));
 
@@ -76,10 +76,10 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 
         sprite.setRotation(0);
 
-        var textureX = u*1024;
-        var textureY = v*1024;
-        var textureWidth = u2*1024 - textureX;
-        var textureHeight = v2*1024 - textureY;
+        float textureX = u*1024;
+        float textureY = v*1024;
+        float textureWidth = u2*1024 - textureX;
+        float textureHeight = v2*1024 - textureY;
         sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
 
         sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
@@ -107,8 +107,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 
 //        This region was probably compiler optimised or andengine was modified
 //        <editor-fold desc="Unwrapped setTextureCoordinates">
-        var wNew = width - x;
-        var hNew = height - y;
+        float wNew = width - x;
+        float hNew = height - y;
 
         sprite.setPosition(x + (wNew / 2f), y + (hNew / 2f));
 
@@ -120,10 +120,10 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
         sprite.setRotation(rotation * -1);
 //        sprite.setRotation(rotation);
 
-        var textureX = u*1024;
-        var textureY = v*1024;
-        var textureWidth = u2*1024 - textureX;
-        var textureHeight = v2*1024 - textureY;
+        float textureX = u*1024;
+        float textureY = v*1024;
+        float textureWidth = u2*1024 - textureX;
+        float textureHeight = v2*1024 - textureY;
         sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
 
         sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
