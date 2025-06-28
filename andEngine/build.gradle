@@ -1,0 +1,39 @@
+plugins {
+    alias(libs.plugins.android.library)
+}
+
+android {
+    buildFeatures {
+        buildConfig = true
+    }
+
+    lint {
+        abortOnError = false
+    }
+
+    namespace = "org.andengine"
+
+    compileSdkVersion 17
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 8
+
+        ndk {
+            moduleName "andengine_shared"
+        }
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
