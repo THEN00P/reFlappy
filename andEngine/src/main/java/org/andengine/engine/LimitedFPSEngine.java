@@ -7,10 +7,10 @@ import org.andengine.util.time.TimeConstants;
  * A subclass of {@link Engine} that tries to achieve a specific amount of
  * updates per second. When the time since the last update is bigger long the
  * steplength, additional updates are executed.
- *
- * (c) 2010 Nicolas Gramlich
+ * 
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 10:17:47 - 02.08.2010
  */
@@ -31,7 +31,6 @@ public class LimitedFPSEngine extends Engine {
 
 	public LimitedFPSEngine(final EngineOptions pEngineOptions, final int pFramesPerSecond) {
 		super(pEngineOptions);
-
 		this.mPreferredFrameLengthNanoseconds = TimeConstants.NANOSECONDS_PER_SECOND / pFramesPerSecond;
 	}
 
@@ -48,7 +47,7 @@ public class LimitedFPSEngine extends Engine {
 		final long preferredFrameLengthNanoseconds = this.mPreferredFrameLengthNanoseconds;
 		final long deltaFrameLengthNanoseconds = preferredFrameLengthNanoseconds - pNanosecondsElapsed;
 
-		if (deltaFrameLengthNanoseconds <= 0) {
+		if(deltaFrameLengthNanoseconds <= 0) {
 			super.onUpdate(pNanosecondsElapsed);
 		} else {
 			final int sleepTimeMilliseconds = (int) (deltaFrameLengthNanoseconds / TimeConstants.NANOSECONDS_PER_MILLISECOND);

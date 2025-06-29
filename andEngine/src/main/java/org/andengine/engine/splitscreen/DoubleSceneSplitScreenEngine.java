@@ -10,9 +10,9 @@ import org.andengine.opengl.util.GLState;
 import android.opengl.GLES20;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 22:28:34 - 27.03.2010
  */
@@ -41,9 +41,6 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 	// Getter & Setter
 	// ===========================================================
 
-	/**
-	 * @deprecated Instead use {@link #getFirstCamera()} or {@link #getSecondCamera()}.
-	 */
 	@Deprecated
 	@Override
 	public Camera getCamera() {
@@ -58,9 +55,6 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 		return this.mSecondCamera;
 	}
 
-	/**
-	 * @deprecated Instead use {@link #getFirstCamera()} or {@link #getSecondScene()}.
-	 */
 	@Deprecated
 	@Override
 	public Scene getScene() {
@@ -75,9 +69,6 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 		return this.mSecondScene;
 	}
 
-	/**
-	 * @deprecated Instead use {@link #setFirstScene(Scene)} or {@link #setSecondScene(Scene)}.
-	 */
 	@Deprecated
 	@Override
 	public void setScene(final Scene pScene) {
@@ -97,17 +88,6 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 	// ===========================================================
 
 	@Override
-	protected void onUpdateScene(final float pSecondsElapsed) {
-		super.onUpdateScene(pSecondsElapsed);
-
-		if (this.mSecondScene != null) {
-			this.mSecondScene.onUpdate(pSecondsElapsed);
-		}
-
-		this.getSecondCamera().onUpdate(pSecondsElapsed);
-	}
-
-	@Override
 	protected void onDrawScene(final GLState pGLState, final Camera pFirstCamera) {
 		final Camera secondCamera = this.getSecondCamera();
 
@@ -119,7 +99,7 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 		pGLState.enableScissorTest();
 
 		/* First Screen. With first camera, on the left half of the screens width. */
-		if (super.mScene != null) {
+		if(super.mScene != null) {
 			GLES20.glScissor(0, 0, surfaceWidthHalf, surfaceHeight);
 			GLES20.glViewport(0, 0, surfaceWidthHalf, surfaceHeight);
 
@@ -128,7 +108,7 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 		}
 
 		/* Second Screen. With second camera, on the right half of the screens width. */
-		if (this.mSecondScene != null) {
+		if(this.mSecondScene != null) {
 			GLES20.glScissor(surfaceWidthHalf, 0, surfaceWidthHalf, surfaceHeight);
 			GLES20.glViewport(surfaceWidthHalf, 0, surfaceWidthHalf, surfaceHeight);
 
@@ -141,7 +121,7 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 
 	@Override
 	protected Camera getCameraFromSurfaceTouchEvent(final TouchEvent pTouchEvent) {
-		if (pTouchEvent.getX() <= this.mSurfaceWidth >> 1) {
+		if(pTouchEvent.getX() <= this.mSurfaceWidth >> 1) {
 			return this.getFirstCamera();
 		} else {
 			return this.getSecondCamera();
@@ -150,7 +130,7 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 
 	@Override
 	protected Scene getSceneFromSurfaceTouchEvent(final TouchEvent pTouchEvent) {
-		if (pTouchEvent.getX() <= this.mSurfaceWidth >> 1) {
+		if(pTouchEvent.getX() <= this.mSurfaceWidth >> 1) {
 			return this.getFirstScene();
 		} else {
 			return this.getSecondScene();
@@ -158,15 +138,29 @@ public class DoubleSceneSplitScreenEngine extends Engine {
 	}
 
 	@Override
-	protected void convertSurfaceTouchEventToSceneTouchEvent(final Camera pCamera, final TouchEvent pSurfaceTouchEvent) {
+	protected void onUpdateScene(final float pSecondsElapsed) {
+		super.onUpdateScene(pSecondsElapsed);
+		if(this.mSecondScene != null) {
+			this.mSecondScene.onUpdate(pSecondsElapsed);
+		}
+	}
+
+	@Override
+	protected void convertSurfaceToSceneTouchEvent(final Camera pCamera, final TouchEvent pSurfaceTouchEvent) {
 		final int surfaceWidthHalf = this.mSurfaceWidth >> 1;
 
-		if (pCamera == this.getFirstCamera()) {
-			pCamera.convertSurfaceTouchEventToSceneTouchEvent(pSurfaceTouchEvent, surfaceWidthHalf, this.mSurfaceHeight);
+		if(pCamera == this.getFirstCamera()) {
+			pCamera.convertSurfaceToSceneTouchEvent(pSurfaceTouchEvent, surfaceWidthHalf, this.mSurfaceHeight);
 		} else {
 			pSurfaceTouchEvent.offset(-surfaceWidthHalf, 0);
-			pCamera.convertSurfaceTouchEventToSceneTouchEvent(pSurfaceTouchEvent, surfaceWidthHalf, this.mSurfaceHeight);
+			pCamera.convertSurfaceToSceneTouchEvent(pSurfaceTouchEvent, surfaceWidthHalf, this.mSurfaceHeight);
 		}
+	}
+
+	@Override
+	protected void onUpdateUpdateHandlers(final float pSecondsElapsed) {
+		super.onUpdateUpdateHandlers(pSecondsElapsed);
+		this.getSecondCamera().onUpdate(pSecondsElapsed);
 	}
 
 	@Override

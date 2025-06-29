@@ -3,7 +3,7 @@ package org.andengine.util.adt.list;
 /**
  * TODO This class could take some kind of AllocationStrategy object.
  *
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 19:35:59 - 03.05.2012
@@ -48,7 +48,7 @@ public class LongArrayList implements ILongList {
 	}
 
 	@Override
-	public long get(final int pIndex) throws ArrayIndexOutOfBoundsException {
+	public float get(final int pIndex) throws ArrayIndexOutOfBoundsException {
 		return this.mItems[pIndex];
 	}
 
@@ -71,11 +71,11 @@ public class LongArrayList implements ILongList {
 	}
 
 	@Override
-	public long remove(final int pIndex) throws ArrayIndexOutOfBoundsException {
-		final long oldValue = this.mItems[pIndex];
+	public float remove(final int pIndex) throws ArrayIndexOutOfBoundsException {
+		final float oldValue = this.mItems[pIndex];
 
 		final int numMoved = this.mSize - pIndex - 1;
-		if (numMoved > 0) {
+		if(numMoved > 0) {
 			System.arraycopy(this.mItems, pIndex + 1, this.mItems, pIndex, numMoved);
 		}
 
@@ -98,7 +98,7 @@ public class LongArrayList implements ILongList {
 	public long[] toArray() {
 		final long[] array = new long[this.mSize];
 		System.arraycopy(this.mItems, 0, array, 0, this.mSize);
-		return array;
+		return array ;
 	}
 
 	// ===========================================================
@@ -107,10 +107,10 @@ public class LongArrayList implements ILongList {
 
 	private void ensureCapacity(final int pCapacity) {
 		final int currentCapacity = this.mItems.length;
-		if (currentCapacity < pCapacity) {
+		if(currentCapacity < pCapacity) {
 			/* Increase array size. */
 			final int newCapacity = ((currentCapacity * 3) >> 1) + 1;
-			final long[] newItems = new long[newCapacity];
+			final long newItems[] = new long[newCapacity];
 			System.arraycopy(this.mItems, 0, newItems, 0, currentCapacity);
 			this.mItems = newItems;
 		}

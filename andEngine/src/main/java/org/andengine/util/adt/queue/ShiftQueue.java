@@ -3,12 +3,12 @@ package org.andengine.util.adt.queue;
 import org.andengine.util.adt.list.ShiftList;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:06:49 - 03.01.2012
  */
-public class ShiftQueue<T> extends ShiftList<T> implements IQueue<T> {
+public class ShiftQueue<T> extends ShiftList<T> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -39,7 +39,7 @@ public class ShiftQueue<T> extends ShiftList<T> implements IQueue<T> {
 
 	@Override
 	public T peek() {
-		if (this.isEmpty()) {
+		if(this.isEmpty()) {
 			return null;
 		} else {
 			return this.get(0);
@@ -48,7 +48,7 @@ public class ShiftQueue<T> extends ShiftList<T> implements IQueue<T> {
 
 	@Override
 	public T poll() {
-		if (this.isEmpty()) {
+		if(this.isEmpty()) {
 			return null;
 		} else {
 			return this.remove(0);

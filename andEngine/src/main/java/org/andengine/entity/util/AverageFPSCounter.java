@@ -3,9 +3,9 @@ package org.andengine.entity.util;
 
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 19:52:31 - 09.03.2010
  */
@@ -48,7 +48,7 @@ public abstract class AverageFPSCounter extends FPSCounter {
 	public void onUpdate(final float pSecondsElapsed) {
 		super.onUpdate(pSecondsElapsed);
 
-		if (this.mSecondsElapsed > this.mAverageDuration) {
+		if(this.mSecondsElapsed > this.mAverageDuration){
 			this.onHandleAverageDurationElapsed(this.getFPS());
 
 			this.mSecondsElapsed -= this.mAverageDuration;

@@ -5,7 +5,7 @@ import org.andengine.util.modifier.ease.EaseLinear;
 import org.andengine.util.modifier.ease.IEaseFunction;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 10:46:10 - 05.10.2011
@@ -44,7 +44,7 @@ public class SkewModifier extends DoubleValueSpanEntityModifier {
 	}
 
 	@Override
-	public SkewModifier deepCopy() {
+	public SkewModifier deepCopy(){
 		return new SkewModifier(this);
 	}
 

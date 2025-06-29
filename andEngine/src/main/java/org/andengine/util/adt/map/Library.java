@@ -3,9 +3,9 @@ package org.andengine.util.adt.map;
 import android.util.SparseArray;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 11:51:29 - 20.08.2010
  * @param <T>
@@ -43,7 +43,7 @@ public class Library<T> {
 
 	public void put(final int pID, final T pItem) {
 		final T item = this.mItems.get(pID);
-		if (item == null) {
+		if(item == null) {
 			this.mItems.put(pID, pItem);
 		} else {
 			throw new IllegalArgumentException("ID: '" + pID + "' is already associated with item: '" + item.toString() + "'.");

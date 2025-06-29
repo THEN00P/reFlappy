@@ -3,12 +3,12 @@ package org.andengine.util.adt.queue;
 import org.andengine.util.adt.list.SortedList;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:17:33 PM - 03.022012
  */
-public class SortedQueue<T extends Comparable<T>> extends SortedList<T> implements ISortedQueue<T> {
+public class SortedQueue<T extends Comparable<T>> extends SortedList<T> implements ISortedQueue<T>{
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -35,7 +35,7 @@ public class SortedQueue<T extends Comparable<T>> extends SortedList<T> implemen
 
 	@Override
 	public T peek() {
-		if (this.isEmpty()) {
+		if(this.isEmpty()) {
 			return null;
 		} else {
 			return this.get(0);
@@ -44,7 +44,7 @@ public class SortedQueue<T extends Comparable<T>> extends SortedList<T> implemen
 
 	@Override
 	public T poll() {
-		if (this.isEmpty()) {
+		if(this.isEmpty()) {
 			return null;
 		} else {
 			return this.remove(0);

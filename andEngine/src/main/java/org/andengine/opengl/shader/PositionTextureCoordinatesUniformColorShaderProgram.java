@@ -8,7 +8,7 @@ import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 import android.opengl.GLES20;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 15:00:46 - 13.02.2012
@@ -33,7 +33,7 @@ public class PositionTextureCoordinatesUniformColorShaderProgram extends ShaderP
 	public static final String FRAGMENTSHADER =
 			"precision lowp float;\n" +
 			"uniform sampler2D " + ShaderProgramConstants.UNIFORM_TEXTURE_0 + ";\n" +
-			"uniform vec4 " + ShaderProgramConstants.UNIFORM_COLOR + ";\n" +
+			"uniform vec4 " + ShaderProgramConstants.UNIFORM_COLOR + ";\n" +	
 			"varying mediump vec2 " + ShaderProgramConstants.VARYING_TEXTURECOORDINATES + ";\n" +
 			"void main() {\n" +
 			"	gl_FragColor = " + ShaderProgramConstants.UNIFORM_COLOR + " * texture2D(" + ShaderProgramConstants.UNIFORM_TEXTURE_0 + ", " + ShaderProgramConstants.VARYING_TEXTURECOORDINATES + ");\n" +
@@ -56,7 +56,7 @@ public class PositionTextureCoordinatesUniformColorShaderProgram extends ShaderP
 	}
 
 	public static PositionTextureCoordinatesUniformColorShaderProgram getInstance() {
-		if (PositionTextureCoordinatesUniformColorShaderProgram.INSTANCE == null) {
+		if(PositionTextureCoordinatesUniformColorShaderProgram.INSTANCE == null) {
 			PositionTextureCoordinatesUniformColorShaderProgram.INSTANCE = new PositionTextureCoordinatesUniformColorShaderProgram();
 		}
 		return PositionTextureCoordinatesUniformColorShaderProgram.INSTANCE;
@@ -95,7 +95,7 @@ public class PositionTextureCoordinatesUniformColorShaderProgram extends ShaderP
 	@Override
 	public void unbind(final GLState pGLState) {
 		GLES20.glEnableVertexAttribArray(ShaderProgramConstants.ATTRIBUTE_COLOR_LOCATION);
-
+		
 		super.unbind(pGLState);
 	}
 

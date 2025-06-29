@@ -4,9 +4,9 @@ import org.andengine.util.modifier.ease.EaseLinear;
 import org.andengine.util.modifier.ease.IEaseFunction;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 23:29:22 - 19.03.2010
  */
@@ -90,10 +90,10 @@ public abstract class BaseSingleValueSpanModifier<T> extends BaseDurationModifie
 	// ===========================================================
 	// Methods
 	// ===========================================================
-
+	
 	public void reset(final float pDuration, final float pFromValue, final float pToValue) {
 		super.reset();
-
+		
 		this.mDuration = pDuration;
 		this.mFromValue = pFromValue;
 		this.mValueSpan = pToValue - pFromValue;

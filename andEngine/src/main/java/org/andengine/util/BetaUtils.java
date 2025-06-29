@@ -14,13 +14,13 @@ import android.content.SharedPreferences;
 
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 22:43:32 - 02.11.2010
  */
-public final class BetaUtils {
+public class BetaUtils {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -34,10 +34,6 @@ public final class BetaUtils {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
-	private BetaUtils() {
-
-	}
 
 	// ===========================================================
 	// Getter & Setter
@@ -65,16 +61,16 @@ public final class BetaUtils {
 		final GregorianCalendar lastuseDate = new GregorianCalendar();
 		lastuseDate.setTimeInMillis(lastuse);
 
-		if (lastuseDate.after(pExpirationDate)) {
+		if(lastuseDate.after(pExpirationDate)){
 			final Builder alertDialogBuilder = new AlertDialog.Builder(pActivity)
 			.setTitle(pTitleResourceID)
 			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setMessage(pMessageResourceID);
 
-			alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
 				@Override
 				public void onClick(final DialogInterface pDialog, final int pWhich) {
-					if (pOkIntent != null) {
+					if(pOkIntent != null) {
 						pActivity.startActivity(pOkIntent);
 					}
 					pActivity.finish();
@@ -83,7 +79,7 @@ public final class BetaUtils {
 			alertDialogBuilder.setNegativeButton(android.R.string.cancel, new OnClickListener() {
 				@Override
 				public void onClick(final DialogInterface pDialog, final int pWhich) {
-					if (pCancelIntent != null) {
+					if(pCancelIntent != null) {
 						pActivity.startActivity(pCancelIntent);
 					}
 					pActivity.finish();
@@ -91,7 +87,7 @@ public final class BetaUtils {
 			})
 			.create().show();
 			return true;
-		} else {
+		}else{
 			return false;
 		}
 	}

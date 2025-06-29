@@ -6,7 +6,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:17:17 - 03.05.2012
@@ -33,8 +33,8 @@ public class AnimationPackTiledTextureRegion extends TiledTextureRegion {
 		this.mAnimationName = pAnimationName;
 		final int frameCount = pFrameDurations.length;
 
-		final int[] frames = new int[frameCount];
-		for (int i = 0; i < frameCount; i++) {
+		final int[] frames= new int[frameCount];
+		for(int i = 0; i < frameCount; i++) {
 			frames[i] = i;
 		}
 

@@ -9,9 +9,9 @@ import android.graphics.RadialGradient;
 import android.graphics.Shader.TileMode;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 19:21:24 - 05.11.2010
  */
@@ -19,8 +19,8 @@ public class RadialGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 	// ===========================================================
 	// Constants
 	// ===========================================================
-
-	private static final float[] POSITIONS_DEFAULT = new float[] { 0.0f, 1.0f };
+	
+	private static final float[] POSITIONS_DEFAULT = new float[] { 0.0f, 1.0f }; 
 
 	// ===========================================================
 	// Fields
@@ -42,7 +42,7 @@ public class RadialGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 		this(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, new int[] { pFromColor, pToColor }, POSITIONS_DEFAULT, pRadialGradientDirection, pTextureAtlasSourceDecoratorOptions);
 	}
 
-	public RadialGradientFillBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape, final int[] pColors, final float[] pPositions, final RadialGradientDirection pRadialGradientDirection) {
+	public RadialGradientFillBitmapTextureAtlasSourceDecorator(final IBitmapTextureAtlasSource pBitmapTextureAtlasSource, final IBitmapTextureAtlasSourceDecoratorShape pBitmapTextureAtlasSourceDecoratorShape,  final int[] pColors, final float[] pPositions, final RadialGradientDirection pRadialGradientDirection) {
 		this(pBitmapTextureAtlasSource, pBitmapTextureAtlasSourceDecoratorShape, pColors, pPositions, pRadialGradientDirection, null);
 	}
 
@@ -62,7 +62,7 @@ public class RadialGradientFillBitmapTextureAtlasSourceDecorator extends BaseSha
 
 		final float radius = Math.max(centerX, centerY);
 
-		switch (pRadialGradientDirection) {
+		switch(pRadialGradientDirection) {
 			case INSIDE_OUT:
 				this.mPaint.setShader(new RadialGradient(centerX, centerY, radius, pColors, pPositions, TileMode.CLAMP));
 				break;

@@ -1,7 +1,7 @@
 package org.andengine.util.exception;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:05:09 - 19.03.2012
@@ -60,7 +60,6 @@ public class DeviceNotSupportedException extends AndEngineException {
 		// Elements
 		// ===========================================================
 
-		GLES2_UNSUPPORTED,
 		CODEPATH_INCOMPLETE,
 		EGLCONFIG_NOT_FOUND;
 

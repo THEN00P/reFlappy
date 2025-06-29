@@ -4,9 +4,9 @@ import org.andengine.entity.scene.background.IBackground;
 import org.andengine.util.modifier.SequenceModifier;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 15:04:02 - 03.09.2010
  */
@@ -26,7 +26,7 @@ public class SequenceBackgroundModifier extends SequenceModifier<IBackground> im
 	public SequenceBackgroundModifier(final IBackgroundModifier... pBackgroundModifiers) throws IllegalArgumentException {
 		super(pBackgroundModifiers);
 	}
-
+	
 	public SequenceBackgroundModifier(final ISubSequenceBackgroundModifierListener pSubSequenceBackgroundModifierListener, final IBackgroundModifier... pBackgroundModifiers) throws IllegalArgumentException {
 		super(pSubSequenceBackgroundModifierListener, pBackgroundModifiers);
 	}

@@ -8,11 +8,11 @@ import android.content.pm.PackageManager;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 16:00:38 - 14.07.2010
  */
-public final class MultiTouch {
+public class MultiTouch {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -21,16 +21,12 @@ public final class MultiTouch {
 	// Fields
 	// ===========================================================
 
-	private static Boolean sSupported;
-	private static Boolean sSupportedDistinct;
+	private static Boolean SUPPORTED = null;
+	private static Boolean SUPPORTED_DISTINCT = null;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
-	private MultiTouch() {
-
-	}
 
 	// ===========================================================
 	// Getter & Setter
@@ -45,19 +41,19 @@ public final class MultiTouch {
 	// ===========================================================
 
 	public static boolean isSupported(final Context pContext) {
-		if (MultiTouch.sSupported == null) {
-			MultiTouch.sSupported = SystemUtils.hasSystemFeature(pContext, PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH, false);
+		if(MultiTouch.SUPPORTED == null) {
+			MultiTouch.SUPPORTED = SystemUtils.hasSystemFeature(pContext, PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH);
 		}
 
-		return MultiTouch.sSupported;
+		return MultiTouch.SUPPORTED;
 	}
 
 	public static boolean isSupportedDistinct(final Context pContext) {
-		if (MultiTouch.sSupportedDistinct == null) {
-			MultiTouch.sSupportedDistinct = SystemUtils.hasSystemFeature(pContext, PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT, false);
+		if(MultiTouch.SUPPORTED_DISTINCT == null) {
+			MultiTouch.SUPPORTED_DISTINCT = SystemUtils.hasSystemFeature(pContext, PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT);
 		}
 
-		return MultiTouch.sSupportedDistinct;
+		return MultiTouch.SUPPORTED_DISTINCT;
 	}
 
 	// ===========================================================

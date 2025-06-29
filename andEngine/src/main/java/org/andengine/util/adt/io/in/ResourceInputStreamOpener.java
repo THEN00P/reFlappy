@@ -6,7 +6,7 @@ import java.io.InputStream;
 import android.content.res.Resources;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 12:07:14 - 02.03.2012

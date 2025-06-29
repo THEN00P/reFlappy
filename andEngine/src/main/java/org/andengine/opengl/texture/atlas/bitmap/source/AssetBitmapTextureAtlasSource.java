@@ -4,22 +4,18 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.andengine.opengl.texture.atlas.source.BaseTextureAtlasSource;
-import org.andengine.util.BitmapUtils;
 import org.andengine.util.StreamUtils;
 import org.andengine.util.debug.Debug;
-import org.andengine.util.system.SystemUtils;
 
-import android.annotation.TargetApi;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:07:52 - 09.03.2010
  */
@@ -82,31 +78,13 @@ public class AssetBitmapTextureAtlasSource extends BaseTextureAtlasSource implem
 
 	@Override
 	public Bitmap onLoadBitmap(final Config pBitmapConfig) {
-		return this.onLoadBitmap(pBitmapConfig, false);
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	@Override
-	public Bitmap onLoadBitmap(final Config pBitmapConfig, final boolean pMutable) {
 		InputStream in = null;
 		try {
 			final BitmapFactory.Options decodeOptions = new BitmapFactory.Options();
 			decodeOptions.inPreferredConfig = pBitmapConfig;
-			decodeOptions.inDither = false;
-
-			if (pMutable && SystemUtils.isAndroidVersionOrHigher(Build.VERSION_CODES.HONEYCOMB)) {
-				decodeOptions.inMutable = pMutable;
-			}
 
 			in = this.mAssetManager.open(this.mAssetPath);
-
-			final Bitmap bitmap = BitmapFactory.decodeStream(in, null, decodeOptions);
-
-			if (pMutable) {
-				return BitmapUtils.ensureBitmapIsMutable(bitmap);
-			} else {
-				return bitmap;
-			}
+			return BitmapFactory.decodeStream(in, null, decodeOptions);
 		} catch (final IOException e) {
 			Debug.e("Failed loading Bitmap in " + this.getClass().getSimpleName() + ". AssetPath: " + this.mAssetPath, e);
 			return null;

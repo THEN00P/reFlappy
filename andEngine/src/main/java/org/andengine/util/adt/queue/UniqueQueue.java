@@ -3,12 +3,12 @@ package org.andengine.util.adt.queue;
 import org.andengine.util.adt.list.UniqueList;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:17:33 PM - 03.022012
  */
-public class UniqueQueue<T extends Comparable<T>> extends UniqueList<T> implements IUniqueQueue<T> {
+public class UniqueQueue<T extends Comparable<T>> extends UniqueList<T> implements IUniqueQueue<T>{
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -35,7 +35,7 @@ public class UniqueQueue<T extends Comparable<T>> extends UniqueList<T> implemen
 
 	@Override
 	public T peek() {
-		if (this.isEmpty()) {
+		if(this.isEmpty()) {
 			return null;
 		} else {
 			return this.get(0);
@@ -44,7 +44,7 @@ public class UniqueQueue<T extends Comparable<T>> extends UniqueList<T> implemen
 
 	@Override
 	public T poll() {
-		if (this.isEmpty()) {
+		if(this.isEmpty()) {
 			return null;
 		} else {
 			return this.remove(0);

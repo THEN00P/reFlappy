@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import org.andengine.engine.handler.IUpdateHandler;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 10:24:39 - 18.06.2010
  */
@@ -38,10 +38,9 @@ public class RunnableHandler implements IUpdateHandler {
 	public synchronized void onUpdate(final float pSecondsElapsed) {
 		final ArrayList<Runnable> runnables = this.mRunnables;
 		final int runnableCount = runnables.size();
-		for (int i = runnableCount - 1; i >= 0; i--) {
-			runnables.get(i).run();
+		for(int i = runnableCount - 1; i >= 0; i--) {
+			runnables.remove(i).run();
 		}
-		runnables.clear();
 	}
 
 	@Override

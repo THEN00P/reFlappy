@@ -6,7 +6,7 @@ import org.andengine.util.modifier.IModifier.IModifierListener;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 11:18:37 - 03.09.2010
  * @param <T>
@@ -44,7 +44,7 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 	}
 
 	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount) {
-		this(pModifier, pLoopCount, null, (IModifierListener<T>) null);
+		this(pModifier, pLoopCount, null, (IModifierListener<T>)null);
 	}
 
 	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final IModifierListener<T> pModifierListener) {
@@ -52,13 +52,13 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 	}
 
 	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final ILoopModifierListener<T> pLoopModifierListener) {
-		this(pModifier, pLoopCount, pLoopModifierListener, (IModifierListener<T>) null);
+		this(pModifier, pLoopCount, pLoopModifierListener, (IModifierListener<T>)null);
 	}
 
 	public LoopModifier(final IModifier<T> pModifier, final int pLoopCount, final ILoopModifierListener<T> pLoopModifierListener, final IModifierListener<T> pModifierListener) {
 		super(pModifierListener);
 
-		this.assertNoNullModifier(pModifier);
+		BaseModifier.assertNoNullModifier(pModifier);
 
 		this.mModifier = pModifier;
 		this.mLoopCount = pLoopCount;
@@ -107,13 +107,13 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 
 	@Override
 	public float onUpdate(final float pSecondsElapsed, final T pItem) {
-		if (this.mFinished) {
+		if(this.mFinished){
 			return 0;
 		} else {
 			float secondsElapsedRemaining = pSecondsElapsed;
 
 			this.mFinishedCached = false;
-			while ((secondsElapsedRemaining > 0) && !this.mFinishedCached) {
+			while((secondsElapsedRemaining > 0) && !this.mFinishedCached) {
 				secondsElapsedRemaining -= this.mModifier.onUpdate(secondsElapsedRemaining, pItem);
 			}
 			this.mFinishedCached = false;
@@ -140,27 +140,27 @@ public class LoopModifier<T> extends BaseModifier<T> implements IModifierListene
 
 	@Override
 	public void onModifierStarted(final IModifier<T> pModifier, final T pItem) {
-		if (!this.mModifierStartedCalled) {
+		if(!this.mModifierStartedCalled) {
 			this.mModifierStartedCalled = true;
 			this.onModifierStarted(pItem);
 		}
-		if (this.mLoopModifierListener != null) {
+		if(this.mLoopModifierListener != null) {
 			this.mLoopModifierListener.onLoopStarted(this, this.mLoop, this.mLoopCount);
 		}
 	}
 
 	@Override
 	public void onModifierFinished(final IModifier<T> pModifier, final T pItem) {
-		if (this.mLoopModifierListener != null) {
+		if(this.mLoopModifierListener != null) {
 			this.mLoopModifierListener.onLoopFinished(this, this.mLoop, this.mLoopCount);
 		}
 
-		if (this.mLoopCount == LoopModifier.LOOP_CONTINUOUS) {
+		if(this.mLoopCount == LoopModifier.LOOP_CONTINUOUS) {
 			this.mSecondsElapsed = 0;
 			this.mModifier.reset();
 		} else {
 			this.mLoop++;
-			if (this.mLoop >= this.mLoopCount) {
+			if(this.mLoop >= this.mLoopCount) {
 				this.mFinished = true;
 				this.mFinishedCached = true;
 				this.onModifierFinished(pItem);

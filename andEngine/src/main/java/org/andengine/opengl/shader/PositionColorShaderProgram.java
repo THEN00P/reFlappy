@@ -8,7 +8,7 @@ import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 import android.opengl.GLES20;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 13:56:44 - 25.08.2011
@@ -52,7 +52,7 @@ public class PositionColorShaderProgram extends ShaderProgram {
 	}
 
 	public static PositionColorShaderProgram getInstance() {
-		if (PositionColorShaderProgram.INSTANCE == null) {
+		if(PositionColorShaderProgram.INSTANCE == null) {
 			PositionColorShaderProgram.INSTANCE = new PositionColorShaderProgram();
 		}
 		return PositionColorShaderProgram.INSTANCE;
@@ -88,7 +88,7 @@ public class PositionColorShaderProgram extends ShaderProgram {
 	@Override
 	public void unbind(final GLState pGLState) {
 		GLES20.glEnableVertexAttribArray(ShaderProgramConstants.ATTRIBUTE_TEXTURECOORDINATES_LOCATION);
-
+		
 		super.unbind(pGLState);
 	}
 

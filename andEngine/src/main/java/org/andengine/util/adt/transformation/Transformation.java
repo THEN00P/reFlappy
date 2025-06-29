@@ -2,12 +2,14 @@ package org.andengine.util.adt.transformation;
 
 import org.andengine.util.math.MathConstants;
 
+import android.util.FloatMath;
+
 
 /**
  * <p>This class is basically a java-space replacement for the native {@link android.graphics.Matrix} class.</p>
- *
+ * 
  * <p>Math taken from <a href="http://www.senocular.com/flash/tutorials/transformmatrix/">senocular.com</a>.</p>
- *
+ * 
  * This class represents an affine transformation with the following matrix:
  * <pre> [ a , b , 0 ]
  * [ c , d , 0 ]
@@ -24,7 +26,7 @@ import org.andengine.util.math.MathConstants;
  *
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 15:47:18 - 23.12.2010
  */
@@ -117,8 +119,8 @@ public class Transformation {
 	public final void preRotate(final float pAngle) {
 		final float angleRad = MathConstants.DEG_TO_RAD * pAngle;
 
-		final float sin = (float) Math.sin(angleRad);
-		final float cos = (float) Math.cos(angleRad);
+		final float sin = FloatMath.sin(angleRad);
+		final float cos = FloatMath.cos(angleRad);
 
 		final float a = this.a;
 		final float b = this.b;
@@ -134,8 +136,8 @@ public class Transformation {
 	public final void postRotate(final float pAngle) {
 		final float angleRad = MathConstants.DEG_TO_RAD * pAngle;
 
-		final float sin = (float) Math.sin(angleRad);
-		final float cos = (float) Math.cos(angleRad);
+		final float sin = FloatMath.sin(angleRad);
+		final float cos = FloatMath.cos(angleRad);
 
 		final float a = this.a;
 		final float b = this.b;
@@ -155,8 +157,8 @@ public class Transformation {
 	public final Transformation setToRotate(final float pAngle) {
 		final float angleRad = MathConstants.DEG_TO_RAD * pAngle;
 
-		final float sin = (float) Math.sin(angleRad);
-		final float cos = (float) Math.cos(angleRad);
+		final float sin = FloatMath.sin(angleRad);
+		final float cos = FloatMath.cos(angleRad);
 
 		this.a = cos;
 		this.b = sin;
@@ -288,7 +290,7 @@ public class Transformation {
 		int count = pVertices.length >> 1;
 		int i = 0;
 		int j = 0;
-		while (--count >= 0) {
+		while(--count >= 0) {
 			final float x = pVertices[i++];
 			final float y = pVertices[i++];
 			pVertices[j++] = x * this.a + y * this.c + this.tx;

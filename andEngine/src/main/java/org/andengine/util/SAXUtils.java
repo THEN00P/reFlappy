@@ -3,9 +3,9 @@ package org.andengine.util;
 import org.xml.sax.Attributes;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 22:02:09 - 21.07.2010
  */
@@ -22,10 +22,6 @@ public final class SAXUtils {
 	// Constructors
 	// ===========================================================
 
-	private SAXUtils() {
-
-	}
-
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
@@ -38,18 +34,6 @@ public final class SAXUtils {
 	// Methods
 	// ===========================================================
 
-	public static final boolean hasAttribute(final Attributes pAttributes, final String pAttributeName) {
-		final String value = pAttributes.getValue("", pAttributeName);
-		return value != null;
-	}
-
-	public static final void hasAttributeOrThrow(final Attributes pAttributes, final String pAttributeName) throws IllegalArgumentException {
-		final String value = pAttributes.getValue("", pAttributeName);
-		if (value == null) {
-			throw new IllegalArgumentException("No value found for attribute: '" + pAttributeName + "'");
-		}
-	}
-
 	public static final String getAttribute(final Attributes pAttributes, final String pAttributeName, final String pDefaultValue) {
 		final String value = pAttributes.getValue("", pAttributeName);
 		return (value != null) ? value : pDefaultValue;
@@ -57,7 +41,7 @@ public final class SAXUtils {
 
 	public static final String getAttributeOrThrow(final Attributes pAttributes, final String pAttributeName) {
 		final String value = pAttributes.getValue("", pAttributeName);
-		if (value != null) {
+		if(value != null) {
 			return value;
 		} else {
 			throw new IllegalArgumentException("No value found for attribute: '" + pAttributeName + "'");

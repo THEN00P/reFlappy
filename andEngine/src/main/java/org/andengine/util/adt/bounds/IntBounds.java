@@ -3,7 +3,7 @@ package org.andengine.util.adt.bounds;
 import org.andengine.util.adt.spatial.bounds.util.IntBoundsUtils;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 21:45:04 - 11.11.2011
@@ -25,7 +25,7 @@ public class IntBounds implements IIntBounds {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
+	
 	public IntBounds(final int pX, final int pY) {
 		this.set(pX, pY);
 	}
@@ -42,7 +42,7 @@ public class IntBounds implements IIntBounds {
 	public int getXMin() {
 		return this.mXMin;
 	}
-
+	
 	@Override
 	public int getYMin() {
 		return this.mYMin;
@@ -68,10 +68,10 @@ public class IntBounds implements IIntBounds {
 		this.mXMax = pXMax;
 		this.mYMax = pYMax;
 
-		if (pXMin > pXMax) {
+		if(pXMin > pXMax) {
 			throw new IllegalArgumentException("pXMin: '" + pXMin + "' must be smaller or equal to pXMax: '" + pXMax + "'.");
 		}
-		if (pYMin > pYMax) {
+		if(pYMin > pYMax) {
 			throw new IllegalArgumentException("pYMin: '" + pYMin + "' must be smaller or equal to pYMax: '" + pYMax + "'.");
 		}
 	}

@@ -1,12 +1,12 @@
 package org.andengine.entity.scene.menu.item.decorator;
 
 import org.andengine.entity.scene.menu.item.IMenuItem;
-import org.andengine.util.adt.color.Color;
+import org.andengine.util.color.Color;
 
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 14:25:35 - 07.07.2010
  */

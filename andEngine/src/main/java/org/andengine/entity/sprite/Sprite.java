@@ -1,7 +1,7 @@
 package org.andengine.entity.sprite;
 
 import org.andengine.engine.camera.Camera;
-import org.andengine.entity.shape.Shape;
+import org.andengine.entity.shape.RectangularShape;
 import org.andengine.entity.sprite.vbo.HighPerformanceSpriteVertexBufferObject;
 import org.andengine.entity.sprite.vbo.ISpriteVertexBufferObject;
 import org.andengine.opengl.shader.PositionColorTextureCoordinatesShaderProgram;
@@ -19,11 +19,11 @@ import android.opengl.GLES20;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 19:22:38 - 09.03.2010
  */
-public class Sprite extends Shape {
+public class Sprite extends RectangularShape {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -103,16 +103,15 @@ public class Sprite extends Shape {
 	}
 
 	public Sprite(final float pX, final float pY, final float pWidth, final float pHeight, final ITextureRegion pTextureRegion, final ISpriteVertexBufferObject pSpriteVertexBufferObject, final ShaderProgram pShaderProgram) {
-		super(pX, pY, pShaderProgram);
-
+		super(pX, pY, pWidth, pHeight, pShaderProgram);
+		
 		this.mTextureRegion = pTextureRegion;
 		this.mSpriteVertexBufferObject = pSpriteVertexBufferObject;
 
 		this.setBlendingEnabled(true);
 		this.initBlendFunction(pTextureRegion);
-
-		this.setSize(pWidth, pHeight);
-
+		
+		this.onUpdateVertices();
 		this.onUpdateColor();
 		this.onUpdateTextureCoordinates();
 	}
@@ -130,7 +129,7 @@ public class Sprite extends Shape {
 	}
 
 	public void setFlippedHorizontal(final boolean pFlippedHorizontal) {
-		if (this.mFlippedHorizontal != pFlippedHorizontal) {
+		if(this.mFlippedHorizontal != pFlippedHorizontal) {
 			this.mFlippedHorizontal = pFlippedHorizontal;
 
 			this.onUpdateTextureCoordinates();
@@ -142,7 +141,7 @@ public class Sprite extends Shape {
 	}
 
 	public void setFlippedVertical(final boolean pFlippedVertical) {
-		if (this.mFlippedVertical != pFlippedVertical) {
+		if(this.mFlippedVertical != pFlippedVertical) {
 			this.mFlippedVertical = pFlippedVertical;
 
 			this.onUpdateTextureCoordinates();
@@ -150,7 +149,7 @@ public class Sprite extends Shape {
 	}
 
 	public void setFlipped(final boolean pFlippedHorizontal, final boolean pFlippedVertical) {
-		if ((this.mFlippedHorizontal != pFlippedHorizontal) || (this.mFlippedVertical != pFlippedVertical)) {
+		if((this.mFlippedHorizontal != pFlippedHorizontal) || (this.mFlippedVertical != pFlippedVertical)) {
 			this.mFlippedHorizontal = pFlippedHorizontal;
 			this.mFlippedVertical = pFlippedVertical;
 

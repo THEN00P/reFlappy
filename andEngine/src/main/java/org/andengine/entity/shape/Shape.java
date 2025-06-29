@@ -2,6 +2,7 @@ package org.andengine.entity.shape;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.Entity;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.shader.ShaderProgram;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
@@ -13,7 +14,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 11:51:27 - 13.03.2010
  */
@@ -29,7 +30,7 @@ public abstract class Shape extends Entity implements IShape {
 	protected int mBlendFunctionSource = IShape.BLENDFUNCTION_SOURCE_DEFAULT;
 	protected int mBlendFunctionDestination = IShape.BLENDFUNCTION_DESTINATION_DEFAULT;
 
-	protected boolean mBlendingEnabled;
+	protected boolean mBlendingEnabled = false;
 
 	protected ShaderProgram mShaderProgram;
 
@@ -39,12 +40,6 @@ public abstract class Shape extends Entity implements IShape {
 
 	public Shape(final float pX, final float pY, final ShaderProgram pShaderProgram) {
 		super(pX, pY);
-
-		this.mShaderProgram = pShaderProgram;
-	}
-
-	public Shape(final float pX, final float pY, final float pWidth, final float pHeight, final ShaderProgram pShaderProgram) {
-		super(pX, pY, pWidth, pHeight);
 
 		this.mShaderProgram = pShaderProgram;
 	}
@@ -112,7 +107,7 @@ public abstract class Shape extends Entity implements IShape {
 
 	@Override
 	protected void preDraw(final GLState pGLState, final Camera pCamera) {
-		if (this.mBlendingEnabled) {
+		if(this.mBlendingEnabled) {
 			pGLState.enableBlend();
 			pGLState.blendFunction(this.mBlendFunctionSource, this.mBlendFunctionDestination);
 		}
@@ -120,30 +115,14 @@ public abstract class Shape extends Entity implements IShape {
 
 	@Override
 	protected void postDraw(final GLState pGLState, final Camera pCamera) {
-		if (this.mBlendingEnabled) {
+		if(this.mBlendingEnabled) {
 			pGLState.disableBlend();
 		}
 	}
 
 	@Override
-	public void setWidth(final float pWidth) {
-		super.setWidth(pWidth);
-
-		this.onUpdateVertices();
-	}
-
-	@Override
-	public void setHeight(final float pHeight) {
-		super.setHeight(pHeight);
-
-		this.onUpdateVertices();
-	}
-
-	@Override
-	public void setSize(final float pWidth, final float pHeight) {
-		super.setSize(pWidth, pHeight);
-
-		this.onUpdateVertices();
+	public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+		return false;
 	}
 
 	@Override
@@ -159,7 +138,7 @@ public abstract class Shape extends Entity implements IShape {
 		super.dispose();
 
 		final IVertexBufferObject vertexBufferObject = this.getVertexBufferObject();
-		if ((vertexBufferObject != null) && vertexBufferObject.isAutoDispose() && !vertexBufferObject.isDisposed()) {
+		if((vertexBufferObject != null) && vertexBufferObject.isAutoDispose() && !vertexBufferObject.isDisposed()) {
 			vertexBufferObject.dispose();
 		}
 	}
@@ -177,7 +156,7 @@ public abstract class Shape extends Entity implements IShape {
 	}
 
 	protected void initBlendFunction(final TextureOptions pTextureOptions) {
-		if (pTextureOptions.mPreMultiplyAlpha) {
+		if(pTextureOptions.mPreMultiplyAlpha) {
 			this.setBlendFunction(IShape.BLENDFUNCTION_SOURCE_PREMULTIPLYALPHA_DEFAULT, IShape.BLENDFUNCTION_DESTINATION_PREMULTIPLYALPHA_DEFAULT);
 		}
 	}

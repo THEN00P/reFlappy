@@ -7,7 +7,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 18:46:51 - 28.03.2012
@@ -47,7 +47,7 @@ public class HighPerformanceMeshVertexBufferObject extends HighPerformanceVertex
 
 		final float packedColor = pMesh.getColor().getABGRPackedFloat();
 
-		for (int i = 0; i < this.mVertexCount; i++) {
+		for(int i = 0; i < this.mVertexCount; i++) {
 			bufferData[(i * Mesh.VERTEX_SIZE) + Mesh.COLOR_INDEX] = packedColor;
 		}
 

@@ -9,7 +9,7 @@ import android.opengl.GLES20;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 15:01:03 - 11.07.2011
  */
@@ -56,17 +56,12 @@ public interface ITexture {
 
 	public void bind(final GLState pGLState);
 	/**
-	 * @param pGLActiveTexture from {@link GLES20#GL_TEXTURE0} to {@link GLES20#GL_TEXTURE31}.
+	 * @param pGLActiveTexture from {@link GLES20#GL_TEXTURE0} to {@link GLES20#GL_TEXTURE31}. 
 	 */
 	public void bind(final GLState pGLState, final int pGLActiveTexture);
 
 	public PixelFormat getPixelFormat();
 	public TextureOptions getTextureOptions();
-
-	/**
-	 * @return in kiloBytes.
-	 */
-	public int getTextureMemorySize();
 
 	public boolean hasTextureStateListener();
 	public ITextureStateListener getTextureStateListener();

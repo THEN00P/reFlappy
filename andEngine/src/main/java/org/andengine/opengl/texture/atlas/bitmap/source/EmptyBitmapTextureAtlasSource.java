@@ -7,9 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 20:20:36 - 08.08.2010
  */
@@ -25,7 +25,7 @@ public class EmptyBitmapTextureAtlasSource extends BaseTextureAtlasSource implem
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
+	
 	public EmptyBitmapTextureAtlasSource(final int pTextureWidth, final int pTextureHeight) {
 		this(0, 0, pTextureWidth, pTextureHeight);
 	}
@@ -49,11 +49,6 @@ public class EmptyBitmapTextureAtlasSource extends BaseTextureAtlasSource implem
 
 	@Override
 	public Bitmap onLoadBitmap(final Config pBitmapConfig) {
-		return this.onLoadBitmap(pBitmapConfig, false);
-	}
-
-	@Override
-	public Bitmap onLoadBitmap(final Config pBitmapConfig, final boolean pMutable) {
 		return Bitmap.createBitmap(this.mTextureWidth, this.mTextureHeight, pBitmapConfig);
 	}
 

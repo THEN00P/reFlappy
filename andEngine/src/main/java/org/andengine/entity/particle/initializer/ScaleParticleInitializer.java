@@ -5,7 +5,7 @@ import org.andengine.entity.particle.Particle;
 
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 10:03:29 - 19.11.2011

@@ -4,9 +4,9 @@ import org.andengine.util.adt.list.SmartList;
 
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 10:47:23 - 03.09.2010
  * @param <T>
@@ -61,14 +61,14 @@ public abstract class BaseModifier<T> implements IModifier<T> {
 
 	@Override
 	public void addModifierListener(final IModifierListener<T> pModifierListener) {
-		if (pModifierListener != null) {
+		if(pModifierListener != null) {
 			this.mModifierListeners.add(pModifierListener);
 		}
 	}
 
 	@Override
 	public boolean removeModifierListener(final IModifierListener<T> pModifierListener) {
-		if (pModifierListener == null) {
+		if(pModifierListener == null) {
 			return false;
 		} else {
 			return this.mModifierListeners.remove(pModifierListener);
@@ -85,7 +85,7 @@ public abstract class BaseModifier<T> implements IModifier<T> {
 	protected void onModifierStarted(final T pItem) {
 		final SmartList<IModifierListener<T>> modifierListeners = this.mModifierListeners;
 		final int modifierListenerCount = modifierListeners.size();
-		for (int i = modifierListenerCount - 1; i >= 0; i--) {
+		for(int i = modifierListenerCount - 1; i >= 0; i--) {
 			modifierListeners.get(i).onModifierStarted(this, pItem);
 		}
 	}
@@ -93,21 +93,21 @@ public abstract class BaseModifier<T> implements IModifier<T> {
 	protected void onModifierFinished(final T pItem) {
 		final SmartList<IModifierListener<T>> modifierListeners = this.mModifierListeners;
 		final int modifierListenerCount = modifierListeners.size();
-		for (int i = modifierListenerCount - 1; i >= 0; i--) {
+		for(int i = modifierListenerCount - 1; i >= 0; i--) {
 			modifierListeners.get(i).onModifierFinished(this, pItem);
 		}
 	}
 
-	protected final void assertNoNullModifier(final IModifier<T> pModifier) {
-		if (pModifier == null) {
+	protected static final <T> void assertNoNullModifier(final IModifier<T> pModifier) {
+		if(pModifier == null) {
 			throw new IllegalArgumentException("Illegal 'null' " + IModifier.class.getSimpleName() + " detected!");
 		}
 	}
 
-	protected final void assertNoNullModifier(final IModifier<T> ... pModifiers) {
+	protected static final <T> void assertNoNullModifier(final IModifier<T> ... pModifiers) {
 		final int modifierCount = pModifiers.length;
-		for (int i = 0; i < modifierCount; i++) {
-			if (pModifiers[i] == null) {
+		for(int i = 0; i < modifierCount; i++) {
+			if(pModifiers[i] == null) {
 				throw new IllegalArgumentException("Illegal 'null' " + IModifier.class.getSimpleName() + " detected at position: '" + i + "'!");
 			}
 		}

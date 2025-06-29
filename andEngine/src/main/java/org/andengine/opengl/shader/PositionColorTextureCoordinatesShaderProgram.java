@@ -8,7 +8,7 @@ import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 import android.opengl.GLES20;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 13:56:44 - 25.08.2011
@@ -58,7 +58,7 @@ public class PositionColorTextureCoordinatesShaderProgram extends ShaderProgram 
 	}
 
 	public static PositionColorTextureCoordinatesShaderProgram getInstance() {
-		if (PositionColorTextureCoordinatesShaderProgram.INSTANCE == null) {
+		if(PositionColorTextureCoordinatesShaderProgram.INSTANCE == null) {
 			PositionColorTextureCoordinatesShaderProgram.INSTANCE = new PositionColorTextureCoordinatesShaderProgram();
 		}
 		return PositionColorTextureCoordinatesShaderProgram.INSTANCE;

@@ -4,12 +4,12 @@ import org.andengine.util.debug.Debug;
 import org.andengine.util.debug.Debug.DebugLevel;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 12:23:06 - 19.01.2012
  */
-public final class ThreadUtils {
+public class ThreadUtils {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -23,10 +23,6 @@ public final class ThreadUtils {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
-	private ThreadUtils() {
-
-	}
 
 	// ===========================================================
 	// Getter & Setter

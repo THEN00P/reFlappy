@@ -2,10 +2,12 @@ package org.andengine.util.algorithm.path.astar;
 
 import org.andengine.util.algorithm.path.IPathFinderMap;
 
+import android.util.FloatMath;
+
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 22:58:01 - 16.08.2010
  */
@@ -35,7 +37,7 @@ public class EuclideanHeuristic<T> implements IAStarHeuristic<T> {
 		final float dX = pToX - pFromX;
 		final float dY = pToY - pFromY;
 
-		return (float) Math.sqrt(dX * dX + dY * dY);
+		return FloatMath.sqrt(dX * dX + dY * dY);
 	}
 
 	// ===========================================================

@@ -1,12 +1,12 @@
 package org.andengine.util.adt.pool;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Valentin Milea
  * @author Nicolas Gramlich
- *
+ * 
  * @since 23:02:47 - 21.08.2010
  */
 public abstract class PoolItem {
@@ -58,7 +58,7 @@ public abstract class PoolItem {
 	}
 
 	public void recycle() {
-		if (this.mParent == null) {
+		if(this.mParent == null) {
 			throw new IllegalStateException("Item already recycled!");
 		}
 

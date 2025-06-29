@@ -10,11 +10,10 @@ import org.andengine.opengl.vbo.DrawType;
 import org.andengine.opengl.vbo.LowMemoryVertexBufferObject;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
-import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.list.IFloatList;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 12:38:22 - 29.03.2012
@@ -52,7 +51,7 @@ public class LowMemoryTextVertexBufferObject extends LowMemoryVertexBufferObject
 
 		int bufferDataOffset = 0;
 		final int charactersMaximum = pText.getCharactersMaximum();
-		for (int i = 0; i < charactersMaximum; i++) {
+		for(int i = 0; i < charactersMaximum; i++) {
 			bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
 			bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
 			bufferData.put(bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.COLOR_INDEX, packedColor);
@@ -70,13 +69,11 @@ public class LowMemoryTextVertexBufferObject extends LowMemoryVertexBufferObject
 	public void onUpdateVertices(final Text pText) {
 		final FloatBuffer bufferData = this.mFloatBuffer;
 
+		// TODO Optimize with field access?
 		final IFont font = pText.getFont();
-		final HorizontalAlign horizontalAlign = pText.getHorizontalAlign();
 		final ArrayList<CharSequence> lines = pText.getLines();
 		final float lineHeight = font.getLineHeight();
 		final IFloatList lineWidths = pText.getLineWidths();
-		final float leading = pText.getLeading();
-		final float ascent = font.getAscent();
 
 		final float lineAlignmentWidth = pText.getLineAlignmentWidth();
 
@@ -84,39 +81,39 @@ public class LowMemoryTextVertexBufferObject extends LowMemoryVertexBufferObject
 		int bufferDataOffset = 0;
 
 		final int lineCount = lines.size();
-		for (int row = 0; row < lineCount; row++) {
-			final CharSequence line = lines.get(row);
+		for (int i = 0; i < lineCount; i++) {
+			final CharSequence line = lines.get(i);
 
 			float xBase;
 
-			switch (horizontalAlign) {
+			switch(pText.getHorizontalAlign()) {
 				case RIGHT:
-					xBase = lineAlignmentWidth - lineWidths.get(row);
+					xBase = lineAlignmentWidth - lineWidths.get(i);
 					break;
 				case CENTER:
-					xBase = (lineAlignmentWidth - lineWidths.get(row)) * 0.5f;
+					xBase = (lineAlignmentWidth - lineWidths.get(i)) * 0.5f;
 					break;
 				case LEFT:
 				default:
 					xBase = 0;
 			}
 
-			final float yBase = (lineCount - row) * lineHeight + ((lineCount - row - 1) * leading) + ascent;
+			final float yBase = i * (lineHeight + pText.getLeading());
 
 			final int lineLength = line.length();
 			Letter previousLetter = null;
-			for (int i = 0; i < lineLength; i++) {
-				final Letter letter = font.getLetter(line.charAt(i));
-				if (previousLetter != null) {
+			for(int j = 0; j < lineLength; j++) {
+				final Letter letter = font.getLetter(line.charAt(j));
+				if(previousLetter != null) {
 					xBase += previousLetter.getKerning(letter.mCharacter);
 				}
 
-				if (!letter.isWhitespace()) {
+				if(!letter.isWhitespace()) {
 					final float x = xBase + letter.mOffsetX;
-					final float y = yBase - letter.mOffsetY;
+					final float y = yBase + letter.mOffsetY;
 
+					final float y2 = y + letter.mHeight;
 					final float x2 = x + letter.mWidth;
-					final float y2 = y - letter.mHeight;
 
 					final float u = letter.mU;
 					final float v = letter.mV;
@@ -124,14 +121,14 @@ public class LowMemoryTextVertexBufferObject extends LowMemoryVertexBufferObject
 					final float v2 = letter.mV2;
 
 					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x);
-					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y2);
+					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y);
 					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u);
-					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v2);
+					bufferData.put(bufferDataOffset + 0 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v);
 
 					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x);
-					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y);
+					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y2);
 					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u);
-					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v);
+					bufferData.put(bufferDataOffset + 1 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v2);
 
 					bufferData.put(bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x2);
 					bufferData.put(bufferDataOffset + 2 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y2);
@@ -143,14 +140,14 @@ public class LowMemoryTextVertexBufferObject extends LowMemoryVertexBufferObject
 					bufferData.put(bufferDataOffset + 3 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u2);
 					bufferData.put(bufferDataOffset + 3 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v2);
 
-					bufferData.put(bufferDataOffset + 4 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x);
+					bufferData.put(bufferDataOffset + 4 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x2);
 					bufferData.put(bufferDataOffset + 4 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y);
-					bufferData.put(bufferDataOffset + 4 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u);
+					bufferData.put(bufferDataOffset + 4 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u2);
 					bufferData.put(bufferDataOffset + 4 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v);
 
-					bufferData.put(bufferDataOffset + 5 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x2);
+					bufferData.put(bufferDataOffset + 5 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_X, x);
 					bufferData.put(bufferDataOffset + 5 * Text.VERTEX_SIZE + Text.VERTEX_INDEX_Y, y);
-					bufferData.put(bufferDataOffset + 5 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u2);
+					bufferData.put(bufferDataOffset + 5 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_U, u);
 					bufferData.put(bufferDataOffset + 5 * Text.VERTEX_SIZE + Text.TEXTURECOORDINATES_INDEX_V, v);
 
 					bufferDataOffset += Text.LETTER_SIZE;

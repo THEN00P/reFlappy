@@ -5,17 +5,18 @@ import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.UpdateHandlerList;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.primitive.Line;
+import org.andengine.entity.shape.RectangularShape;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.Constants;
 import org.andengine.util.adt.transformation.Transformation;
-import org.andengine.util.algorithm.collision.EntityCollisionChecker;
+import org.andengine.util.algorithm.collision.RectangularShapeCollisionChecker;
 import org.andengine.util.math.MathUtils;
 
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 10:24:18 - 25.03.2010
  */
@@ -135,11 +136,11 @@ public class Camera implements IUpdateHandler {
 		return this.mYMax - this.mYMin;
 	}
 
-	public final float getCameraSceneWidth() {
+	public float getWidthRaw() {
 		return this.mXMax - this.mXMin;
 	}
 
-	public final float getCameraSceneHeight() {
+	public float getHeightRaw() {
 		return this.mYMax - this.mYMin;
 	}
 
@@ -171,7 +172,7 @@ public class Camera implements IUpdateHandler {
 
 	public void setHUD(final HUD pHUD) {
 		this.mHUD = pHUD;
-		if (pHUD != null) {
+		if(pHUD != null) {
 			pHUD.setCamera(this);
 		}
 	}
@@ -221,9 +222,9 @@ public class Camera implements IUpdateHandler {
 	}
 
 	public void setSurfaceSize(final int pSurfaceX, final int pSurfaceY, final int pSurfaceWidth, final int pSurfaceHeight) {
-		if (this.mSurfaceHeight == 0 && this.mSurfaceWidth == 0) {
+		if(this.mSurfaceHeight == 0 && this.mSurfaceWidth == 0) {
 			this.onSurfaceSizeInitialized(pSurfaceX, pSurfaceY, pSurfaceWidth, pSurfaceHeight);
-		} else if (this.mSurfaceWidth != pSurfaceWidth || this.mSurfaceHeight != pSurfaceHeight) {
+		} else if(this.mSurfaceWidth != pSurfaceWidth || this.mSurfaceHeight != pSurfaceHeight) {
 			this.onSurfaceSizeChanged(this.mSurfaceX, this.mSurfaceY, this.mSurfaceWidth, this.mSurfaceHeight, pSurfaceX, pSurfaceY, pSurfaceWidth, pSurfaceHeight);
 		}
 	}
@@ -242,11 +243,11 @@ public class Camera implements IUpdateHandler {
 
 	@Override
 	public void onUpdate(final float pSecondsElapsed) {
-		if (this.mUpdateHandlers != null) {
+		if(this.mUpdateHandlers != null) {
 			this.mUpdateHandlers.onUpdate(pSecondsElapsed);
 		}
 
-		if (this.mHUD != null) {
+		if(this.mHUD != null) {
 			this.mHUD.onUpdate(pSecondsElapsed);
 		}
 
@@ -263,69 +264,69 @@ public class Camera implements IUpdateHandler {
 	// ===========================================================
 
 	public void onDrawHUD(final GLState pGLState) {
-		if (this.mHUD != null) {
+		if(this.mHUD != null) {
 			this.mHUD.onDraw(pGLState, this);
 		}
 	}
 
 	public void updateChaseEntity() {
-		if (this.mChaseEntity != null) {
+		if(this.mChaseEntity != null) {
 			final float[] centerCoordinates = this.mChaseEntity.getSceneCenterCoordinates();
 			this.setCenter(centerCoordinates[Constants.VERTEX_INDEX_X], centerCoordinates[Constants.VERTEX_INDEX_Y]);
 		}
 	}
 
 	public boolean isLineVisible(final Line pLine) {
-		return EntityCollisionChecker.isVisible(this, pLine);
+		return RectangularShapeCollisionChecker.isVisible(this, pLine);
 	}
 
-	public boolean isEntityVisible(final IEntity pEntity) {
-		return EntityCollisionChecker.isVisible(this, pEntity);
+	public boolean isRectangularShapeVisible(final RectangularShape pRectangularShape) {
+		return RectangularShapeCollisionChecker.isVisible(this, pRectangularShape);
 	}
 
-	public boolean isEntityVisible(final float pX, final float pY, final float pWidth, final float pHeight, final Transformation pLocalToSceneTransformation) {
-		return EntityCollisionChecker.isVisible(this, pX, pY, pWidth, pHeight, pLocalToSceneTransformation);
+	public boolean isRectangularShapeVisible(final float pX, final float pY, final float pWidth, final float pHeight, final Transformation pLocalToSceneTransformation) {
+		return RectangularShapeCollisionChecker.isVisible(this, pX, pY, pWidth, pHeight, pLocalToSceneTransformation);
 	}
 
 	public void onApplySceneMatrix(final GLState pGLState) {
-		pGLState.orthoProjectionGLMatrixf(this.getXMin(), this.getXMax(), this.getYMin(), this.getYMax(), this.mZNear, this.mZFar);
+		pGLState.orthoProjectionGLMatrixf(this.getXMin(), this.getXMax(), this.getYMax(), this.getYMin(), this.mZNear, this.mZFar);
 
 		final float rotation = this.mRotation;
-		if (rotation != 0) {
-			this.applyRotation(pGLState, this.getCenterX(), this.getCenterY(), rotation);
+		if(rotation != 0) {
+			Camera.applyRotation(pGLState, this.getCenterX(), this.getCenterY(), rotation);
 		}
 	}
 
 	public void onApplySceneBackgroundMatrix(final GLState pGLState) {
-		final float cameraSceneWidth = this.getCameraSceneWidth();
-		final float cameraSceneHeight = this.getCameraSceneHeight();
+		final float widthRaw = this.getWidthRaw();
+		final float heightRaw = this.getHeightRaw();
 
-		pGLState.orthoProjectionGLMatrixf(0, cameraSceneWidth, 0, cameraSceneHeight, this.mZNear, this.mZFar);
+		pGLState.orthoProjectionGLMatrixf(0, widthRaw, heightRaw, 0, this.mZNear, this.mZFar);
 
 		final float rotation = this.mRotation;
-		if (rotation != 0) {
-			this.applyRotation(pGLState, cameraSceneWidth * 0.5f, cameraSceneHeight * 0.5f, rotation);
+		if(rotation != 0) {
+			Camera.applyRotation(pGLState, widthRaw * 0.5f, heightRaw * 0.5f, rotation);
 		}
 	}
 
 	public void onApplyCameraSceneMatrix(final GLState pGLState) {
-		final float cameraSceneWidth = this.getCameraSceneWidth();
-		final float cameraSceneHeight = this.getCameraSceneHeight();
-		pGLState.orthoProjectionGLMatrixf(0, cameraSceneWidth, 0, cameraSceneHeight, this.mZNear, this.mZFar);
+		final float widthRaw = this.getWidthRaw();
+		final float heightRaw = this.getHeightRaw();
+		pGLState.orthoProjectionGLMatrixf(0, widthRaw, heightRaw, 0, this.mZNear, this.mZFar);
 
 		final float cameraSceneRotation = this.mCameraSceneRotation;
-		if (cameraSceneRotation != 0) {
-			this.applyRotation(pGLState, cameraSceneWidth * 0.5f, cameraSceneHeight * 0.5f, cameraSceneRotation);
+		if(cameraSceneRotation != 0) {
+			Camera.applyRotation(pGLState, widthRaw * 0.5f, heightRaw * 0.5f, cameraSceneRotation);
 		}
 	}
 
-	private void applyRotation(final GLState pGLState, final float pRotationCenterX, final float pRotationCenterY, final float pAngle) {
+	private static void applyRotation(final GLState pGLState, final float pRotationCenterX, final float pRotationCenterY, final float pAngle) {
 		pGLState.translateProjectionGLMatrixf(pRotationCenterX, pRotationCenterY, 0);
 		pGLState.rotateProjectionGLMatrixf(pAngle, 0, 0, 1);
 		pGLState.translateProjectionGLMatrixf(-pRotationCenterX, -pRotationCenterY, 0);
 	}
 
-	public void convertSceneTouchEventToCameraSceneTouchEvent(final TouchEvent pSceneTouchEvent) {
+	public void convertSceneToCameraSceneTouchEvent(final TouchEvent pSceneTouchEvent) {
 		this.unapplySceneRotation(pSceneTouchEvent);
 
 		this.applySceneToCameraSceneOffset(pSceneTouchEvent);
@@ -350,7 +351,7 @@ public class Camera implements IUpdateHandler {
 		return pSceneCoordinates;
 	}
 
-	public void convertCameraSceneTouchEventToSceneTouchEvent(final TouchEvent pCameraSceneTouchEvent) {
+	public void convertCameraSceneToSceneTouchEvent(final TouchEvent pCameraSceneTouchEvent) {
 		this.unapplyCameraSceneRotation(pCameraSceneTouchEvent);
 
 		this.unapplySceneToCameraSceneOffset(pCameraSceneTouchEvent);
@@ -395,19 +396,18 @@ public class Camera implements IUpdateHandler {
 
 	private void applySceneRotation(final float[] pCameraSceneCoordinates) {
 		final float rotation = this.mRotation;
-		if (rotation != 0) {
-			MathUtils.rotateAroundCenter(pCameraSceneCoordinates, rotation, this.getCenterX(), this.getCenterY()); // TODO Use a Transformation object instead!?!
+		if(rotation != 0) {
+			MathUtils.rotateAroundCenter(pCameraSceneCoordinates, -rotation, this.getCenterX(), this.getCenterY());
 		}
 	}
 
 	private void applySceneRotation(final TouchEvent pCameraSceneTouchEvent) {
 		final float rotation = this.mRotation;
-
-		if (rotation != 0) {
+		if(rotation != 0) {
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] = pCameraSceneTouchEvent.getX();
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] = pCameraSceneTouchEvent.getY();
 
-			MathUtils.rotateAroundCenter(Camera.VERTICES_TMP, rotation, this.getCenterX(), this.getCenterY()); // TODO Use a Transformation object instead!?!
+			MathUtils.rotateAroundCenter(Camera.VERTICES_TMP, -rotation, this.getCenterX(), this.getCenterY());
 
 			pCameraSceneTouchEvent.set(Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X], Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y]);
 		}
@@ -416,72 +416,68 @@ public class Camera implements IUpdateHandler {
 	private void unapplySceneRotation(final float[] pSceneCoordinates) {
 		final float rotation = this.mRotation;
 
-		if (rotation != 0) {
-			MathUtils.revertRotateAroundCenter(pSceneCoordinates, rotation, this.getCenterX(), this.getCenterY()); // TODO Use a Transformation object instead!?!
+		if(rotation != 0) {
+			MathUtils.revertRotateAroundCenter(pSceneCoordinates, rotation, this.getCenterX(), this.getCenterY());
 		}
 	}
 
 	private void unapplySceneRotation(final TouchEvent pSceneTouchEvent) {
 		final float rotation = this.mRotation;
 
-		if (rotation != 0) {
+		if(rotation != 0) {
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] = pSceneTouchEvent.getX();
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] = pSceneTouchEvent.getY();
 
-			MathUtils.revertRotateAroundCenter(Camera.VERTICES_TMP, rotation, this.getCenterX(), this.getCenterY()); // TODO Use a Transformation object instead!?!
+			MathUtils.revertRotateAroundCenter(Camera.VERTICES_TMP, rotation, this.getCenterX(), this.getCenterY());
 
 			pSceneTouchEvent.set(Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X], Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y]);
 		}
 	}
 
 	private void applyCameraSceneRotation(final float[] pSceneCoordinates) {
-		final float cameraSceneRotation = this.mCameraSceneRotation;
+		final float cameraSceneRotation = -this.mCameraSceneRotation;
 
-		if (cameraSceneRotation != 0) {
-			MathUtils.rotateAroundCenter(pSceneCoordinates, cameraSceneRotation, this.getCameraSceneWidth() * 0.5f, this.getCameraSceneHeight() * 0.5f); // TODO Use a Transformation object instead!?!
+		if(cameraSceneRotation != 0) {
+			MathUtils.rotateAroundCenter(pSceneCoordinates, cameraSceneRotation, (this.mXMax - this.mXMin) * 0.5f, (this.mYMax - this.mYMin) * 0.5f);
 		}
 	}
 
 	private void applyCameraSceneRotation(final TouchEvent pSceneTouchEvent) {
-		final float cameraSceneRotation = this.mCameraSceneRotation;
+		final float cameraSceneRotation = -this.mCameraSceneRotation;
 
-		if (cameraSceneRotation != 0) {
+		if(cameraSceneRotation != 0) {
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] = pSceneTouchEvent.getX();
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] = pSceneTouchEvent.getY();
 
-			MathUtils.rotateAroundCenter(Camera.VERTICES_TMP, cameraSceneRotation, this.getCameraSceneWidth() * 0.5f, this.getCameraSceneHeight() * 0.5f); // TODO Use a Transformation object instead!?!
+			MathUtils.rotateAroundCenter(Camera.VERTICES_TMP, cameraSceneRotation, (this.mXMax - this.mXMin) * 0.5f, (this.mYMax - this.mYMin) * 0.5f);
 
 			pSceneTouchEvent.set(Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X], Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y]);
 		}
 	}
 
 	private void unapplyCameraSceneRotation(final float[] pCameraSceneCoordinates) {
-		final float cameraSceneRotation = this.mCameraSceneRotation;
+		final float cameraSceneRotation = -this.mCameraSceneRotation;
 
-		if (cameraSceneRotation != 0) {
-			MathUtils.revertRotateAroundCenter(pCameraSceneCoordinates, cameraSceneRotation, this.getCameraSceneWidth() * 0.5f, this.getCameraSceneHeight() * 0.5f); // TODO Use a Transformation object instead!?!
+		if(cameraSceneRotation != 0) {
+			MathUtils.revertRotateAroundCenter(pCameraSceneCoordinates, cameraSceneRotation, (this.mXMax - this.mXMin) * 0.5f, (this.mYMax - this.mYMin) * 0.5f);
 		}
 	}
 
 	private void unapplyCameraSceneRotation(final TouchEvent pCameraSceneTouchEvent) {
-		final float cameraSceneRotation = this.mCameraSceneRotation;
+		final float cameraSceneRotation = -this.mCameraSceneRotation;
 
-		if (cameraSceneRotation != 0) {
+		if(cameraSceneRotation != 0) {
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] = pCameraSceneTouchEvent.getX();
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] = pCameraSceneTouchEvent.getY();
 
-			MathUtils.revertRotateAroundCenter(Camera.VERTICES_TMP, cameraSceneRotation, this.getCameraSceneWidth() * 0.5f, this.getCameraSceneHeight() * 0.5f); // TODO Use a Transformation object instead!?!
+			MathUtils.revertRotateAroundCenter(Camera.VERTICES_TMP, cameraSceneRotation, (this.mXMax - this.mXMin) * 0.5f, (this.mYMax - this.mYMin) * 0.5f);
 
 			pCameraSceneTouchEvent.set(Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X], Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y]);
 		}
 	}
 
-
-	public void convertSurfaceTouchEventToSceneTouchEvent(final TouchEvent pSurfaceTouchEvent) {
-		this.convertSurfaceTouchEventToSceneTouchEvent(pSurfaceTouchEvent, this.mSurfaceWidth, this.mSurfaceHeight);
-	}
-
-	public void convertSurfaceTouchEventToSceneTouchEvent(final TouchEvent pSurfaceTouchEvent, final int pSurfaceWidth, final int pSurfaceHeight) {
+	// TODO Camera already knows about its surfaceWidth, is there a need to pass it in here again?
+	public void convertSurfaceToSceneTouchEvent(final TouchEvent pSurfaceTouchEvent, final int pSurfaceWidth, final int pSurfaceHeight) {
 		final float relativeX;
 		final float relativeY;
 
@@ -489,60 +485,26 @@ public class Camera implements IUpdateHandler {
 		final float surfaceTouchEventY = pSurfaceTouchEvent.getY();
 
 		final float rotation = this.mRotation;
-		if (rotation == 0) {
+		if(rotation == 0) {
 			relativeX = surfaceTouchEventX / pSurfaceWidth;
-			relativeY = 1 - (surfaceTouchEventY / pSurfaceHeight);
-		} else if (rotation == 180) {
-			relativeX = 1 - (surfaceTouchEventX / pSurfaceWidth);
 			relativeY = surfaceTouchEventY / pSurfaceHeight;
+		} else if(rotation == 180) {
+			relativeX = 1 - (surfaceTouchEventX / pSurfaceWidth);
+			relativeY = 1 - (surfaceTouchEventY / pSurfaceHeight);
 		} else {
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] = surfaceTouchEventX;
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] = surfaceTouchEventY;
 
-			MathUtils.rotateAroundCenter(Camera.VERTICES_TMP, rotation, pSurfaceWidth >> 1, pSurfaceHeight >> 1); // TODO Use a Transformation object instead!?!
+			MathUtils.rotateAroundCenter(Camera.VERTICES_TMP, rotation, pSurfaceWidth >> 1, pSurfaceHeight >> 1);
 
 			relativeX = Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] / pSurfaceWidth;
-			relativeY = 1 - (Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] / pSurfaceHeight);
+			relativeY = Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] / pSurfaceHeight;
 		}
 
-		this.convertAxisAlignedSurfaceTouchEventToSceneTouchEvent(pSurfaceTouchEvent, relativeX, relativeY);
+		this.convertAxisAlignedSurfaceToSceneTouchEvent(pSurfaceTouchEvent, relativeX, relativeY);
 	}
 
-	public float[] getSceneCoordinatesFromSurfaceCoordinates(final float pSurfaceX, final float pSurfaceY) {
-		Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] = pSurfaceX;
-		Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] = pSurfaceY;
-
-		return this.getSceneCoordinatesFromSurfaceCoordinates(Camera.VERTICES_TMP);
-	}
-
-	public float[] getSceneCoordinatesFromSurfaceCoordinates(final float[] pSurfaceCoordinates) {
-		return this.getSceneCoordinatesFromSurfaceCoordinates(pSurfaceCoordinates, this.mSurfaceWidth, this.mSurfaceHeight);
-	}
-
-	public float[] getSceneCoordinatesFromSurfaceCoordinates(final float[] pSurfaceCoordinates, final int pSurfaceWidth, final int pSurfaceHeight) {
-		final float relativeX;
-		final float relativeY;
-
-		final float rotation = this.mRotation;
-		if (rotation == 0) {
-			relativeX = pSurfaceCoordinates[Constants.VERTEX_INDEX_X] / pSurfaceWidth;
-			relativeY = 1 - (pSurfaceCoordinates[Constants.VERTEX_INDEX_Y] / pSurfaceHeight);
-		} else if (rotation == 180) {
-			relativeX = 1 - (pSurfaceCoordinates[Constants.VERTEX_INDEX_X] / pSurfaceWidth);
-			relativeY = pSurfaceCoordinates[Constants.VERTEX_INDEX_Y] / pSurfaceHeight;
-		} else {
-			MathUtils.rotateAroundCenter(pSurfaceCoordinates, rotation, pSurfaceWidth >> 1, pSurfaceHeight >> 1); // TODO Use a Transformation object instead!?!
-
-			relativeX = pSurfaceCoordinates[Constants.VERTEX_INDEX_X] / pSurfaceWidth;
-			relativeY = 1 - (pSurfaceCoordinates[Constants.VERTEX_INDEX_Y] / pSurfaceHeight);
-		}
-
-		this.convertAxisAlignedSurfaceCoordinatesToSceneCoordinates(pSurfaceCoordinates, relativeX, relativeY);
-
-		return pSurfaceCoordinates;
-	}
-
-	private void convertAxisAlignedSurfaceTouchEventToSceneTouchEvent(final TouchEvent pSurfaceTouchEvent, final float pRelativeX, final float pRelativeY) {
+	private void convertAxisAlignedSurfaceToSceneTouchEvent(final TouchEvent pSurfaceTouchEvent, final float pRelativeX, final float pRelativeY) {
 		final float xMin = this.getXMin();
 		final float xMax = this.getXMax();
 		final float yMin = this.getYMin();
@@ -554,72 +516,22 @@ public class Camera implements IUpdateHandler {
 		pSurfaceTouchEvent.set(x, y);
 	}
 
-	private void convertAxisAlignedSurfaceCoordinatesToSceneCoordinates(final float[] pSurfaceCoordinates, final float pRelativeX, final float pRelativeY) {
-		final float xMin = this.getXMin();
-		final float xMax = this.getXMax();
-		final float yMin = this.getYMin();
-		final float yMax = this.getYMax();
-
-		final float x = xMin + pRelativeX * (xMax - xMin);
-		final float y = yMin + pRelativeY * (yMax - yMin);
-
-		pSurfaceCoordinates[Constants.VERTEX_INDEX_X] = x;
-		pSurfaceCoordinates[Constants.VERTEX_INDEX_Y] = y;
-	}
-
-
-	public void convertSceneTouchEventToSurfaceTouchEvent(final TouchEvent pSceneTouchEvent) {
-		this.convertSceneTouchEventToSurfaceTouchEvent(pSceneTouchEvent, this.mSurfaceWidth, this.mSurfaceHeight);
-	}
-
-	public void convertSceneTouchEventToSurfaceTouchEvent(final TouchEvent pSceneTouchEvent, final int pSurfaceWidth, final int pSurfaceHeight) {
+	public void convertSceneToSurfaceTouchEvent(final TouchEvent pSceneTouchEvent, final int pSurfaceWidth, final int pSurfaceHeight) {
 		this.convertAxisAlignedSceneToSurfaceTouchEvent(pSceneTouchEvent, pSurfaceWidth, pSurfaceHeight);
 
 		final float rotation = this.mRotation;
-		if (rotation == 0) {
-			/* Nothing. */
-		} else if (rotation == 180) {
-			pSceneTouchEvent.setY(pSurfaceHeight - pSceneTouchEvent.getY());
-			pSceneTouchEvent.setX(pSurfaceWidth - pSceneTouchEvent.getX());
+		if(rotation == 0) {
+			/* Nothing to do. */
+		} else if(rotation == 180) {
+			pSceneTouchEvent.set(pSurfaceWidth - pSceneTouchEvent.getX(), pSurfaceHeight - pSceneTouchEvent.getY());
 		} else {
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] = pSceneTouchEvent.getX();
 			Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] = pSceneTouchEvent.getY();
 
-			MathUtils.revertRotateAroundCenter(Camera.VERTICES_TMP, -rotation, pSurfaceWidth >> 1, pSurfaceHeight >> 1); // TODO Use a Transformation object instead!?!
+			MathUtils.revertRotateAroundCenter(Camera.VERTICES_TMP, rotation, pSurfaceWidth >> 1, pSurfaceHeight >> 1);
 
 			pSceneTouchEvent.set(Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X], Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y]);
 		}
-	}
-
-	public float[] getSurfaceCoordinatesFromSceneCoordinates(final float pSceneX, final float pSceneY) {
-		return this.getSurfaceCoordinatesFromSceneCoordinates(pSceneX, pSceneY, mSurfaceWidth, mSurfaceHeight);
-	}
-
-	public float[] getSurfaceCoordinatesFromSceneCoordinates(final float pSceneX, final float pSceneY, final int pSurfaceWidth, final int pSurfaceHeight) {
-		Camera.VERTICES_TMP[Constants.VERTEX_INDEX_X] = pSceneX;
-		Camera.VERTICES_TMP[Constants.VERTEX_INDEX_Y] = pSceneY;
-
-		return this.getSurfaceCoordinatesFromSceneCoordinates(Camera.VERTICES_TMP, pSurfaceWidth, pSurfaceHeight);
-	}
-
-	public float[] getSurfaceCoordinatesFromSceneCoordinates(final float[] pSceneCoordinates) {
-		return this.getSurfaceCoordinatesFromSceneCoordinates(pSceneCoordinates, this.mSurfaceWidth, this.mSurfaceHeight);
-	}
-
-	public float[] getSurfaceCoordinatesFromSceneCoordinates(final float[] pSceneCoordinates, final int pSurfaceWidth, final int pSurfaceHeight) {
-		this.convertAxisAlignedSceneCoordinatesToSurfaceCoordinates(pSceneCoordinates, pSurfaceWidth, pSurfaceHeight);
-
-		final float rotation = this.mRotation;
-		if (rotation == 0) {
-			/* Nothing. */
-		} else if (rotation == 180) {
-			pSceneCoordinates[Constants.VERTEX_INDEX_Y] = pSurfaceHeight - pSceneCoordinates[Constants.VERTEX_INDEX_Y];
-			pSceneCoordinates[Constants.VERTEX_INDEX_X] = pSurfaceWidth - pSceneCoordinates[Constants.VERTEX_INDEX_X];
-		} else {
-			MathUtils.revertRotateAroundCenter(pSceneCoordinates, -rotation, pSurfaceWidth >> 1, pSurfaceHeight >> 1); // TODO Use a Transformation object instead!?!
-		}
-
-		return pSceneCoordinates;
 	}
 
 	private void convertAxisAlignedSceneToSurfaceTouchEvent(final TouchEvent pSceneTouchEvent, final int pSurfaceWidth, final int pSurfaceHeight) {
@@ -629,51 +541,34 @@ public class Camera implements IUpdateHandler {
 		final float yMax = this.getYMax();
 
 		final float relativeX = (pSceneTouchEvent.getX() - xMin) / (xMax - xMin);
-		final float relativeY = 1 - (pSceneTouchEvent.getY() - yMin) / (yMax - yMin);
+		final float relativeY = (pSceneTouchEvent.getY() - yMin) / (yMax - yMin);
 
-		final float x = relativeX * pSurfaceWidth;
-		final float y = relativeY * pSurfaceHeight;
-
-		pSceneTouchEvent.set(x, y);
+		pSceneTouchEvent.set(relativeX * pSurfaceWidth, relativeY * pSurfaceHeight);
 	}
-
-	private void convertAxisAlignedSceneCoordinatesToSurfaceCoordinates(final float[] pSceneCoordinates, final int pSurfaceWidth, final int pSurfaceHeight) {
-		final float xMin = this.getXMin();
-		final float xMax = this.getXMax();
-		final float yMin = this.getYMin();
-		final float yMax = this.getYMax();
-
-		final float relativeX = (pSceneCoordinates[Constants.VERTEX_INDEX_X] - xMin) / (xMax - xMin);
-		final float relativeY = 1 - (pSceneCoordinates[Constants.VERTEX_INDEX_Y] - yMin) / (yMax - yMin);
-
-		pSceneCoordinates[Constants.VERTEX_INDEX_X] = relativeX * pSurfaceWidth;
-		pSceneCoordinates[Constants.VERTEX_INDEX_Y] = relativeY * pSurfaceHeight;
-	}
-
 
 	public void registerUpdateHandler(final IUpdateHandler pUpdateHandler) {
-		if (this.mUpdateHandlers == null) {
+		if(this.mUpdateHandlers == null) {
 			this.allocateUpdateHandlers();
 		}
 		this.mUpdateHandlers.add(pUpdateHandler);
 	}
 
 	public boolean unregisterUpdateHandler(final IUpdateHandler pUpdateHandler) {
-		if (this.mUpdateHandlers == null) {
+		if(this.mUpdateHandlers == null) {
 			return false;
 		}
 		return this.mUpdateHandlers.remove(pUpdateHandler);
 	}
 
 	public boolean unregisterUpdateHandlers(final IUpdateHandlerMatcher pUpdateHandlerMatcher) {
-		if (this.mUpdateHandlers == null) {
+		if(this.mUpdateHandlers == null) {
 			return false;
 		}
 		return this.mUpdateHandlers.removeAll(pUpdateHandlerMatcher);
 	}
 
 	public void clearUpdateHandlers() {
-		if (this.mUpdateHandlers == null) {
+		if(this.mUpdateHandlers == null) {
 			return;
 		}
 		this.mUpdateHandlers.clear();
@@ -691,23 +586,23 @@ public class Camera implements IUpdateHandler {
 	}
 
 	protected void onSurfaceSizeChanged(final int pOldSurfaceX, final int pOldSurfaceY, final int pOldSurfaceWidth, final int pOldSurfaceHeight, final int pNewSurfaceX, final int pNewSurfaceY, final int pNewSurfaceWidth, final int pNewSurfaceHeight) {
-		if (this.mResizeOnSurfaceSizeChanged) {
+		if(this.mResizeOnSurfaceSizeChanged) {
 			final float surfaceWidthRatio = (float)pNewSurfaceWidth / pOldSurfaceWidth;
 			final float surfaceHeightRatio = (float)pNewSurfaceHeight / pOldSurfaceHeight;
 
 			final float centerX = this.getCenterX();
 			final float centerY = this.getCenterY();
 
-			final float newWidth = (this.mXMax - this.mXMin) * surfaceWidthRatio;
-			final float newHeight = (this.mYMax - this.mYMin) * surfaceHeightRatio;
+			final float newWidthRaw = this.getWidthRaw() * surfaceWidthRatio;
+			final float newHeightRaw = this.getHeightRaw() * surfaceHeightRatio;
 
-			final float newWidthHalf = newWidth * 0.5f;
-			final float newHeightHalf = newHeight * 0.5f;
+			final float newWidthRawHalf = newWidthRaw * 0.5f;
+			final float newHeightRawHalf = newHeightRaw * 0.5f;
 
-			final float xMin = centerX - newWidthHalf;
-			final float yMin = centerY - newHeightHalf;
-			final float xMax = centerX + newWidthHalf;
-			final float yMax = centerY + newHeightHalf;
+			final float xMin = centerX - newWidthRawHalf;
+			final float yMin = centerY - newHeightRawHalf;
+			final float xMax = centerX + newWidthRawHalf;
+			final float yMax = centerY + newHeightRawHalf;
 
 			this.set(xMin, yMin, xMax, yMax);
 		}

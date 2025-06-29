@@ -5,9 +5,9 @@ import org.andengine.util.adt.pool.GenericPool;
 import android.view.MotionEvent;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 10:17:42 - 13.07.2010
  */
@@ -75,14 +75,6 @@ public class TouchEvent {
 
 	public float getY() {
 		return this.mY;
-	}
-
-	public void setX(final float pX) {
-		this.mX = pX;
-	}
-
-	public void setY(final float pY) {
-		this.mY = pY;
 	}
 
 	public void set(final float pX, final float pY) {

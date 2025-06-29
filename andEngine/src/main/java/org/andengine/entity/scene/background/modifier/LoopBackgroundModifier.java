@@ -4,9 +4,9 @@ import org.andengine.entity.scene.background.IBackground;
 import org.andengine.util.modifier.LoopModifier;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 15:03:53 - 03.09.2010
  */
@@ -32,7 +32,7 @@ public class LoopBackgroundModifier extends LoopModifier<IBackground> implements
 	}
 
 	public LoopBackgroundModifier(final IBackgroundModifier pBackgroundModifier, final int pLoopCount, final ILoopBackgroundModifierListener pLoopModifierListener) {
-		super(pBackgroundModifier, pLoopCount, pLoopModifierListener, (IBackgroundModifierListener) null);
+		super(pBackgroundModifier, pLoopCount, pLoopModifierListener, (IBackgroundModifierListener)null);
 	}
 
 	public LoopBackgroundModifier(final IBackgroundModifier pBackgroundModifier, final int pLoopCount, final IBackgroundModifierListener pBackgroundModifierListener) {

@@ -9,9 +9,9 @@ import android.media.SoundPool.OnLoadCompleteListener;
 import android.util.SparseArray;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 13:22:59 - 11.03.2010
  */
@@ -66,25 +66,25 @@ public class SoundManager extends BaseAudioManager<Sound> implements OnLoadCompl
 	@Override
 	public boolean remove(final Sound pSound) {
 		final boolean removed = super.remove(pSound);
-		if (removed) {
+		if(removed) {
 			this.mSoundMap.remove(pSound.getSoundID());
 		}
 		return removed;
 
 	}
-
+	
 	@Override
 	public void releaseAll() {
 		super.releaseAll();
 
 		this.mSoundPool.release();
 	}
-
+	
 	@Override
 	public synchronized void onLoadComplete(final SoundPool pSoundPool, final int pSoundID, final int pStatus) {
-		if (pStatus == SoundManager.SOUND_STATUS_OK) {
+		if(pStatus == SoundManager.SOUND_STATUS_OK) {
 			final Sound sound = this.mSoundMap.get(pSoundID);
-			if (sound == null) {
+			if(sound == null) {
 				throw new SoundException("Unexpected soundID: '" + pSoundID + "'.");
 			} else {
 				sound.setLoaded(true);
@@ -95,14 +95,6 @@ public class SoundManager extends BaseAudioManager<Sound> implements OnLoadCompl
 	// ===========================================================
 	// Methods
 	// ===========================================================
-
-	public void onPause() {
-		this.mSoundPool.autoPause();
-	}
-
-	public void onResume() {
-		this.mSoundPool.autoResume();
-	}
 
 	// ===========================================================
 	// Inner and Anonymous Classes

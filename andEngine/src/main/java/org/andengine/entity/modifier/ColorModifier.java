@@ -1,14 +1,14 @@
 package org.andengine.entity.modifier;
 
 import org.andengine.entity.IEntity;
-import org.andengine.util.adt.color.Color;
+import org.andengine.util.color.Color;
 import org.andengine.util.modifier.ease.EaseLinear;
 import org.andengine.util.modifier.ease.IEaseFunction;
 
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 15:39:50 - 29.06.2010
  */
@@ -62,7 +62,7 @@ public class ColorModifier extends TripleValueSpanEntityModifier {
 	}
 
 	@Override
-	public ColorModifier deepCopy() {
+	public ColorModifier deepCopy(){
 		return new ColorModifier(this);
 	}
 

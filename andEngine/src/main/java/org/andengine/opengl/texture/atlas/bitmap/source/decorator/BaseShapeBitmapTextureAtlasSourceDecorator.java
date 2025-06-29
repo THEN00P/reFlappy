@@ -6,9 +6,9 @@ import org.andengine.opengl.texture.atlas.bitmap.source.decorator.shape.IBitmapT
 import android.graphics.Canvas;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 20:09:41 - 05.11.2010
  */
@@ -45,7 +45,7 @@ public abstract class BaseShapeBitmapTextureAtlasSourceDecorator extends BaseBit
 	// ===========================================================
 
 	@Override
-	protected void onDecorateBitmap(final Canvas pCanvas) {
+	protected void onDecorateBitmap(final Canvas pCanvas){
 		this.mBitmapTextureAtlasSourceDecoratorShape.onDecorateBitmap(pCanvas, this.mPaint, (this.mTextureAtlasSourceDecoratorOptions == null) ? TextureAtlasSourceDecoratorOptions.DEFAULT : this.mTextureAtlasSourceDecoratorOptions);
 	}
 

@@ -9,9 +9,9 @@ import android.graphics.Canvas;
 import android.graphics.Picture;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:52:58 - 21.05.2011
  */
@@ -33,7 +33,7 @@ public abstract class PictureBitmapTextureAtlasSource extends BaseTextureAtlasSo
 	public PictureBitmapTextureAtlasSource(final Picture pPicture) {
 		this(pPicture, 0, 0);
 	}
-
+	
 	public PictureBitmapTextureAtlasSource(final Picture pPicture, final int pTextureX, final int pTextureY) {
 		this(pPicture, pTextureX, pTextureY, pPicture.getWidth(), pPicture.getHeight());
 	}
@@ -62,7 +62,7 @@ public abstract class PictureBitmapTextureAtlasSource extends BaseTextureAtlasSo
 	@Override
 	public Bitmap onLoadBitmap(final Config pBitmapConfig) {
 		final Picture picture = this.mPicture;
-		if (picture == null) {
+		if(picture == null) {
 			Debug.e("Failed loading Bitmap in " + this.getClass().getSimpleName() + ".");
 			return null;
 		}

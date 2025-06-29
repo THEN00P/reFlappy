@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 09:35:55 - 14.12.2009
  */
@@ -41,11 +41,11 @@ public abstract class GenericInputDialogBuilder<T> {
 	// Constructors
 	// ===========================================================
 
-	public GenericInputDialogBuilder(final Context pContext, final int pTitleResID, final int pMessageResID, final int pErrorResID, final int pIconResID, final Callback<T> pSuccessCallback, final OnCancelListener pOnCancelListener) {
+	public GenericInputDialogBuilder(final Context pContext, final int pTitleResID, final int pMessageResID, final int pErrorResID, final int pIconResID, final Callback<T> pSuccessCallback, final OnCancelListener pOnCancelListener){
 		this(pContext, pTitleResID, pMessageResID, pErrorResID, pIconResID, "", pSuccessCallback, pOnCancelListener);
 	}
 
-	public GenericInputDialogBuilder(final Context pContext, final int pTitleResID, final int pMessageResID, final int pErrorResID, final int pIconResID, final String pDefaultText, final Callback<T> pSuccessCallback, final OnCancelListener pOnCancelListener) {
+	public GenericInputDialogBuilder(final Context pContext, final int pTitleResID, final int pMessageResID, final int pErrorResID, final int pIconResID, final String pDefaultText, final Callback<T> pSuccessCallback, final OnCancelListener pOnCancelListener){
 		this.mContext = pContext;
 		this.mTitleResID = pTitleResID;
 		this.mMessageResID = pMessageResID;
@@ -75,13 +75,13 @@ public abstract class GenericInputDialogBuilder<T> {
 		etInput.setText(this.mDefaultText);
 
 		final AlertDialog.Builder ab = new AlertDialog.Builder(this.mContext);
-		if (this.mTitleResID != 0) {
+		if(this.mTitleResID != 0) {
 			ab.setTitle(this.mTitleResID);
 		}
-		if (this.mMessageResID != 0) {
+		if(this.mMessageResID != 0) {
 			ab.setMessage(this.mMessageResID);
 		}
-		if (this.mIconResID != 0) {
+		if(this.mIconResID != 0) {
 			ab.setIcon(this.mIconResID);
 		}
 
@@ -91,7 +91,7 @@ public abstract class GenericInputDialogBuilder<T> {
 			@Override
 			public void onClick(final DialogInterface pDialog, final int pWhich) {
 				final T result;
-				try {
+				try{
 					result = GenericInputDialogBuilder.this.generateResult(etInput.getText().toString());
 				} catch (final IllegalArgumentException e) {
 					Debug.e("Error in GenericInputDialogBuilder.generateResult()", e);

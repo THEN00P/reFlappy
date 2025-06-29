@@ -5,9 +5,9 @@ import org.andengine.util.modifier.ease.EaseLinear;
 import org.andengine.util.modifier.ease.IEaseFunction;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 23:13:01 - 19.03.2010
  */
@@ -45,7 +45,7 @@ public class AlphaModifier extends SingleValueSpanEntityModifier {
 	}
 
 	@Override
-	public AlphaModifier deepCopy() {
+	public AlphaModifier deepCopy(){
 		return new AlphaModifier(this);
 	}
 

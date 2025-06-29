@@ -3,7 +3,7 @@ package org.andengine.util.adt.bounds;
 import org.andengine.util.adt.spatial.bounds.util.FloatBoundsUtils;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 21:48:53 - 11.10.2011
@@ -25,7 +25,7 @@ public class FloatBounds implements IFloatBounds {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
+	
 	public FloatBounds(final float pX, final float pY) {
 		this.set(pX, pY);
 	}
@@ -42,7 +42,7 @@ public class FloatBounds implements IFloatBounds {
 	public float getXMin() {
 		return this.mXMin;
 	}
-
+	
 	@Override
 	public float getYMin() {
 		return this.mYMin;
@@ -68,10 +68,10 @@ public class FloatBounds implements IFloatBounds {
 		this.mXMax = pXMax;
 		this.mYMax = pYMax;
 
-		if (pXMin > pXMax) {
+		if(pXMin > pXMax) {
 			throw new IllegalArgumentException("pXMin: '" + pXMin + "' must be smaller or equal to pXMax: '" + pXMax + "'.");
 		}
-		if (pYMin > pYMax) {
+		if(pYMin > pYMax) {
 			throw new IllegalArgumentException("pYMin: '" + pYMin + "' must be smaller or equal to pYMax: '" + pYMax + "'.");
 		}
 	}

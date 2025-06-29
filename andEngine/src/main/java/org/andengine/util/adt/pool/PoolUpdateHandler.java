@@ -8,10 +8,10 @@ import org.andengine.util.adt.queue.concurrent.SynchronizedQueue;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Valentin Milea
  * @author Nicolas Gramlich
- *
+ * 
  * @since 23:02:58 - 21.08.2010
  */
 public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHandler {
@@ -84,7 +84,7 @@ public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHa
 		final Pool<T> pool = this.mPool;
 
 		T item;
-		while ((item = scheduledPoolItemQueue.poll()) != null) {
+		while((item = scheduledPoolItemQueue.poll()) != null) {
 			this.onHandlePoolItem(item);
 			pool.recyclePoolItem(item);
 		}
@@ -96,7 +96,7 @@ public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHa
 		final Pool<T> pool = this.mPool;
 
 		T item;
-		while ((item = scheduledPoolItemQueue.poll()) != null) {
+		while((item = scheduledPoolItemQueue.poll()) != null) {
 			pool.recyclePoolItem(item);
 		}
 	}
@@ -110,9 +110,9 @@ public abstract class PoolUpdateHandler<T extends PoolItem> implements IUpdateHa
 	}
 
 	public void postPoolItem(final T pPoolItem) {
-		if (pPoolItem == null) {
+		if(pPoolItem == null) {
 			throw new IllegalArgumentException("PoolItem already recycled!");
-		} else if (!this.mPool.ownsPoolItem(pPoolItem)) {
+		} else if(!this.mPool.ownsPoolItem(pPoolItem)) {
 			throw new IllegalArgumentException("PoolItem from another pool!");
 		}
 

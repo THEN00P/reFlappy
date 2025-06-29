@@ -5,7 +5,7 @@ import org.andengine.util.adt.pool.GenericPool;
 import android.util.SparseArray;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 12:19:22 - 08.12.2011
@@ -70,27 +70,27 @@ public class IntLRUCache<V> {
 
 	public V put(final int pKey, final V pValue) {
 		final IntLRUCacheValueHolder<V> existingIntLRUCacheValueHolder = this.mSparseArray.get(pKey);
-		if (existingIntLRUCacheValueHolder != null) {
+		if(existingIntLRUCacheValueHolder != null) {
 			/* Just heat up that item. */
 			this.mIntLRUCacheQueue.moveToTail(existingIntLRUCacheValueHolder.mIntLRUCacheQueueNode);
 
 			return existingIntLRUCacheValueHolder.mValue;
 		}
 
-		if (this.mSize >= this.mCapacity) {
+		if(this.mSize >= this.mCapacity) {
 			final int deadKey = this.mIntLRUCacheQueue.poll();
 			this.mSparseArray.remove(deadKey);
 			this.mSize--;
 		}
 
-		final IntLRUCacheQueueNode intLRUCacheQueueNode = this.mIntLRUCacheQueue.add(pKey);
+		final IntLRUCacheQueueNode IntLRUCacheQueueNode = this.mIntLRUCacheQueue.add(pKey);
 
-		final IntLRUCacheValueHolder<V> intLRUCacheValueHolder = this.mIntLRUCacheValueHolderPool.obtainPoolItem();
-//		final IntLRUCacheValueHolder<V> intLRUCacheValueHolder = new IntLRUCacheValueHolder<V>();
-		intLRUCacheValueHolder.mValue = pValue;
-		intLRUCacheValueHolder.mIntLRUCacheQueueNode = intLRUCacheQueueNode;
+		final IntLRUCacheValueHolder<V> IntLRUCacheValueHolder = this.mIntLRUCacheValueHolderPool.obtainPoolItem();
+//		final IntLRUCacheValueHolder<V> IntLRUCacheValueHolder = new IntLRUCacheValueHolder<V>();
+		IntLRUCacheValueHolder.mValue = pValue;
+		IntLRUCacheValueHolder.mIntLRUCacheQueueNode = IntLRUCacheQueueNode;
 
-		this.mSparseArray.put(pKey, intLRUCacheValueHolder);
+		this.mSparseArray.put(pKey, IntLRUCacheValueHolder);
 
 		this.mSize++;
 
@@ -98,21 +98,21 @@ public class IntLRUCache<V> {
 	}
 
 	public V get(final int pKey) {
-		final IntLRUCacheValueHolder<V> intLRUCacheValueHolder = this.mSparseArray.get(pKey);
-		if (intLRUCacheValueHolder == null) {
+		final IntLRUCacheValueHolder<V> IntLRUCacheValueHolder = this.mSparseArray.get(pKey);
+		if(IntLRUCacheValueHolder == null) {
 			return null;
 		}
 
-		this.mIntLRUCacheQueue.moveToTail(intLRUCacheValueHolder.mIntLRUCacheQueueNode);
+		this.mIntLRUCacheQueue.moveToTail(IntLRUCacheValueHolder.mIntLRUCacheQueueNode);
 
-		return intLRUCacheValueHolder.mValue;
+		return IntLRUCacheValueHolder.mValue;
 	}
 
 	public void clear() {
-		while (!this.mIntLRUCacheQueue.isEmpty()) {
+		while(!this.mIntLRUCacheQueue.isEmpty()) {
 			final int key = this.mIntLRUCacheQueue.poll();
 			final IntLRUCacheValueHolder<V> lruCacheValueHolder = this.mSparseArray.get(key);
-			if (lruCacheValueHolder == null) {
+			if(lruCacheValueHolder == null) {
 				throw new IllegalArgumentException();
 			}
 			this.mSparseArray.remove(key);
@@ -243,15 +243,15 @@ public class IntLRUCache<V> {
 		}
 
 		public IntLRUCacheQueueNode add(final int pKey) {
-			final IntLRUCacheQueueNode intLRUCacheQueueNode = this.mIntLRUCacheQueueNodePool.obtainPoolItem();
-//			final IntLRUCacheQueueNode intLRUCacheQueueNode = new IntLRUCacheQueueNode();
-			intLRUCacheQueueNode.mKey = pKey;
+			final IntLRUCacheQueueNode IntLRUCacheQueueNode = this.mIntLRUCacheQueueNodePool.obtainPoolItem();
+//			final IntLRUCacheQueueNode IntLRUCacheQueueNode = new IntLRUCacheQueueNode();
+			IntLRUCacheQueueNode.mKey = pKey;
 
-			return this.add(intLRUCacheQueueNode);
+			return this.add(IntLRUCacheQueueNode);
 		}
 
 		private IntLRUCacheQueueNode add(final IntLRUCacheQueueNode pIntLRUCacheQueueNode) {
-			if (this.isEmpty()) {
+			if(this.isEmpty()) {
 				this.mHead = pIntLRUCacheQueueNode;
 				this.mTail = this.mHead;
 			} else {
@@ -266,12 +266,12 @@ public class IntLRUCache<V> {
 		public int poll() {
 			final IntLRUCacheQueueNode head = this.mHead;
 			final int key = this.mHead.mKey;
-			if (key == 0) {
+			if(key == 0) {
 				throw new IllegalStateException();
 			}
 
 			/* Check if item to poll is the tail. */
-			if (this.mHead.mNext == null) {
+			if(this.mHead.mNext == null) {
 				this.mHead = null;
 				this.mTail = null;
 			} else {
@@ -287,14 +287,14 @@ public class IntLRUCache<V> {
 			final IntLRUCacheQueueNode next = pIntLRUCacheQueueNode.mNext;
 
 			/* Check if the node already is the tail. */
-			if (next == null) {
+			if(next == null) {
 				return;
 			} else {
 				final IntLRUCacheQueueNode previous = pIntLRUCacheQueueNode.mPrevious;
 				next.mPrevious = previous;
 
 				/* Check if item to bump is the head. */
-				if (previous == null) {
+				if(previous == null) {
 					this.mHead = next;
 				} else {
 					previous.mNext = next;

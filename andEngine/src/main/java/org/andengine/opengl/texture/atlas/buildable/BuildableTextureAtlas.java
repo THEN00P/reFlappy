@@ -17,7 +17,7 @@ import org.andengine.util.call.Callback;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 21:26:38 - 12.08.2010
  */
@@ -140,11 +140,6 @@ public class BuildableTextureAtlas<S extends ITextureAtlasSource, T extends ITex
 	}
 
 	@Override
-	public int getTextureMemorySize() {
-		return this.mTextureAtlas.getTextureMemorySize();
-	}
-
-	@Override
 	@Deprecated
 	public void addTextureAtlasSource(final S pTextureAtlasSource, final int pTextureX, final int pTextureY) {
 		this.mTextureAtlas.addTextureAtlasSource(pTextureAtlasSource, pTextureX, pTextureY);
@@ -189,7 +184,7 @@ public class BuildableTextureAtlas<S extends ITextureAtlasSource, T extends ITex
 	public ITextureAtlasStateListener<S> getTextureStateListener() {
 		return this.mTextureAtlas.getTextureStateListener();
 	}
-
+	
 	@Override
 	public ITextureAtlasStateListener<S> getTextureAtlasStateListener() {
 		return this.mTextureAtlas.getTextureAtlasStateListener();
@@ -226,9 +221,9 @@ public class BuildableTextureAtlas<S extends ITextureAtlasSource, T extends ITex
 	@Override
 	public void removeTextureAtlasSource(final ITextureAtlasSource pTextureAtlasSource) {
 		final ArrayList<TextureAtlasSourceWithWithLocationCallback<S>> textureSources = this.mTextureAtlasSourcesToPlace;
-		for (int i = textureSources.size() - 1; i >= 0; i--) {
+		for(int i = textureSources.size() - 1; i >= 0; i--) {
 			final TextureAtlasSourceWithWithLocationCallback<S> textureSource = textureSources.get(i);
-			if (textureSource.mTextureAtlasSource == pTextureAtlasSource) {
+			if(textureSource.mTextureAtlasSource == pTextureAtlasSource) {
 				textureSources.remove(i);
 				this.mTextureAtlas.setUpdateOnHardwareNeeded(true);
 				return;

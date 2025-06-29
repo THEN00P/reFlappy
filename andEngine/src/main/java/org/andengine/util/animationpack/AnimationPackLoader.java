@@ -18,7 +18,7 @@ import org.xml.sax.XMLReader;
 import android.content.res.AssetManager;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:05:15 - 29.07.2011
@@ -65,7 +65,7 @@ public class AnimationPackLoader {
 	}
 
 	public AnimationPack load(final InputStream pInputStream, final String pAssetBasePath) throws AnimationPackParseException {
-		try {
+		try{
 			final SAXParserFactory spf = SAXParserFactory.newInstance();
 			final SAXParser sp = spf.newSAXParser();
 

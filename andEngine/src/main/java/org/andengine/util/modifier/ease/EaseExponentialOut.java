@@ -28,7 +28,7 @@ public class EaseExponentialOut implements IEaseFunction {
 	}
 
 	public static EaseExponentialOut getInstance() {
-		if (INSTANCE == null) {
+		if(INSTANCE == null) {
 			INSTANCE = new EaseExponentialOut();
 		}
 		return INSTANCE;
@@ -52,7 +52,7 @@ public class EaseExponentialOut implements IEaseFunction {
 	// ===========================================================
 
 	public static float getValue(final float pPercentage) {
-		return (pPercentage == 1) ? 1 : (-(float) Math.pow(2, -10 * pPercentage) + 1);
+		return (pPercentage == 1) ? 1 : (-(float)Math.pow(2, -10 * pPercentage) + 1);
 	}
 
 	// ===========================================================

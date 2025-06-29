@@ -1,7 +1,7 @@
 package org.andengine.util.exception;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 16:33:53 - 23.04.2012
@@ -20,22 +20,6 @@ public class CancelledException extends AndEngineException {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
-	public CancelledException() {
-		super();
-	}
-
-	public CancelledException(String pMessage) {
-		super(pMessage);
-	}
-
-	public CancelledException(Throwable pThrowable) {
-		super(pThrowable);
-	}
-
-	public CancelledException(String pMessage, Throwable pThrowable) {
-		super(pMessage, pThrowable);
-	}
 
 	// ===========================================================
 	// Getter & Setter

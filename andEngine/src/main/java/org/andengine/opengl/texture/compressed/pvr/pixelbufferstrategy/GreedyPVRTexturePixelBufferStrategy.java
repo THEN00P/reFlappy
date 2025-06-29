@@ -11,7 +11,7 @@ import org.andengine.opengl.texture.compressed.pvr.PVRTexture.PVRTextureHeader;
 import android.opengl.GLES20;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 11:26:07 - 27.09.2011

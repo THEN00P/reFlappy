@@ -5,7 +5,7 @@ import org.andengine.util.modifier.ease.EaseLinear;
 import org.andengine.util.modifier.ease.IEaseFunction;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 12:12:55 - 11.01.2012
@@ -57,7 +57,7 @@ public class JumpModifier extends MoveModifier {
 	}
 
 	public JumpModifier(final float pDuration, final float pFromX, final float pToX, final float pFromY, final float pToY, final float pJumpHeight, final int pJumpCount, final IEntityModifierListener pEntityModifierListener, final IEaseFunction pEaseFunction) {
-		super(pDuration, pFromX, pFromY, pToX, pToY, pEntityModifierListener, pEaseFunction);
+		super(pDuration, pFromX, pToX, pFromY, pToY, pEntityModifierListener, pEaseFunction);
 
 		this.mJumpHeight = pJumpHeight;
 		this.mJumpCount = pJumpCount;

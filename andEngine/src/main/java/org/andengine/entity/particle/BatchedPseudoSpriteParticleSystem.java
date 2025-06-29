@@ -8,10 +8,10 @@ import org.andengine.entity.sprite.batch.SpriteBatch;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.adt.color.ColorUtils;
+import org.andengine.util.color.ColorUtils;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 11:39:46 - 10.05.2012
@@ -25,8 +25,8 @@ public class BatchedPseudoSpriteParticleSystem extends BlendFunctionParticleSyst
 	// Fields
 	// ===========================================================
 
+	protected final ITextureRegion mTextureRegion;
 	protected final SpriteBatch mSpriteBatch;
-	private final ITextureRegion mTextureRegion;
 
 	// ===========================================================
 	// Constructors
@@ -40,7 +40,7 @@ public class BatchedPseudoSpriteParticleSystem extends BlendFunctionParticleSyst
 		super(pX, pY, new IEntityFactory<Entity>() {
 			@Override
 			public Entity create(final float pX, final float pY) {
-				return new Entity(pX, pY, pTextureRegion.getWidth(), pTextureRegion.getHeight());
+				return new Entity(pX, pY);
 			}
 		}, pParticleEmitter, pRateMinimum, pRateMaximum, pParticlesMaximum);
 
@@ -62,7 +62,7 @@ public class BatchedPseudoSpriteParticleSystem extends BlendFunctionParticleSyst
 		this.mSpriteBatch.setIndex(0);
 
 		final Particle<Entity>[] particles = this.mParticles;
-		for (int i = this.mParticlesAlive - 1; i >= 0; i--) {
+		for(int i = this.mParticlesAlive - 1; i >= 0; i--) {
 			final Entity entity = particles[i].getEntity();
 
 			/* In order to support alpha changes of the sprites inside the spritebatch,
@@ -70,7 +70,7 @@ public class BatchedPseudoSpriteParticleSystem extends BlendFunctionParticleSyst
 			final float alpha = entity.getAlpha();
 			final float colorABGRPackedInt = ColorUtils.convertRGBAToABGRPackedFloat(entity.getRed() * alpha, entity.getGreen() * alpha, entity.getBlue() * alpha, alpha);
 
-			this.mSpriteBatch.drawWithoutChecks(this.mTextureRegion, entity, colorABGRPackedInt);
+			this.mSpriteBatch.drawWithoutChecks(this.mTextureRegion, entity, this.mTextureRegion.getWidth(), this.mTextureRegion.getHeight(), colorABGRPackedInt);
 		}
 		this.mSpriteBatch.submit();
 

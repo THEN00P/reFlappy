@@ -5,25 +5,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.andengine.util.StreamUtils;
-import org.andengine.util.level.exception.LevelLoaderException;
+import org.andengine.util.debug.Debug;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
- * @param <T>
  * @since 14:16:19 - 11.10.2010
  */
-public abstract class LevelLoader<T extends IEntityLoaderData, L extends IEntityLoaderListener, R extends ILevelLoaderResult> {
+public class LevelLoader {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -32,99 +34,107 @@ public abstract class LevelLoader<T extends IEntityLoaderData, L extends IEntity
 	// Fields
 	// ===========================================================
 
-	private final HashMap<String, IEntityLoader<T>> mEntityLoaders = new HashMap<String, IEntityLoader<T>>();
-	private IEntityLoader<T> mDefaultEntityLoader;
+	private String mAssetBasePath;
+
+	private IEntityLoader mDefaultEntityLoader;
+	private final HashMap<String, IEntityLoader> mEntityLoaders = new HashMap<String, IEntityLoader>();
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
 	public LevelLoader() {
-
+		this("");
 	}
 
-	public LevelLoader(final IEntityLoader<T> pDefaultEntityLoader) {
-		this.mDefaultEntityLoader = pDefaultEntityLoader;
+	public LevelLoader(final String pAssetBasePath) {
+		this.setAssetBasePath(pAssetBasePath);
 	}
 
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
 
-	public void setDefaultEntityLoader(final IEntityLoader<T> pDefaultEntityLoader) {
+	public IEntityLoader getDefaultEntityLoader() {
+		return this.mDefaultEntityLoader;
+	}
+
+	public void setDefaultEntityLoader(final IEntityLoader pDefaultEntityLoader) {
 		this.mDefaultEntityLoader = pDefaultEntityLoader;
+	}
+
+	/**
+	 * @param pAssetBasePath must end with '<code>/</code>' or have <code>.length() == 0</code>.
+	 */
+	public void setAssetBasePath(final String pAssetBasePath) {
+		if(pAssetBasePath.endsWith("/") || (pAssetBasePath.length() == 0)) {
+			this.mAssetBasePath = pAssetBasePath;
+		} else {
+			throw new IllegalStateException("pAssetBasePath must end with '/' or be lenght zero.");
+		}
+	}
+
+	public String getAssetBasePath() {
+		return mAssetBasePath;
 	}
 
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
+	protected void onAfterLoadLevel() {
+
+	}
+
+	protected void onBeforeLoadLevel() {
+
+	}
+
 	// ===========================================================
 	// Methods
 	// ===========================================================
 
-	protected abstract T onCreateEntityLoaderData();
-	protected abstract LevelLoaderContentHandler<T, L, R> onCreateLevelLoaderContentHandler(final HashMap<String, IEntityLoader<T>> pEntityLoaders, final IEntityLoader<T> pDefaultEntityLoader, final T pEntityLoaderData, final L pEntityLoaderListener);
+	public void registerEntityLoader(final String pEntityName, final IEntityLoader pEntityLoader) {
+		this.mEntityLoaders.put(pEntityName, pEntityLoader);
+	}
 
-	public void registerEntityLoader(final IEntityLoader<T> pEntityLoader) {
-		final String[] entityNames = pEntityLoader.getEntityNames();
-		for (int i = 0; i < entityNames.length; i++) {
-			final String entityName = entityNames[i];
-			this.mEntityLoaders.put(entityName, pEntityLoader);
+	public void registerEntityLoader(final String[] pEntityNames, final IEntityLoader pEntityLoader) {
+		final HashMap<String, IEntityLoader> entityLoaders = this.mEntityLoaders;
+
+		for(int i = pEntityNames.length - 1; i >= 0; i--) {
+			entityLoaders.put(pEntityNames[i], pEntityLoader);
 		}
 	}
 
-	public void clearEntityLoaders() {
-		this.mEntityLoaders.clear();
+	public void loadLevelFromAsset(final AssetManager pAssetManager, final String pAssetPath) throws IOException {
+		this.loadLevelFromStream(pAssetManager.open(this.mAssetBasePath + pAssetPath));
 	}
 
-	public R loadLevelFromAsset(final AssetManager pAssetManager, final String pAssetPath) throws LevelLoaderException {
-		return this.loadLevelFromAsset(pAssetManager, pAssetPath, (L) null);
+	public void loadLevelFromResource(final Resources pResources, final int pRawResourceID) throws IOException {
+		this.loadLevelFromStream(pResources.openRawResource(pRawResourceID));
 	}
 
-	public R loadLevelFromAsset(final AssetManager pAssetManager, final String pAssetPath, final L pEntityLoaderListener) throws LevelLoaderException {
-		final T entityLoaderData = this.onCreateEntityLoaderData();
-
-		return this.loadLevelFromAsset(pAssetManager, pAssetPath, entityLoaderData, pEntityLoaderListener);
-	}
-
-	public R loadLevelFromAsset(final AssetManager pAssetManager, final String pAssetPath, final T pEntityLoaderData) throws LevelLoaderException {
-		return this.loadLevelFromAsset(pAssetManager, pAssetPath, pEntityLoaderData, null);
-	}
-
-	public R loadLevelFromAsset(final AssetManager pAssetManager, final String pAssetPath, final T pEntityLoaderData, final L pEntityLoaderListener) throws LevelLoaderException {
-		try {
-			return this.loadLevelFromStream(pAssetManager.open(pAssetPath), pEntityLoaderData, pEntityLoaderListener);
-		} catch (final IOException e) {
-			throw new LevelLoaderException(e);
-		}
-	}
-
-	public R loadLevelFromStream(final InputStream pInputStream) throws LevelLoaderException {
-		return this.loadLevelFromStream(pInputStream, null);
-	}
-
-	public R loadLevelFromStream(final InputStream pInputStream, final L pEntityLoaderListener) throws LevelLoaderException {
-		final T entityLoaderData = this.onCreateEntityLoaderData();
-
-		return this.loadLevelFromStream(pInputStream, entityLoaderData, pEntityLoaderListener);
-	}
-
-	public R loadLevelFromStream(final InputStream pInputStream, final T pEntityLoaderData, final L pEntityLoaderListener) throws LevelLoaderException {
-		try {
+	public void loadLevelFromStream(final InputStream pInputStream) throws IOException {
+		try{
 			final SAXParserFactory spf = SAXParserFactory.newInstance();
 			final SAXParser sp = spf.newSAXParser();
 
 			final XMLReader xr = sp.getXMLReader();
 
-			final LevelLoaderContentHandler<T, L, R> levelContentHandler = this.onCreateLevelLoaderContentHandler(this.mEntityLoaders, this.mDefaultEntityLoader, pEntityLoaderData, pEntityLoaderListener);
-			xr.setContentHandler(levelContentHandler);
+			this.onBeforeLoadLevel();
+
+			final LevelParser levelParser = new LevelParser(this.mDefaultEntityLoader, this.mEntityLoaders);
+			xr.setContentHandler(levelParser);
 
 			xr.parse(new InputSource(new BufferedInputStream(pInputStream)));
 
-			return levelContentHandler.getLevelLoaderResult();
-		} catch (final Exception e) {
-			throw new LevelLoaderException(e);
+			this.onAfterLoadLevel();
+		} catch (final SAXException se) {
+			Debug.e(se);
+			/* Doesn't happen. */
+		} catch (final ParserConfigurationException pe) {
+			Debug.e(pe);
+			/* Doesn't happen. */
 		} finally {
 			StreamUtils.close(pInputStream);
 		}

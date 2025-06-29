@@ -8,7 +8,7 @@ import org.andengine.entity.shape.IShape;
 import org.andengine.opengl.util.GLState;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 11:34:32 - 10.05.2012
@@ -30,11 +30,11 @@ public class BlendFunctionParticleSystem<T extends IEntity> extends ParticleSyst
 	// Constructors
 	// ===========================================================
 
-	public BlendFunctionParticleSystem(final IEntityFactory<T> pEntityFactory, final IParticleEmitter pParticleEmitter, final float pRateMinimum, final float pRateMaximum, final int pParticlesMaximum) {
+	public BlendFunctionParticleSystem(IEntityFactory<T> pEntityFactory, IParticleEmitter pParticleEmitter, float pRateMinimum, float pRateMaximum, int pParticlesMaximum) {
 		super(pEntityFactory, pParticleEmitter, pRateMinimum, pRateMaximum, pParticlesMaximum);
 	}
 
-	public BlendFunctionParticleSystem(final float pX, final float pY, final IEntityFactory<T> pEntityFactory, final IParticleEmitter pParticleEmitter, final float pRateMinimum, final float pRateMaximum, final int pParticlesMaximum) {
+	public BlendFunctionParticleSystem(float pX, float pY, IEntityFactory<T> pEntityFactory, IParticleEmitter pParticleEmitter, float pRateMinimum, float pRateMaximum, int pParticlesMaximum) {
 		super(pX, pY, pEntityFactory, pParticleEmitter, pRateMinimum, pRateMaximum, pParticlesMaximum);
 	}
 
@@ -77,7 +77,7 @@ public class BlendFunctionParticleSystem<T extends IEntity> extends ParticleSyst
 
 	@Override
 	protected void preDraw(final GLState pGLState, final Camera pCamera) {
-		if (this.mBlendingEnabled) {
+		if(this.mBlendingEnabled) {
 			pGLState.enableBlend();
 			pGLState.blendFunction(this.mBlendFunctionSource, this.mBlendFunctionDestination);
 		}
@@ -85,7 +85,7 @@ public class BlendFunctionParticleSystem<T extends IEntity> extends ParticleSyst
 
 	@Override
 	protected void postDraw(final GLState pGLState, final Camera pCamera) {
-		if (this.mBlendingEnabled) {
+		if(this.mBlendingEnabled) {
 			pGLState.disableBlend();
 		}
 	}

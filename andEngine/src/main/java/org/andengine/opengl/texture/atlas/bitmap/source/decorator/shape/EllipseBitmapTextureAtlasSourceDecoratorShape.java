@@ -7,9 +7,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:52:55 - 04.01.2011
  */
@@ -35,7 +35,7 @@ public class EllipseBitmapTextureAtlasSourceDecoratorShape implements IBitmapTex
 	}
 
 	public static EllipseBitmapTextureAtlasSourceDecoratorShape getDefaultInstance() {
-		if (sDefaultInstance == null) {
+		if(sDefaultInstance == null) {
 			sDefaultInstance = new EllipseBitmapTextureAtlasSourceDecoratorShape();
 		}
 		return sDefaultInstance;
@@ -57,7 +57,7 @@ public class EllipseBitmapTextureAtlasSourceDecoratorShape implements IBitmapTex
 		final float bottom = pCanvas.getHeight() - pDecoratorOptions.getInsetBottom();
 
 		this.mRectF.set(left, top, right, bottom);
-
+		
 		pCanvas.drawOval(this.mRectF, pPaint);
 	}
 

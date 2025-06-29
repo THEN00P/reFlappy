@@ -4,9 +4,9 @@ import org.andengine.util.modifier.ease.EaseLinear;
 import org.andengine.util.modifier.ease.IEaseFunction;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 10:51:46 - 03.09.2010
  * @param <T>
@@ -57,11 +57,13 @@ public abstract class BaseDoubleValueSpanModifier<T> extends BaseSingleValueSpan
 	// Getter & Setter
 	// ===========================================================
 
+	@Override
 	@Deprecated
 	public float getFromValue() {
 		return super.getFromValue();
 	}
 
+	@Override
 	@Deprecated
 	public float getToValue() {
 		return super.getToValue();
@@ -109,7 +111,7 @@ public abstract class BaseDoubleValueSpanModifier<T> extends BaseSingleValueSpan
 	// ===========================================================
 	// Methods
 	// ===========================================================
-
+	
 	public void reset(final float pDuration, final float pFromValueA, final float pToValueA, final float pFromValueB, final float pToValueB) {
 		super.reset(pDuration, pFromValueA, pToValueA);
 

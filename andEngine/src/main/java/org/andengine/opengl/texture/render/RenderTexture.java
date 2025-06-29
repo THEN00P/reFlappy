@@ -13,16 +13,16 @@ import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.util.GLHelper;
 import org.andengine.opengl.util.GLState;
-import org.andengine.util.adt.color.Color;
+import org.andengine.util.color.Color;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.opengl.GLES20;
 
 /**
- * The general workflow with a {@link RenderTexture} is: {@link #init(GLState)} -> {@link #begin(GLState)} -> {@link #end(GLState)} -> {@link #destroy(GLState)}.
+ * The general workflow with a {@link RenderTexture} is: {@link RenderTexture#init(GLState)} -> {@link RenderTexture#begin(GLState)} -> {@link RenderTexture#end(GLState)} -> {@link RenderTexture#destroy(GLState)}. 
  *
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 07:13:05 - 24.08.2011
@@ -124,7 +124,7 @@ public class RenderTexture extends Texture {
 
 	/**
 	 * @param pGLState
-	 * @throws RenderTextureInitializationException when this {@link RenderTexture} could not be initialized. The {@link GLException} contains the error code. When this exception is throw, all cleanup will be automatically performed through {@link #destroy(GLState)}.
+	 * @throws RenderTextureInitializationException when this {@link RenderTexture} could not be initialized. The {@link GLException} contains the error code. When this exception is throw, all cleanup will be automatically performed through {@link RenderTexture#destroy(GLState)}.
 	 */
 	public void init(final GLState pGLState) throws GLFrameBufferException, GLException {
 		this.savePreviousFramebufferObjectID(pGLState);
@@ -159,16 +159,16 @@ public class RenderTexture extends Texture {
 	}
 
 	/**
-	 * @see {@link #end(GLState)},
-	 * 		{@link #end(GLState, boolean, boolean}}.
+	 * @see {@link RenderTexture#end(GLState)},
+	 * 		{@link RenderTexture#end(GLState, boolean, boolean}}.
 	 */
 	public void begin(final GLState pGLState) {
 		this.begin(pGLState, false, false);
 	}
 
 	/**
-	 * @see {@link #end(GLState)},
-	 * 		{@link #end(GLState, boolean, boolean}}.
+	 * @see {@link RenderTexture#end(GLState)},
+	 * 		{@link RenderTexture#end(GLState, boolean, boolean}}.
 	 *
 	 * @param pColor the {@link Color} to clear this {@link RenderTexture}.
 	 */
@@ -177,8 +177,8 @@ public class RenderTexture extends Texture {
 	}
 
 	/**
-	 * @see {@link #end(GLState)},
-	 * 		{@link #end(GLState, boolean, boolean}}.
+	 * @see {@link RenderTexture#end(GLState)},
+	 * 		{@link RenderTexture#end(GLState, boolean, boolean}}.
 	 *
 	 * @param pRed the red portion of the color to clear this {@link RenderTexture}.
 	 * @param pGreen the green portion of the color to clear this {@link RenderTexture}.
@@ -190,8 +190,8 @@ public class RenderTexture extends Texture {
 	}
 
 	/**
-	 * @see {@link #end(GLState)},
-	 * 		{@link #end(GLState, boolean, boolean}}.
+	 * @see {@link RenderTexture#end(GLState)},
+	 * 		{@link RenderTexture#end(GLState, boolean, boolean}}.
 	 *
 	 * @param pColor the {@link Color} to clear this {@link RenderTexture}.
 	 */
@@ -200,8 +200,8 @@ public class RenderTexture extends Texture {
 	}
 
 	/**
-	 * @see {@link #end(GLState)},
-	 * 		{@link #end(GLState, boolean, boolean}}.
+	 * @see {@link RenderTexture#end(GLState)},
+	 * 		{@link RenderTexture#end(GLState, boolean, boolean}}.
 	 *
 	 * @param pRed the red portion of the color to clear this {@link RenderTexture}.
 	 * @param pGreen the green portion of the color to clear this {@link RenderTexture}.
@@ -222,8 +222,8 @@ public class RenderTexture extends Texture {
 	}
 
 	/**
-	 * @see {@link #end(GLState)},
-	 * 		{@link #end(GLState, boolean, boolean}}.
+	 * @see {@link RenderTexture#end(GLState)},
+	 * 		{@link RenderTexture#end(GLState, boolean, boolean}}.
 	 */
 	public void begin(final GLState pGLState, final boolean pFlipX, final boolean pFlipY) {
 		this.savePreviousViewport();
@@ -235,19 +235,19 @@ public class RenderTexture extends Texture {
 		final float right;
 		final float bottom;
 		final float top;
-		if (pFlipX) {
+		if(pFlipX) {
 			left = this.mWidth;
 			right = 0;
 		} else {
 			left = 0;
 			right = this.mWidth;
 		}
-		if (pFlipY) {
-			top = 0;
-			bottom = this.mHeight;
-		} else {
+		if(pFlipY) {
 			top = this.mHeight;
 			bottom = 0;
+		} else {
+			top = 0;
+			bottom = this.mHeight;
 		}
 		pGLState.orthoProjectionGLMatrixf(left, right, bottom, top, -1, 1);
 
@@ -273,12 +273,12 @@ public class RenderTexture extends Texture {
 	}
 
 	/**
-	 * @see {@link #begin(GLState)},
-	 * 		{@link #begin(GLState, boolean, boolean)},
-	 * 		{@link #begin(GLState, Color)},
-	 * 		{@link #begin(GLState, float, float, float, float)},
-	 * 		{@link #begin(GLState, boolean, boolean, Color)}.
-	 * 		{@link #begin(GLState, boolean, boolean, float, float, float, float)}.
+	 * @see {@link RenderTexture#begin(GLState)},
+	 * 		{@link RenderTexture#begin(GLState, boolean, boolean)},
+	 * 		{@link RenderTexture#begin(GLState, Color)},
+	 * 		{@link RenderTexture#begin(GLState, float, float, float, float)},
+	 * 		{@link RenderTexture#begin(GLState, boolean, boolean, Color)}.
+	 * 		{@link RenderTexture#begin(GLState, boolean, boolean, float, float, float, float)}.
 	 */
 	public void end(final GLState pGLState) {
 		this.end(pGLState, false, false);
@@ -288,18 +288,18 @@ public class RenderTexture extends Texture {
 	 * @param pGLState
 	 * @param pFlush {@link GLState#flush()} has lower preference than pFinish.
 	 * @param pFinish {@link GLState#finish()} had higher preference than pFlush.
-	 *
-	 * @see {@link #begin(GLState)},
-	 * 		{@link #begin(GLState, boolean, boolean)},
-	 * 		{@link #begin(GLState, Color)},
-	 * 		{@link #begin(GLState, float, float, float, float)},
-	 * 		{@link #begin(GLState, boolean, boolean, Color)}.
-	 * 		{@link #begin(GLState, boolean, boolean, float, float, float, float)}.
+	 * 
+	 * @see {@link RenderTexture#begin(GLState)},
+	 * 		{@link RenderTexture#begin(GLState, boolean, boolean)},
+	 * 		{@link RenderTexture#begin(GLState, Color)},
+	 * 		{@link RenderTexture#begin(GLState, float, float, float, float)},
+	 * 		{@link RenderTexture#begin(GLState, boolean, boolean, Color)}.
+	 * 		{@link RenderTexture#begin(GLState, boolean, boolean, float, float, float, float)}.
 	 */
 	public void end(final GLState pGLState, final boolean pFlush, final boolean pFinish) {
-		if (pFinish) {
+		if(pFinish) {
 			this.finish(pGLState);
-		} else if (pFlush) {
+		} else if(pFlush) {
 			this.flush(pGLState);
 		}
 
@@ -362,7 +362,7 @@ public class RenderTexture extends Texture {
 	}
 
 	public Bitmap getBitmap(final GLState pGLState, final int pX, final int pY, final int pWidth, final int pHeight) {
-		if (this.mPixelFormat != PixelFormat.RGBA_8888) {
+		if(this.mPixelFormat != PixelFormat.RGBA_8888) {
 			throw new IllegalStateException("Currently only 'PixelFormat." + PixelFormat.RGBA_8888 + "' is supported to be retrieved as a Bitmap.");
 		}
 

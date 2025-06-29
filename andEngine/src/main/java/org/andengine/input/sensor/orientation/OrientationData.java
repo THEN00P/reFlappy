@@ -9,9 +9,9 @@ import android.hardware.SensorManager;
 import android.view.Surface;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 11:30:33 - 25.05.2010
  */
@@ -34,8 +34,8 @@ public class OrientationData extends BaseSensorData {
 	// Constructors
 	// ===========================================================
 
-	public OrientationData() {
-		super(3);
+	public OrientationData(final int pDisplayRotation) {
+		super(3, pDisplayRotation);
 	}
 
 	// ===========================================================
@@ -68,13 +68,11 @@ public class OrientationData extends BaseSensorData {
 
 	public void setAccelerationValues(final float[] pValues) {
 		System.arraycopy(pValues, 0, this.mAccelerationValues, 0, pValues.length);
-
 		this.updateOrientation();
 	}
 
 	public void setMagneticFieldValues(final float[] pValues) {
 		System.arraycopy(pValues, 0, this.mMagneticFieldValues, 0, pValues.length);
-
 		this.updateOrientation();
 	}
 
@@ -82,7 +80,7 @@ public class OrientationData extends BaseSensorData {
 		SensorManager.getRotationMatrix(this.mRotationMatrix, null, this.mAccelerationValues, this.mMagneticFieldValues);
 
 		// TODO Use dont't use identical matrixes in remapCoordinateSystem, due to performance reasons.
-		switch (this.mDisplayRotation) {
+		switch(this.mDisplayRotation) {
 			case Surface.ROTATION_0:
 				/* Nothing. */
 				break;
@@ -100,7 +98,7 @@ public class OrientationData extends BaseSensorData {
 		final float[] values = this.mValues;
 		SensorManager.getOrientation(this.mRotationMatrix, values);
 
-		for (int i = values.length - 1; i >= 0; i--) {
+		for(int i = values.length - 1; i >= 0; i--) {
 			values[i] = values[i] * MathConstants.RAD_TO_DEG;
 		}
 	}

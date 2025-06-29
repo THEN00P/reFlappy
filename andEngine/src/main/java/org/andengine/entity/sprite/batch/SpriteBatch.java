@@ -2,6 +2,7 @@ package org.andengine.entity.sprite.batch;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.IEntity;
+import org.andengine.entity.shape.IShape;
 import org.andengine.entity.shape.Shape;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.batch.vbo.HighPerformanceSpriteBatchVertexBufferObject;
@@ -16,18 +17,18 @@ import org.andengine.opengl.vbo.DrawType;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributesBuilder;
-import org.andengine.util.adt.color.ColorUtils;
 import org.andengine.util.adt.transformation.Transformation;
+import org.andengine.util.color.ColorUtils;
 
 import android.opengl.GLES20;
 
 /**
  * TODO TRY DEGENERATE TRIANGLES!
  * TODO Check if there is this multiple-of-X-byte(?) alignment optimization?
- *
+ * 
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 11:45:48 - 14.06.2011
  */
@@ -130,10 +131,6 @@ public class SpriteBatch extends Shape {
 	// Getter & Setter
 	// ===========================================================
 
-	public int getCapacity() {
-		return this.mCapacity;
-	}
-
 	public int getIndex() {
 		return this.mIndex;
 	}
@@ -166,7 +163,7 @@ public class SpriteBatch extends Shape {
 	}
 
 	@Override
-	public boolean collidesWith(final IEntity pOtherEntity) {
+	public boolean collidesWith(final IShape pOtherShape) {
 		return false;
 	}
 
@@ -184,7 +181,7 @@ public class SpriteBatch extends Shape {
 	protected void preDraw(final GLState pGLState, final Camera pCamera) {
 		super.preDraw(pGLState, pCamera);
 
-		if (this.mBlendingEnabled) {
+		if(this.mBlendingEnabled) {
 			pGLState.enableBlend();
 			pGLState.blendFunction(this.mBlendFunctionSource, this.mBlendFunctionDestination);
 		}
@@ -207,7 +204,7 @@ public class SpriteBatch extends Shape {
 	protected void postDraw(final GLState pGLState, final Camera pCamera) {
 		this.mSpriteBatchVertexBufferObject.unbind(pGLState, this.mShaderProgram);
 
-		if (this.mBlendingEnabled) {
+		if(this.mBlendingEnabled) {
 			pGLState.disableBlend();
 		}
 
@@ -225,7 +222,7 @@ public class SpriteBatch extends Shape {
 	public void dispose() {
 		super.dispose();
 
-		if (this.mSpriteBatchVertexBufferObject != null && this.mSpriteBatchVertexBufferObject.isAutoDispose() && !this.mSpriteBatchVertexBufferObject.isDisposed()) {
+		if(this.mSpriteBatchVertexBufferObject != null && this.mSpriteBatchVertexBufferObject.isAutoDispose() && !this.mSpriteBatchVertexBufferObject.isDisposed()) {
 			this.mSpriteBatchVertexBufferObject.dispose();
 		}
 	}
@@ -354,71 +351,71 @@ public class SpriteBatch extends Shape {
 	 * @see {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, float, float, float)} {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, Transformation, float)}.
 	 */
 	public void draw(final Sprite pSprite) {
-		this.draw(pSprite.getTextureRegion(), pSprite, pSprite.getColor().getABGRPackedFloat());
+		this.draw(pSprite.getTextureRegion(), pSprite, pSprite.getWidth(), pSprite.getHeight(), pSprite.getColor().getABGRPackedFloat());
 	}
 
 	public void drawWithoutChecks(final Sprite pSprite) {
-		this.drawWithoutChecks(pSprite.getTextureRegion(), pSprite, pSprite.getColor().getABGRPackedFloat());
+		this.drawWithoutChecks(pSprite.getTextureRegion(), pSprite, pSprite.getWidth(), pSprite.getHeight(), pSprite.getColor().getABGRPackedFloat());
 	}
 
 	/**
 	 * @see {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, float, float, float, float, float, float)} {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, Transformation, float, float, float, float)}.
 	 */
 	public void draw(final Sprite pSprite, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
-		this.draw(pSprite.getTextureRegion(), pSprite, pRed, pGreen, pBlue, pAlpha);
+		this.draw(pSprite.getTextureRegion(), pSprite, pSprite.getWidth(), pSprite.getHeight(), pRed, pGreen, pBlue, pAlpha);
 	}
 
 	public void drawWithoutChecks(final Sprite pSprite, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
-		this.drawWithoutChecks(pSprite.getTextureRegion(), pSprite, pRed, pGreen, pBlue, pAlpha);
+		this.drawWithoutChecks(pSprite.getTextureRegion(), pSprite, pSprite.getWidth(), pSprite.getHeight(), pRed, pGreen, pBlue, pAlpha);
 	}
 
 	/**
 	 * @see {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, float, float, float)} {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, Transformation, float, float, float, float)}.
 	 */
 	public void draw(final Sprite pSprite, final float pColorABGRPackedInt) {
-		this.draw(pSprite.getTextureRegion(), pSprite, pColorABGRPackedInt);
+		this.draw(pSprite.getTextureRegion(), pSprite, pSprite.getWidth(), pSprite.getHeight(), pColorABGRPackedInt);
 	}
 
 	public void drawWithoutChecks(final Sprite pSprite, final float pColorABGRPackedInt) {
-		this.drawWithoutChecks(pSprite.getTextureRegion(), pSprite, pColorABGRPackedInt);
+		this.drawWithoutChecks(pSprite.getTextureRegion(), pSprite, pSprite.getWidth(), pSprite.getHeight(), pColorABGRPackedInt);
 	}
 
 	/**
 	 * @see {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, float, float, float)} {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, Transformation, float)}.
 	 */
-	public void draw(final ITextureRegion pTextureRegion, final IEntity pEntity) {
-		this.draw(pTextureRegion, pEntity, pEntity.getColor().getABGRPackedFloat());
+	public void draw(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pWidth, final float pHeight) {
+		this.draw(pTextureRegion, pEntity, pWidth, pHeight, pEntity.getColor().getABGRPackedFloat());
 	}
 
-	public void drawWithoutChecks(final ITextureRegion pTextureRegion, final IEntity pEntity) {
-		this.drawWithoutChecks(pTextureRegion, pEntity, pEntity.getColor().getABGRPackedFloat());
+	public void drawWithoutChecks(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pWidth, final float pHeight) {
+		this.drawWithoutChecks(pTextureRegion, pEntity, pWidth, pHeight, pEntity.getColor().getABGRPackedFloat());
 	}
 
 	/**
 	 * @see {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, float, float, float, float, float, float)} {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, Transformation, float, float, float, float)}.
 	 */
-	public void draw(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
-		if (pEntity.isVisible()) {
+	public void draw(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pWidth, final float pHeight, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
+		if(pEntity.isVisible()) {
 			this.assertCapacity();
 
 			this.assertTexture(pTextureRegion);
 
-			if (pEntity.isRotatedOrScaledOrSkewed()) {
-				this.add(pTextureRegion, pEntity.getWidth(), pEntity.getHeight(), pEntity.getLocalToParentTransformation(), pRed, pGreen, pBlue, pAlpha);
+			if(pEntity.isRotatedOrScaledOrSkewed()) {
+				this.add(pTextureRegion, pWidth, pHeight, pEntity.getLocalToParentTransformation(), pRed, pGreen, pBlue, pAlpha);
 			} else {
-				this.add(pTextureRegion, pEntity.getX(), pEntity.getY(), pEntity.getWidth(), pEntity.getHeight(), pRed, pGreen, pBlue, pAlpha);
+				this.add(pTextureRegion, pEntity.getX(), pEntity.getY(), pWidth, pHeight, pRed, pGreen, pBlue, pAlpha);
 			}
 
 			this.mIndex++;
 		}
 	}
 
-	public void drawWithoutChecks(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
-		if (pEntity.isVisible()) {
-			if (pEntity.isRotatedOrScaledOrSkewed()) {
-				this.add(pTextureRegion, pEntity.getWidth(), pEntity.getHeight(), pEntity.getLocalToParentTransformation(), pRed, pGreen, pBlue, pAlpha);
+	public void drawWithoutChecks(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pWidth, final float pHeight, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
+		if(pEntity.isVisible()) {
+			if(pEntity.isRotatedOrScaledOrSkewed()) {
+				this.add(pTextureRegion, pWidth, pHeight, pEntity.getLocalToParentTransformation(), pRed, pGreen, pBlue, pAlpha);
 			} else {
-				this.add(pTextureRegion, pEntity.getX(), pEntity.getY(), pEntity.getWidth(), pEntity.getHeight(), pRed, pGreen, pBlue, pAlpha);
+				this.add(pTextureRegion, pEntity.getX(), pEntity.getY(), pWidth, pHeight, pRed, pGreen, pBlue, pAlpha);
 			}
 
 			this.mIndex++;
@@ -428,28 +425,28 @@ public class SpriteBatch extends Shape {
 	/**
 	 * @see {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, float, float, float)} {@link SpriteBatchVertexBufferObject#add(ITextureRegion, float, float, Transformation, float, float, float, float)}.
 	 */
-	public void draw(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pColorABGRPackedInt) {
-		if (pEntity.isVisible()) {
+	public void draw(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pWidth, final float pHeight, final float pColorABGRPackedInt) {
+		if(pEntity.isVisible()) {
 			this.assertCapacity();
 
 			this.assertTexture(pTextureRegion);
 
-			if (pEntity.isRotatedOrScaledOrSkewed()) {
-				this.addWithPackedColor(pTextureRegion, pEntity.getWidth(), pEntity.getHeight(), pEntity.getLocalToParentTransformation(), pColorABGRPackedInt);
+			if(pEntity.isRotatedOrScaledOrSkewed()) {
+				this.addWithPackedColor(pTextureRegion, pWidth, pHeight, pEntity.getLocalToParentTransformation(), pColorABGRPackedInt);
 			} else {
-				this.addWithPackedColor(pTextureRegion, pEntity.getX(), pEntity.getY(), pEntity.getWidth(), pEntity.getHeight(), pColorABGRPackedInt);
+				this.addWithPackedColor(pTextureRegion, pEntity.getX(), pEntity.getY(), pWidth, pHeight, pColorABGRPackedInt);
 			}
 
 			this.mIndex++;
 		}
 	}
 
-	public void drawWithoutChecks(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pColorABGRPackedInt) {
-		if (pEntity.isVisible()) {
-			if (pEntity.isRotatedOrScaledOrSkewed()) {
-				this.addWithPackedColor(pTextureRegion, pEntity.getWidth(), pEntity.getHeight(), pEntity.getLocalToParentTransformation(), pColorABGRPackedInt);
+	public void drawWithoutChecks(final ITextureRegion pTextureRegion, final IEntity pEntity, final float pWidth, final float pHeight, final float pColorABGRPackedInt) {
+		if(pEntity.isVisible()) {
+			if(pEntity.isRotatedOrScaledOrSkewed()) {
+				this.addWithPackedColor(pTextureRegion, pWidth, pHeight, pEntity.getLocalToParentTransformation(), pColorABGRPackedInt);
 			} else {
-				this.addWithPackedColor(pTextureRegion, pEntity.getX(), pEntity.getY(), pEntity.getWidth(), pEntity.getHeight(), pColorABGRPackedInt);
+				this.addWithPackedColor(pTextureRegion, pEntity.getX(), pEntity.getY(), pWidth, pHeight, pColorABGRPackedInt);
 			}
 
 			this.mIndex++;
@@ -470,20 +467,20 @@ public class SpriteBatch extends Shape {
 	}
 
 	private void assertCapacity(final int pIndex) {
-		if (pIndex >= this.mCapacity) {
-			throw new IllegalStateException("This supplied pIndex: '" + pIndex + "' is exceeding the capacity: '" + this.mCapacity + "' of this " + this.getClass().getSimpleName() + "!");
+		if(pIndex >= this.mCapacity) {
+			throw new IllegalStateException("This supplied pIndex: '" + pIndex + "' is exceeding the capacity: '" + this.mCapacity + "' of this SpriteBatch!");
 		}
 	}
 
 	private void assertCapacity() {
-		if (this.mIndex == this.mCapacity) {
-			throw new IllegalStateException("This " + this.getClass().getSimpleName() + " has already reached its capacity (" + this.mCapacity + ") !");
+		if(this.mIndex == this.mCapacity) {
+			throw new IllegalStateException("This SpriteBatch has already reached its capacity (" + this.mCapacity + ") !");
 		}
 	}
 
 	protected void assertTexture(final ITextureRegion pTextureRegion) {
-		if (pTextureRegion.getTexture() != this.mTexture) {
-			throw new IllegalArgumentException("The supplied Texture does match the Texture of this " + this.getClass().getSimpleName() + "!");
+		if(pTextureRegion.getTexture() != this.mTexture) {
+			throw new IllegalArgumentException("The supplied Texture does match the Texture of this SpriteBatch!");
 		}
 	}
 
@@ -669,7 +666,7 @@ public class SpriteBatch extends Shape {
 
 		pTransformation.transform(SpriteBatch.VERTICES_TMP);
 
-		this.addInner(pTextureRegion, SpriteBatch.VERTICES_TMP[0], SpriteBatch.VERTICES_TMP[1], SpriteBatch.VERTICES_TMP[2], SpriteBatch.VERTICES_TMP[3], SpriteBatch.VERTICES_TMP[4], SpriteBatch.VERTICES_TMP[5], SpriteBatch.VERTICES_TMP[6], SpriteBatch.VERTICES_TMP[7], pRed, pGreen, pBlue, pAlpha);
+		this.addInner(pTextureRegion, SpriteBatch.VERTICES_TMP[0], SpriteBatch.VERTICES_TMP[1], SpriteBatch.VERTICES_TMP[2], SpriteBatch.VERTICES_TMP[3],  SpriteBatch.VERTICES_TMP[4], SpriteBatch.VERTICES_TMP[5], SpriteBatch.VERTICES_TMP[6], SpriteBatch.VERTICES_TMP[7], pRed, pGreen, pBlue, pAlpha);
 	}
 
 	/**
@@ -694,7 +691,7 @@ public class SpriteBatch extends Shape {
 
 		pTransformation.transform(SpriteBatch.VERTICES_TMP);
 
-		this.mSpriteBatchVertexBufferObject.addWithPackedColor(pTextureRegion, SpriteBatch.VERTICES_TMP[0], SpriteBatch.VERTICES_TMP[1], SpriteBatch.VERTICES_TMP[2], SpriteBatch.VERTICES_TMP[3], SpriteBatch.VERTICES_TMP[4], SpriteBatch.VERTICES_TMP[5], SpriteBatch.VERTICES_TMP[6], SpriteBatch.VERTICES_TMP[7], pColorABGRPackedInt);
+		this.mSpriteBatchVertexBufferObject.addWithPackedColor(pTextureRegion, SpriteBatch.VERTICES_TMP[0], SpriteBatch.VERTICES_TMP[1], SpriteBatch.VERTICES_TMP[2], SpriteBatch.VERTICES_TMP[3],  SpriteBatch.VERTICES_TMP[4], SpriteBatch.VERTICES_TMP[5], SpriteBatch.VERTICES_TMP[6], SpriteBatch.VERTICES_TMP[7], pColorABGRPackedInt);
 	}
 
 	/**

@@ -3,9 +3,9 @@ package org.andengine.engine.handler.timer;
 import org.andengine.engine.handler.IUpdateHandler;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 16:23:58 - 12.03.2010
  */
@@ -33,8 +33,8 @@ public class TimerHandler implements IUpdateHandler {
 	}
 
 	public TimerHandler(final float pTimerSeconds, final boolean pAutoReset, final ITimerCallback pTimerCallback) {
-		if (pTimerSeconds <= 0) {
-			throw new IllegalStateException("pTimerSeconds must be >= 0!");
+		if(pTimerSeconds <= 0){
+			throw new IllegalStateException("pTimerSeconds must be > 0!");
 		}
 
 		this.mTimerSeconds = pTimerSeconds;
@@ -55,6 +55,10 @@ public class TimerHandler implements IUpdateHandler {
 	}
 
 	public void setTimerSeconds(final float pTimerSeconds) {
+		if(pTimerSeconds <= 0){
+			throw new IllegalStateException("pTimerSeconds must be > 0!");
+		}
+
 		this.mTimerSeconds = pTimerSeconds;
 	}
 
@@ -65,7 +69,7 @@ public class TimerHandler implements IUpdateHandler {
 	public float getTimerSecondsElapsed() {
 		return this.mTimerSecondsElapsed;
 	}
-
+	
 	public boolean isTimerCallbackTriggered() {
 		return this.mTimerCallbackTriggered;
 	}
@@ -80,16 +84,16 @@ public class TimerHandler implements IUpdateHandler {
 
 	@Override
 	public void onUpdate(final float pSecondsElapsed) {
-		if (this.mAutoReset) {
+		if(this.mAutoReset) {
 			this.mTimerSecondsElapsed += pSecondsElapsed;
-			while (this.mTimerSecondsElapsed >= this.mTimerSeconds) {
+			while(this.mTimerSecondsElapsed >= this.mTimerSeconds) {
 				this.mTimerSecondsElapsed -= this.mTimerSeconds;
 				this.mTimerCallback.onTimePassed(this);
 			}
 		} else {
-			if (!this.mTimerCallbackTriggered) {
+			if(!this.mTimerCallbackTriggered) {
 				this.mTimerSecondsElapsed += pSecondsElapsed;
-				if (this.mTimerSecondsElapsed >= this.mTimerSeconds) {
+				if(this.mTimerSecondsElapsed >= this.mTimerSeconds) {
 					this.mTimerCallbackTriggered = true;
 					this.mTimerCallback.onTimePassed(this);
 				}

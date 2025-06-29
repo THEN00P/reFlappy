@@ -6,24 +6,20 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.andengine.opengl.texture.atlas.source.BaseTextureAtlasSource;
-import org.andengine.util.BitmapUtils;
 import org.andengine.util.FileUtils;
 import org.andengine.util.StreamUtils;
 import org.andengine.util.debug.Debug;
-import org.andengine.util.system.SystemUtils;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 
 /**
- *
- * (c) 2010 Nicolas Gramlich
+ * 
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 16:39:22 - 10.08.2010
  */
@@ -41,7 +37,7 @@ public class FileBitmapTextureAtlasSource extends BaseTextureAtlasSource impleme
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
+	
 	public static FileBitmapTextureAtlasSource create(final File pFile) {
 		return FileBitmapTextureAtlasSource.create(pFile, 0, 0);
 	}
@@ -92,30 +88,13 @@ public class FileBitmapTextureAtlasSource extends BaseTextureAtlasSource impleme
 
 	@Override
 	public Bitmap onLoadBitmap(final Config pBitmapConfig) {
-		return this.onLoadBitmap(pBitmapConfig, false);
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	@Override
-	public Bitmap onLoadBitmap(final Config pBitmapConfig, final boolean pMutable) {
 		final BitmapFactory.Options decodeOptions = new BitmapFactory.Options();
 		decodeOptions.inPreferredConfig = pBitmapConfig;
-		decodeOptions.inDither = false;
-
-		if (pMutable && SystemUtils.isAndroidVersionOrHigher(Build.VERSION_CODES.HONEYCOMB)) {
-			decodeOptions.inMutable = pMutable;
-		}
 
 		InputStream in = null;
 		try {
 			in = new FileInputStream(this.mFile);
-			final Bitmap bitmap = BitmapFactory.decodeStream(in, null, decodeOptions);
-
-			if (pMutable) {
-				return BitmapUtils.ensureBitmapIsMutable(bitmap);
-			} else {
-				return bitmap;
-			}
+			return BitmapFactory.decodeStream(in, null, decodeOptions);
 		} catch (final IOException e) {
 			Debug.e("Failed loading Bitmap in " + this.getClass().getSimpleName() + ". File: " + this.mFile, e);
 			return null;

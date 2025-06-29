@@ -1,7 +1,7 @@
 package org.andengine.util.adt.list;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 15:27:16 - 01.02.2012

@@ -7,9 +7,9 @@ import org.andengine.entity.shape.IShape;
 import org.andengine.util.adt.list.ListUtils;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:19:35 - 11.03.2010
  */
@@ -64,10 +64,10 @@ public class CollisionHandler implements IUpdateHandler {
 		final ArrayList<? extends IShape> staticEntities = this.mTargetStaticEntities;
 		final int staticEntityCount = staticEntities.size();
 
-		for (int i = 0; i < staticEntityCount; i++) {
-			if (checkShape.collidesWith(staticEntities.get(i))) {
+		for(int i = 0; i < staticEntityCount; i++){
+			if(checkShape.collidesWith(staticEntities.get(i))){
 				final boolean proceed = this.mCollisionCallback.onCollision(checkShape, staticEntities.get(i));
-				if (!proceed) {
+				if(!proceed) {
 					return;
 				}
 			}

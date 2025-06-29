@@ -9,7 +9,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 14:53:12 - 13.06.2010
  */
@@ -56,7 +56,7 @@ public class Music extends BaseAudioEntity {
 
 	@Override
 	protected MusicManager getAudioManager() throws MusicReleasedException {
-		return (MusicManager) super.getAudioManager();
+		return (MusicManager)super.getAudioManager();
 	}
 
 	@Override

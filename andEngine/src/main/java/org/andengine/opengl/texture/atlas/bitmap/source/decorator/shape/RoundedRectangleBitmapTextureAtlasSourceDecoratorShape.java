@@ -7,9 +7,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:50:09 - 04.01.2011
  */
@@ -45,7 +45,7 @@ public class RoundedRectangleBitmapTextureAtlasSourceDecoratorShape implements I
 	}
 
 	public static RoundedRectangleBitmapTextureAtlasSourceDecoratorShape getDefaultInstance() {
-		if (sDefaultInstance == null) {
+		if(sDefaultInstance == null) {
 			sDefaultInstance = new RoundedRectangleBitmapTextureAtlasSourceDecoratorShape();
 		}
 		return sDefaultInstance;

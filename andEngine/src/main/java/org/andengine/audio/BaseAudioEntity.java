@@ -5,7 +5,7 @@ import org.andengine.audio.exception.AudioException;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 16:35:37 - 13.06.2010
  */
@@ -69,7 +69,7 @@ public abstract class BaseAudioEntity implements IAudioEntity {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected abstract void throwOnReleased() throws AudioException;
+	protected abstract void throwOnReleased() throws AudioException ;
 
 	@Override
 	public float getVolume() throws AudioException {
@@ -149,7 +149,7 @@ public abstract class BaseAudioEntity implements IAudioEntity {
 	// ===========================================================
 
 	protected void assertNotReleased() throws AudioException {
-		if (this.mReleased) {
+		if(this.mReleased) {
 			this.throwOnReleased();
 		}
 	}

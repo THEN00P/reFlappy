@@ -5,9 +5,9 @@ import org.andengine.entity.particle.Particle;
 import org.andengine.util.math.MathUtils;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 10:18:06 - 29.06.2010
  */
@@ -52,7 +52,7 @@ public abstract class BaseSingleValueParticleInitializer<T extends IEntity> impl
 	// ===========================================================
 
 	protected float getRandomValue() {
-		if (this.mMinValue == this.mMaxValue) {
+		if(this.mMinValue == this.mMaxValue) {
 			return this.mMaxValue;
 		} else {
 			return MathUtils.random(this.mMinValue, this.mMaxValue);

@@ -8,7 +8,7 @@ import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 import android.opengl.GLES20;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 13:56:44 - 25.08.2011
@@ -55,7 +55,7 @@ public class PositionTextureCoordinatesPositionInterpolationTextureSelectShaderP
 	}
 
 	public static PositionTextureCoordinatesPositionInterpolationTextureSelectShaderProgram getInstance() {
-		if (PositionTextureCoordinatesPositionInterpolationTextureSelectShaderProgram.INSTANCE == null) {
+		if(PositionTextureCoordinatesPositionInterpolationTextureSelectShaderProgram.INSTANCE == null) {
 			PositionTextureCoordinatesPositionInterpolationTextureSelectShaderProgram.INSTANCE = new PositionTextureCoordinatesPositionInterpolationTextureSelectShaderProgram();
 		}
 		return PositionTextureCoordinatesPositionInterpolationTextureSelectShaderProgram.INSTANCE;
@@ -104,7 +104,7 @@ public class PositionTextureCoordinatesPositionInterpolationTextureSelectShaderP
 		GLES20.glEnableVertexAttribArray(ShaderProgramConstants.ATTRIBUTE_POSITION_LOCATION);
 		GLES20.glDisableVertexAttribArray(ShaderProgramConstants.ATTRIBUTE_POSITION_0_LOCATION);
 		GLES20.glDisableVertexAttribArray(ShaderProgramConstants.ATTRIBUTE_POSITION_1_LOCATION);
-
+		
 		super.unbind(pGLState);
 	}
 

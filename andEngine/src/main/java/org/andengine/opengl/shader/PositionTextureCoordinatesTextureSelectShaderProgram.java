@@ -8,7 +8,7 @@ import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 import android.opengl.GLES20;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 13:56:44 - 25.08.2011
@@ -29,7 +29,7 @@ public class PositionTextureCoordinatesTextureSelectShaderProgram extends Shader
 			"uniform bool " + ShaderProgramConstants.UNIFORM_TEXTURESELECT_TEXTURE_0 + ";\n" +
 			"varying mediump vec2 " + ShaderProgramConstants.VARYING_TEXTURECOORDINATES + ";\n" +
 			"void main() {\n" +
-			"	if (" + ShaderProgramConstants.UNIFORM_TEXTURESELECT_TEXTURE_0 + ") {\n" +
+			"	if(" + ShaderProgramConstants.UNIFORM_TEXTURESELECT_TEXTURE_0 + ") {\n" +
 			"		gl_FragColor = texture2D(" + ShaderProgramConstants.UNIFORM_TEXTURE_0 + ", " + ShaderProgramConstants.VARYING_TEXTURECOORDINATES + ");\n" +
 			"	} else {\n" +
 			"		gl_FragColor = texture2D(" + ShaderProgramConstants.UNIFORM_TEXTURE_1 + ", " + ShaderProgramConstants.VARYING_TEXTURECOORDINATES + ");\n" +
@@ -54,7 +54,7 @@ public class PositionTextureCoordinatesTextureSelectShaderProgram extends Shader
 	}
 
 	public static PositionTextureCoordinatesTextureSelectShaderProgram getInstance() {
-		if (PositionTextureCoordinatesTextureSelectShaderProgram.INSTANCE == null) {
+		if(PositionTextureCoordinatesTextureSelectShaderProgram.INSTANCE == null) {
 			PositionTextureCoordinatesTextureSelectShaderProgram.INSTANCE = new PositionTextureCoordinatesTextureSelectShaderProgram();
 		}
 		return PositionTextureCoordinatesTextureSelectShaderProgram.INSTANCE;
@@ -95,7 +95,7 @@ public class PositionTextureCoordinatesTextureSelectShaderProgram extends Shader
 	@Override
 	public void unbind(final GLState pGLState) {
 		GLES20.glEnableVertexAttribArray(ShaderProgramConstants.ATTRIBUTE_COLOR_LOCATION);
-
+		
 		super.unbind(pGLState);
 	}
 

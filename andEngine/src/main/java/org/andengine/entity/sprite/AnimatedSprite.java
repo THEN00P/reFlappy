@@ -11,7 +11,7 @@ import org.andengine.util.time.TimeConstants;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 15:25:46 - 10.03.2010
  */
@@ -105,20 +105,20 @@ public class AnimatedSprite extends TiledSprite {
 	protected void onManagedUpdate(final float pSecondsElapsed) {
 		super.onManagedUpdate(pSecondsElapsed);
 
-		if (this.mAnimationRunning) {
+		if(this.mAnimationRunning) {
 			final int loopCount = this.mAnimationData.getLoopCount();
 			final int[] frames = this.mAnimationData.getFrames();
 			final long animationDuration = this.mAnimationData.getAnimationDuration();
 
-			if (!this.mAnimationStartedFired && (this.mAnimationProgress == 0)) {
+			if(!this.mAnimationStartedFired && (this.mAnimationProgress == 0)) {
 				this.mAnimationStartedFired = true;
-				if (frames == null) {
+				if(frames == null) {
 					this.setCurrentTileIndex(this.mAnimationData.getFirstFrameIndex());
 				} else {
 					this.setCurrentTileIndex(frames[0]);
 				}
 				this.mCurrentFrameIndex = 0;
-				if (this.mAnimationListener != null) {
+				if(this.mAnimationListener != null) {
 					this.mAnimationListener.onAnimationStarted(this, loopCount);
 					this.mAnimationListener.onAnimationFrameChanged(this, AnimatedSprite.FRAMEINDEX_INVALID, 0);
 				}
@@ -126,42 +126,42 @@ public class AnimatedSprite extends TiledSprite {
 			final long nanoSecondsElapsed = (long) (pSecondsElapsed * TimeConstants.NANOSECONDS_PER_SECOND);
 			this.mAnimationProgress += nanoSecondsElapsed;
 
-			if (loopCount == IAnimationData.LOOP_CONTINUOUS) {
-				while (this.mAnimationProgress > animationDuration) {
+			if(loopCount == IAnimationData.LOOP_CONTINUOUS) {
+				while(this.mAnimationProgress > animationDuration ) {
 					this.mAnimationProgress -= animationDuration;
-					if (this.mAnimationListener != null) {
+					if(this.mAnimationListener != null) {
 						this.mAnimationListener.onAnimationLoopFinished(this, this.mRemainingLoopCount, loopCount);
 					}
 				}
 			} else {
-				while (this.mAnimationProgress > animationDuration) {
+				while(this.mAnimationProgress > animationDuration) {
 					this.mAnimationProgress -= animationDuration;
 					this.mRemainingLoopCount--;
-					if (this.mRemainingLoopCount < 0) {
+					if(this.mRemainingLoopCount < 0) {
 						break;
-					} else if (this.mAnimationListener != null) {
+					} else if(this.mAnimationListener != null) {
 						this.mAnimationListener.onAnimationLoopFinished(this, this.mRemainingLoopCount, loopCount);
 					}
 				}
 			}
 
-			if ((loopCount == IAnimationData.LOOP_CONTINUOUS) || (this.mRemainingLoopCount >= 0)) {
+			if((loopCount == IAnimationData.LOOP_CONTINUOUS) || (this.mRemainingLoopCount >= 0)) {
 				final int newFrameIndex = this.mAnimationData.calculateCurrentFrameIndex(this.mAnimationProgress);
 
-				if (this.mCurrentFrameIndex != newFrameIndex) {
-					if (frames == null) {
+				if(this.mCurrentFrameIndex != newFrameIndex) {
+					if(frames == null) {
 						this.setCurrentTileIndex(this.mAnimationData.getFirstFrameIndex() + newFrameIndex);
 					} else {
 						this.setCurrentTileIndex(frames[newFrameIndex]);
 					}
-					if (this.mAnimationListener != null) {
+					if(this.mAnimationListener != null) {
 						this.mAnimationListener.onAnimationFrameChanged(this, this.mCurrentFrameIndex, newFrameIndex);
 					}
 				}
 				this.mCurrentFrameIndex = newFrameIndex;
 			} else {
 				this.mAnimationRunning = false;
-				if (this.mAnimationListener != null) {
+				if(this.mAnimationListener != null) {
 					this.mAnimationListener.onAnimationFinished(this);
 				}
 			}
@@ -212,7 +212,7 @@ public class AnimatedSprite extends TiledSprite {
 	}
 
 	public void animate(final long[] pFrameDurations) {
-		this.animate(pFrameDurations, (IAnimationListener) null);
+		this.animate(pFrameDurations, (IAnimationListener)null);
 	}
 
 	public void animate(final long[] pFrameDurations, final IAnimationListener pAnimationListener) {
@@ -263,7 +263,7 @@ public class AnimatedSprite extends TiledSprite {
 
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 */
@@ -273,7 +273,7 @@ public class AnimatedSprite extends TiledSprite {
 
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 * @param pAnimationListener
@@ -286,7 +286,7 @@ public class AnimatedSprite extends TiledSprite {
 
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 * @param pLoop
@@ -297,7 +297,7 @@ public class AnimatedSprite extends TiledSprite {
 
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 * @param pLoop
@@ -311,7 +311,7 @@ public class AnimatedSprite extends TiledSprite {
 
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 * @param pLoopCount
@@ -322,7 +322,7 @@ public class AnimatedSprite extends TiledSprite {
 
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 * @param pLoopCount
@@ -338,7 +338,7 @@ public class AnimatedSprite extends TiledSprite {
 		this.animate(pAnimationData, null);
 	}
 
-	private void animate(final IAnimationData pAnimationData, final IAnimationListener pAnimationListener) {
+	public void animate(final IAnimationData pAnimationData, final IAnimationListener pAnimationListener) {
 		this.mAnimationData.set(pAnimationData);
 
 		this.initAnimation(pAnimationListener);

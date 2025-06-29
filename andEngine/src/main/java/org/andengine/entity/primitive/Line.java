@@ -1,9 +1,10 @@
 package org.andengine.entity.primitive;
 
 import org.andengine.engine.camera.Camera;
-import org.andengine.entity.IEntity;
 import org.andengine.entity.primitive.vbo.HighPerformanceLineVertexBufferObject;
 import org.andengine.entity.primitive.vbo.ILineVertexBufferObject;
+import org.andengine.entity.shape.IShape;
+import org.andengine.entity.shape.RectangularShape;
 import org.andengine.entity.shape.Shape;
 import org.andengine.opengl.shader.PositionColorShaderProgram;
 import org.andengine.opengl.shader.constants.ShaderProgramConstants;
@@ -14,6 +15,7 @@ import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttribute;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributesBuilder;
 import org.andengine.util.algorithm.collision.LineCollisionChecker;
+import org.andengine.util.algorithm.collision.RectangularShapeCollisionChecker;
 import org.andengine.util.exception.MethodNotSupportedException;
 
 import android.opengl.GLES20;
@@ -21,7 +23,7 @@ import android.opengl.GLES20;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 09:50:36 - 04.04.2010
  */
@@ -30,7 +32,7 @@ public class Line extends Shape {
 	// Constants
 	// ===========================================================
 
-	public static final float LINE_WIDTH_DEFAULT = GLState.LINE_WIDTH_DEFAULT;
+	public static final float LINE_WIDTH_DEFAULT = 1.0f;
 
 	public static final int VERTEX_INDEX_X = 0;
 	public static final int VERTEX_INDEX_Y = Line.VERTEX_INDEX_X + 1;
@@ -61,21 +63,21 @@ public class Line extends Shape {
 	// ===========================================================
 
 	/**
-	 * Uses a default {@link HighPerformanceLineVertexBufferObject} in {@link DrawType#STATIC} with the {@link VertexBufferObjectAttribute}s: {@link #VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
+	 * Uses a default {@link HighPerformanceLineVertexBufferObject} in {@link DrawType#STATIC} with the {@link VertexBufferObjectAttribute}s: {@link Line#VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
 	 */
 	public Line(final float pX1, final float pY1, final float pX2, final float pY2, final VertexBufferObjectManager pVertexBufferObjectManager) {
 		this(pX1, pY1, pX2, pY2, Line.LINE_WIDTH_DEFAULT, pVertexBufferObjectManager, DrawType.STATIC);
 	}
 
 	/**
-	 * Uses a default {@link HighPerformanceLineVertexBufferObject} with the {@link VertexBufferObjectAttribute}s: {@link #VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
+	 * Uses a default {@link HighPerformanceLineVertexBufferObject} with the {@link VertexBufferObjectAttribute}s: {@link Line#VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
 	 */
 	public Line(final float pX1, final float pY1, final float pX2, final float pY2, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
 		this(pX1, pY1, pX2, pY2, Line.LINE_WIDTH_DEFAULT, pVertexBufferObjectManager, pDrawType);
 	}
 
 	/**
-	 * Uses a default {@link HighPerformanceLineVertexBufferObject} in {@link DrawType#STATIC} with the {@link VertexBufferObjectAttribute}s: {@link #VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
+	 * Uses a default {@link HighPerformanceLineVertexBufferObject} in {@link DrawType#STATIC} with the {@link VertexBufferObjectAttribute}s: {@link Line#VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
 	 */
 	public Line(final float pX1, final float pY1, final float pX2, final float pY2, final float pLineWidth, final VertexBufferObjectManager pVertexBufferObjectManager) {
 		this(pX1, pY1, pX2, pY2, pLineWidth, pVertexBufferObjectManager, DrawType.STATIC);
@@ -86,12 +88,10 @@ public class Line extends Shape {
 	}
 
 	public Line(final float pX1, final float pY1, final float pX2, final float pY2, final float pLineWidth, final ILineVertexBufferObject pLineVertexBufferObject) {
-		super(pX1, pY1, pX2 - pX1, pY2 - pY1, PositionColorShaderProgram.getInstance());
+		super(pX1, pY1, PositionColorShaderProgram.getInstance());
 
 		this.mX2 = pX2;
 		this.mY2 = pY2;
-
-		this.setOffsetCenter(0, 0);
 
 		this.mLineWidth = pLineWidth;
 
@@ -99,6 +99,15 @@ public class Line extends Shape {
 
 		this.onUpdateVertices();
 		this.onUpdateColor();
+
+		final float centerX = (this.mX2 - this.mX) * 0.5f;
+		final float centerY = (this.mY2 - this.mY) * 0.5f;
+
+		this.mRotationCenterX = centerX;
+		this.mRotationCenterY = centerY;
+
+		this.mScaleCenterX = this.mRotationCenterX;
+		this.mScaleCenterY = this.mRotationCenterY;
 
 		this.setBlendingEnabled(true);
 	}
@@ -108,7 +117,7 @@ public class Line extends Shape {
 	// ===========================================================
 
 	/**
-	 * @deprecated Instead use {@link #getX1()} or {@link #getX2()}.
+	 * @deprecated Instead use {@link Line#getX1()} or {@link Line#getX2()}.
 	 */
 	@Deprecated
 	@Override
@@ -117,7 +126,7 @@ public class Line extends Shape {
 	}
 
 	/**
-	 * @deprecated Instead use {@link #getY1()} or {@link #getY2()}.
+	 * @deprecatedInstead use {@link Line#getY1()} or {@link Line#getY2()}.
 	 */
 	@Deprecated
 	@Override
@@ -150,37 +159,33 @@ public class Line extends Shape {
 	}
 
 	/**
-	 * Instead use {@link #setPosition(float, float, float, float)}.
+	 * Instead use {@link Line#setPosition(float, float, float, float)}.
 	 */
 	@Deprecated
 	@Override
 	public void setX(final float pX) {
 		final float dX = this.mX - pX;
 
-		this.mX2 += dX;
-
 		super.setX(pX);
 
-		this.onUpdateVertices();
+		this.mX2 += dX;
 	}
 
 	/**
-	 * Instead use {@link #setPosition(float, float, float, float)}.
+	 * Instead use {@link Line#setPosition(float, float, float, float)}.
 	 */
 	@Deprecated
 	@Override
 	public void setY(final float pY) {
 		final float dY = this.mY - pY;
-
-		this.mY2 += dY;
-
+		
 		super.setY(pY);
-
-		this.onUpdateVertices();
+		
+		this.mY2 += dY;
 	}
 
 	/**
-	 * Instead use {@link #setPosition(float, float, float, float)}.
+	 * Instead use {@link Line#setPosition(float, float, float, float)}.
 	 */
 	@Deprecated
 	@Override
@@ -188,12 +193,10 @@ public class Line extends Shape {
 		final float dX = this.mX - pX;
 		final float dY = this.mY - pY;
 
-		this.mX2 += dX;
-		this.mY2 += dY;
-
 		super.setPosition(pX, pY);
 
-		this.onUpdateVertices();
+		this.mX2 += dX;
+		this.mY2 += dY;
 	}
 
 	public void setPosition(final float pX1, final float pY1, final float pX2, final float pY2) {
@@ -203,24 +206,6 @@ public class Line extends Shape {
 		super.setPosition(pX1, pY1);
 
 		this.onUpdateVertices();
-	}
-
-	@Deprecated
-	@Override
-	public void setWidth(final float pWidth) {
-		super.setWidth(pWidth);
-	}
-
-	@Deprecated
-	@Override
-	public void setHeight(final float pHeight) {
-		super.setHeight(pHeight);
-	}
-
-	@Deprecated
-	@Override
-	public void setSize(final float pWidth, final float pHeight) {
-		super.setSize(pWidth, pHeight);
 	}
 
 	// ===========================================================
@@ -285,12 +270,14 @@ public class Line extends Shape {
 	}
 
 	@Override
-	public boolean collidesWith(final IEntity pOtherEntity) {
-		if (pOtherEntity instanceof Line) {
-			final Line otherLine = (Line) pOtherEntity;
+	public boolean collidesWith(final IShape pOtherShape) {
+		if(pOtherShape instanceof Line) {
+			final Line otherLine = (Line) pOtherShape;
 			return LineCollisionChecker.checkLineCollision(this.mX, this.mY, this.mX2, this.mY2, otherLine.mX, otherLine.mY, otherLine.mX2, otherLine.mY2);
+		} else if(pOtherShape instanceof RectangularShape) {
+			return RectangularShapeCollisionChecker.checkCollision((RectangularShape) pOtherShape, this);
 		} else {
-			return super.collidesWith(pOtherEntity);
+			return false;
 		}
 	}
 

@@ -1,9 +1,9 @@
 package org.andengine.util.mime;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 14:58:20 - 10.01.2011
  */
@@ -13,9 +13,8 @@ public enum MIMEType {
 	// ===========================================================
 
 	JPEG("image/jpeg"),
-	Gif ("image/gif"),
-	PNG("image/png"),
-	TEXT("text/plain");
+	GIF("image/gif"),
+	PNG("image/png");
 
 	// ===========================================================
 	// Constants
@@ -24,7 +23,7 @@ public enum MIMEType {
 	// ===========================================================
 	// Fields
 	// ===========================================================
-
+	
 	private final String mTypeString;
 
 	// ===========================================================

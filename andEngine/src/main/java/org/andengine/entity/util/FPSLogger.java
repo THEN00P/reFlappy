@@ -2,13 +2,12 @@ package org.andengine.entity.util;
 
 import org.andengine.BuildConfig;
 import org.andengine.util.debug.Debug;
-import org.andengine.util.debug.Debug.DebugLevel;
 import org.andengine.util.time.TimeConstants;
 
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 19:52:31 - 09.03.2010
  */
@@ -21,8 +20,6 @@ public class FPSLogger extends AverageFPSCounter {
 	// Fields
 	// ===========================================================
 
-	private final DebugLevel mDebugLevel;
-
 	protected float mShortestFrame = Float.MAX_VALUE;
 	protected float mLongestFrame = Float.MIN_VALUE;
 
@@ -31,21 +28,11 @@ public class FPSLogger extends AverageFPSCounter {
 	// ===========================================================
 
 	public FPSLogger() {
-		this(DebugLevel.DEBUG);
-	}
-
-	public FPSLogger(final DebugLevel pDebugLevel) {
-		this.mDebugLevel = pDebugLevel;
+		super();
 	}
 
 	public FPSLogger(final float pAverageDuration) {
-		this(pAverageDuration, DebugLevel.DEBUG);
-	}
-
-	public FPSLogger(final float pAverageDuration, final DebugLevel pDebugLevel) {
 		super(pAverageDuration);
-
-		this.mDebugLevel = pDebugLevel;
 	}
 
 	// ===========================================================
@@ -85,12 +72,11 @@ public class FPSLogger extends AverageFPSCounter {
 	// ===========================================================
 
 	protected void onLogFPS() {
-		if (BuildConfig.DEBUG) {
-			final float framesPerSecond = this.mFrames / this.mSecondsElapsed;
-			final float shortestFrameInMilliseconds = this.mShortestFrame * TimeConstants.MILLISECONDS_PER_SECOND;
-			final float longestFrameInMilliseconds = this.mLongestFrame * TimeConstants.MILLISECONDS_PER_SECOND;
-
-			Debug.log(this.mDebugLevel, String.format("FPS: %.2f (MIN: %.0f ms | MAX: %.0f ms)", framesPerSecond, shortestFrameInMilliseconds, longestFrameInMilliseconds));
+		if(BuildConfig.DEBUG) {
+			Debug.d(String.format("FPS: %.2f (MIN: %.0f ms | MAX: %.0f ms)",
+				this.mFrames / this.mSecondsElapsed,
+				this.mShortestFrame * TimeConstants.MILLISECONDS_PER_SECOND,
+				this.mLongestFrame * TimeConstants.MILLISECONDS_PER_SECOND));
 		}
 	}
 

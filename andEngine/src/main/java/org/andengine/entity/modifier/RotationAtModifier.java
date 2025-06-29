@@ -6,9 +6,9 @@ import org.andengine.util.modifier.ease.IEaseFunction;
 
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 21:59:38 - 06.07.2010
  */
@@ -55,7 +55,7 @@ public class RotationAtModifier extends RotationModifier {
 	}
 
 	@Override
-	public RotationAtModifier deepCopy() {
+	public RotationAtModifier deepCopy(){
 		return new RotationAtModifier(this);
 	}
 

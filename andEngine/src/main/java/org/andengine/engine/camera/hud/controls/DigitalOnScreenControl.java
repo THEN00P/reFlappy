@@ -6,9 +6,9 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.math.MathUtils;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 00:21:55 - 11.07.2010
  */
@@ -61,54 +61,54 @@ public class DigitalOnScreenControl extends BaseOnScreenControl {
 
 	@Override
 	protected void onUpdateControlKnob(final float pRelativeX, final float pRelativeY) {
-		if (pRelativeX == 0 && pRelativeY == 0) {
+		if(pRelativeX == 0 && pRelativeY == 0) {
 			super.onUpdateControlKnob(0, 0);
 			return;
 		}
 
-		if (this.mAllowDiagonal) {
+		if(this.mAllowDiagonal) {
 			final float angle = MathUtils.radToDeg(MathUtils.atan2(pRelativeY, pRelativeX)) + 180;
-			if (this.testDiagonalAngle(0, angle) || this.testDiagonalAngle(360, angle)) {
+			if(DigitalOnScreenControl.testDiagonalAngle(0, angle) || DigitalOnScreenControl.testDiagonalAngle(360, angle)) {
 				super.onUpdateControlKnob(-EXTENT_SIDE, 0);
-			} else if (this.testDiagonalAngle(45, angle)) {
+			} else if(DigitalOnScreenControl.testDiagonalAngle(45, angle)) {
 				super.onUpdateControlKnob(-EXTENT_DIAGONAL, -EXTENT_DIAGONAL);
-			} else if (this.testDiagonalAngle(90, angle)) {
+			} else if(DigitalOnScreenControl.testDiagonalAngle(90, angle)) {
 				super.onUpdateControlKnob(0, -EXTENT_SIDE);
-			} else if (this.testDiagonalAngle(135, angle)) {
+			} else if(DigitalOnScreenControl.testDiagonalAngle(135, angle)) {
 				super.onUpdateControlKnob(EXTENT_DIAGONAL, -EXTENT_DIAGONAL);
-			} else if (this.testDiagonalAngle(180, angle)) {
+			} else if(DigitalOnScreenControl.testDiagonalAngle(180, angle)) {
 				super.onUpdateControlKnob(EXTENT_SIDE, 0);
-			} else if (this.testDiagonalAngle(225, angle)) {
+			} else if(DigitalOnScreenControl.testDiagonalAngle(225, angle)) {
 				super.onUpdateControlKnob(EXTENT_DIAGONAL, EXTENT_DIAGONAL);
-			} else if (this.testDiagonalAngle(270, angle)) {
+			} else if(DigitalOnScreenControl.testDiagonalAngle(270, angle)) {
 				super.onUpdateControlKnob(0, EXTENT_SIDE);
-			} else if (this.testDiagonalAngle(315, angle)) {
+			} else if(DigitalOnScreenControl.testDiagonalAngle(315, angle)) {
 				super.onUpdateControlKnob(-EXTENT_DIAGONAL, EXTENT_DIAGONAL);
 			} else {
 				super.onUpdateControlKnob(0, 0);
 			}
 		} else {
-			if (Math.abs(pRelativeX) > Math.abs(pRelativeY)) {
-				if (pRelativeX > 0) {
+			if(Math.abs(pRelativeX) > Math.abs(pRelativeY)) {
+				if(pRelativeX > 0) {
 					super.onUpdateControlKnob(EXTENT_SIDE, 0);
-				} else if (pRelativeX < 0) {
+				} else if(pRelativeX < 0) {
 					super.onUpdateControlKnob(-EXTENT_SIDE, 0);
-				} else if (pRelativeX == 0) {
+				} else if(pRelativeX == 0) {
 					super.onUpdateControlKnob(0, 0);
 				}
 			} else {
-				if (pRelativeY > 0) {
+				if(pRelativeY > 0) {
 					super.onUpdateControlKnob(0, EXTENT_SIDE);
-				} else if (pRelativeY < 0) {
+				} else if(pRelativeY < 0) {
 					super.onUpdateControlKnob(0, -EXTENT_SIDE);
-				} else if (pRelativeY == 0) {
+				} else if(pRelativeY == 0) {
 					super.onUpdateControlKnob(0, 0);
 				}
 			}
 		}
 	}
 
-	private boolean testDiagonalAngle(final float pTestAngle, final float pActualAngle) {
+	private static boolean testDiagonalAngle(final float pTestAngle, final float pActualAngle) {
 		return pActualAngle > pTestAngle - ANGLE_DELTA && pActualAngle < pTestAngle + ANGLE_DELTA;
 	}
 

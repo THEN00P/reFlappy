@@ -14,7 +14,7 @@ import org.andengine.util.exception.AndEngineRuntimeException;
 import android.opengl.GLES20;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 11:26:07 - 27.09.2011
@@ -65,7 +65,7 @@ public class SmartPVRTexturePixelBufferStrategy implements IPVRTexturePixelBuffe
 		/* Load stripes. */
 		int currentStripePixelDataOffset = pCurrentPixelDataOffset;
 		int currentStripeOffsetY = 0;
-		while (currentStripeOffsetY < pHeight) {
+		while(currentStripeOffsetY < pHeight) {
 			final int currentStripeHeight = Math.min(pHeight - currentStripeOffsetY, stripeHeight);
 			final int currentStripePixelDataSize = currentStripeHeight * bytesPerRow;
 
@@ -120,23 +120,23 @@ public class SmartPVRTexturePixelBufferStrategy implements IPVRTexturePixelBuffe
 
 		@Override
 		public ByteBuffer getPixelBuffer(final int pStart, final int pByteCount) throws IOException {
-			if (pStart < this.mInputStreamPosition) {
+			if(pStart < this.mInputStreamPosition) {
 				throw new AndEngineRuntimeException("Cannot read data that has been read already. (pStart: '" + pStart + "', this.mInputStreamPosition: '" + this.mInputStreamPosition + "')");
 			}
 
 			/* Ensure data buffer is bug enough. */
-			if (this.mData == null || this.mData.length < pByteCount) {
+			if(this.mData == null || this.mData.length < pByteCount) {
 				this.mData = new byte[pByteCount];
 			}
 
 			/* If needed, skip bytes up to where the data was requested. */
-			if (this.mInputStreamPosition < pStart) {
+			if(this.mInputStreamPosition < pStart) {
 				final int bytesToSkip = pStart - this.mInputStreamPosition;
 				final long skipped = this.mInputStream.skip(bytesToSkip);
 
 				this.mInputStreamPosition += skipped;
 
-				if (bytesToSkip != skipped) {
+				if(bytesToSkip != skipped) {
 					throw new AndEngineRuntimeException("Skipped: '" + skipped + "' instead of '" + bytesToSkip + "'.");
 				}
 			}

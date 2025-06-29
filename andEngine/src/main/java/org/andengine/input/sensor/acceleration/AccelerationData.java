@@ -8,9 +8,9 @@ import android.hardware.SensorManager;
 import android.view.Surface;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 16:50:44 - 10.03.2010
  */
@@ -26,7 +26,7 @@ public class AccelerationData extends BaseSensorData {
 			@Override
 			public void swapAxis(final float[] pValues) {
 				final float x = -pValues[SensorManager.DATA_X];
-				final float y = -pValues[SensorManager.DATA_Y];
+				final float y = pValues[SensorManager.DATA_Y];
 				pValues[SensorManager.DATA_X] = x;
 				pValues[SensorManager.DATA_Y] = y;
 			}
@@ -36,7 +36,7 @@ public class AccelerationData extends BaseSensorData {
 			@Override
 			public void swapAxis(final float[] pValues) {
 				final float x = pValues[SensorManager.DATA_Y];
-				final float y = -pValues[SensorManager.DATA_X];
+				final float y = pValues[SensorManager.DATA_X];
 				pValues[SensorManager.DATA_X] = x;
 				pValues[SensorManager.DATA_Y] = y;
 			}
@@ -46,7 +46,7 @@ public class AccelerationData extends BaseSensorData {
 			@Override
 			public void swapAxis(final float[] pValues) {
 				final float x = pValues[SensorManager.DATA_X];
-				final float y = pValues[SensorManager.DATA_Y];
+				final float y = -pValues[SensorManager.DATA_Y];
 				pValues[SensorManager.DATA_X] = x;
 				pValues[SensorManager.DATA_Y] = y;
 			}
@@ -56,7 +56,7 @@ public class AccelerationData extends BaseSensorData {
 			@Override
 			public void swapAxis(final float[] pValues) {
 				final float x = -pValues[SensorManager.DATA_Y];
-				final float y = pValues[SensorManager.DATA_X];
+				final float y = -pValues[SensorManager.DATA_X];
 				pValues[SensorManager.DATA_X] = x;
 				pValues[SensorManager.DATA_Y] = y;
 			}
@@ -71,8 +71,8 @@ public class AccelerationData extends BaseSensorData {
 	// Constructors
 	// ===========================================================
 
-	public AccelerationData() {
-		super(3);
+	public AccelerationData(final int pDisplayOrientation) {
+		super(3, pDisplayOrientation);
 	}
 
 	// ===========================================================
@@ -100,7 +100,7 @@ public class AccelerationData extends BaseSensorData {
 	}
 
 	public void setZ(final float pZ) {
-		this.mValues[SensorManager.DATA_Z] = pZ;
+		this.mValues[SensorManager.DATA_Z]  = pZ;
 	}
 
 	@Override

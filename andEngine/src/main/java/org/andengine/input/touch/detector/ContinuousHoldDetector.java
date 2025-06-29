@@ -11,10 +11,10 @@ import android.view.MotionEvent;
 
 /**
  * Note: Needs to be registered as an {@link IUpdateHandler} to the {@link Engine} or {@link Scene} to work properly.
- *
+ * 
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @author Greg Haynes
  * @since 20:49:25 - 23.08.2010
@@ -65,7 +65,7 @@ public class ContinuousHoldDetector extends HoldDetector implements IUpdateHandl
 	}
 
 	/**
-	 * When {@link #isHolding()} this method will call through to {@link IHoldDetectorListener#onHoldFinished(HoldDetector, long, int, float, float)}.
+	 * When {@link ContinuousHoldDetector#isHolding()} this method will call through to {@link IHoldDetectorListener#onHoldFinished(HoldDetector, long, int, float, float)}.
 	 */
 	@Override
 	public void reset() {
@@ -77,9 +77,9 @@ public class ContinuousHoldDetector extends HoldDetector implements IUpdateHandl
 	public boolean onManagedTouchEvent(final TouchEvent pSceneTouchEvent) {
 		final MotionEvent motionEvent = pSceneTouchEvent.getMotionEvent();
 
-		switch (pSceneTouchEvent.getAction()) {
+		switch(pSceneTouchEvent.getAction()) {
 			case TouchEvent.ACTION_DOWN:
-				if (this.mPointerID == TouchEvent.INVALID_POINTER_ID) {
+				if(this.mPointerID == TouchEvent.INVALID_POINTER_ID) {
 					this.prepareHold(pSceneTouchEvent);
 					return true;
 				} else {
@@ -87,7 +87,7 @@ public class ContinuousHoldDetector extends HoldDetector implements IUpdateHandl
 				}
 			case TouchEvent.ACTION_MOVE:
 			{
-				if (this.mPointerID == pSceneTouchEvent.getPointerID()) {
+				if(this.mPointerID == pSceneTouchEvent.getPointerID()) {
 					this.mHoldX = pSceneTouchEvent.getX();
 					this.mHoldY = pSceneTouchEvent.getY();
 
@@ -100,11 +100,11 @@ public class ContinuousHoldDetector extends HoldDetector implements IUpdateHandl
 			case TouchEvent.ACTION_UP:
 			case TouchEvent.ACTION_CANCEL:
 			{
-				if (this.mPointerID == pSceneTouchEvent.getPointerID()) {
+				if(this.mPointerID == pSceneTouchEvent.getPointerID()) {
 					this.mHoldX = pSceneTouchEvent.getX();
 					this.mHoldY = pSceneTouchEvent.getY();
 
-					if (this.mTriggering) {
+					if(this.mTriggering) {
 						this.triggerOnHoldFinished(motionEvent.getEventTime() - this.mDownTimeMilliseconds);
 					}
 
@@ -130,12 +130,12 @@ public class ContinuousHoldDetector extends HoldDetector implements IUpdateHandl
 	// ===========================================================
 
 	void fireListener() {
-		if (this.mPointerID != TouchEvent.INVALID_POINTER_ID) {
+		if(this.mPointerID != TouchEvent.INVALID_POINTER_ID) {
 			final long holdTimeMilliseconds = System.currentTimeMillis() - this.mDownTimeMilliseconds;
-			if (holdTimeMilliseconds >= this.mTriggerHoldMinimumMilliseconds) {
-				if (this.mTriggering) {
+			if(holdTimeMilliseconds >= this.mTriggerHoldMinimumMilliseconds) {
+				if(this.mTriggering) {
 					this.triggerOnHold(holdTimeMilliseconds);
-				} else if (!this.mMaximumDistanceExceeded) {
+				} else if(!this.mMaximumDistanceExceeded) {
 					this.triggerOnHoldStarted();
 				}
 			}

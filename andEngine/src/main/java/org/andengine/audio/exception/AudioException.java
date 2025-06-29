@@ -3,7 +3,7 @@ package org.andengine.audio.exception;
 import org.andengine.util.exception.AndEngineRuntimeException;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 20:44:53 - 09.11.2011

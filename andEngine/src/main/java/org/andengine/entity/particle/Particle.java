@@ -8,7 +8,7 @@ import org.andengine.opengl.util.GLState;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 19:37:13 - 14.03.2010
  */
@@ -61,7 +61,7 @@ public class Particle<T extends IEntity> {
 	}
 
 	public boolean isExpired() {
-		return this.mExpired;
+		return this.mExpired ;
 	}
 
 	public void setExpired(final boolean pExpired) {
@@ -77,8 +77,8 @@ public class Particle<T extends IEntity> {
 	// ===========================================================
 
 	protected void onUpdate(final float pSecondsElapsed) {
-		if (!this.mExpired) {
-			if (this.mExpireTime == Particle.EXPIRETIME_NEVER || this.mLifeTime + pSecondsElapsed < this.mExpireTime) {
+		if(!this.mExpired){
+			if(this.mExpireTime == Particle.EXPIRETIME_NEVER || this.mLifeTime + pSecondsElapsed < this.mExpireTime) {
 				/* Particle doesn't expire or didn't expire yet. */
 				this.mLifeTime += pSecondsElapsed;
 				this.mEntity.onUpdate(pSecondsElapsed);
@@ -94,7 +94,7 @@ public class Particle<T extends IEntity> {
 	}
 
 	public void onDraw(final GLState pGLState, final Camera pCamera) {
-		if (!this.mExpired) {
+		if(!this.mExpired) {
 			this.mEntity.onDraw(pGLState, pCamera);
 		}
 	}

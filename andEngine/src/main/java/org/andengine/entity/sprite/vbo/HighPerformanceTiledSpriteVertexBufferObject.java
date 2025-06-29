@@ -9,7 +9,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 18:39:06 - 28.03.2012
@@ -47,7 +47,7 @@ public class HighPerformanceTiledSpriteVertexBufferObject extends HighPerformanc
 
 		final int tileCount = pTiledSprite.getTileCount();
 		int bufferDataOffset = 0;
-		for (int i = 0; i < tileCount; i++) {
+		for(int i = 0; i < tileCount; i++) {
 			bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX] = packedColor;
 			bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX] = packedColor;
 			bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.COLOR_INDEX] = packedColor;
@@ -65,29 +65,31 @@ public class HighPerformanceTiledSpriteVertexBufferObject extends HighPerformanc
 	public void onUpdateVertices(final TiledSprite pTiledSprite) {
 		final float[] bufferData = this.mBufferData;
 
-		final float width = pTiledSprite.getWidth(); // TODO Optimize with field access?
-		final float height = pTiledSprite.getHeight(); // TODO Optimize with field access?
+		final float x = 0;
+		final float y = 0;
+		final float x2 = pTiledSprite.getWidth(); // TODO Optimize with field access?
+		final float y2 = pTiledSprite.getHeight(); // TODO Optimize with field access?
 
 		final int tileCount = pTiledSprite.getTileCount();
 		int bufferDataOffset = 0;
-		for (int i = 0; i < tileCount; i++) {
-			bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = 0;
-			bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = 0;
+		for(int i = 0; i < tileCount; i++) {
+			bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x;
+			bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y;
 
-			bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = 0;
-			bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = height;
+			bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x;
+			bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y2;
 
-			bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = width;
-			bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = 0;
+			bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x2;
+			bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y;
 
-			bufferData[bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = width;
-			bufferData[bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = 0;
+			bufferData[bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x2;
+			bufferData[bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y;
 
-			bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = 0;
-			bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = height;
+			bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x;
+			bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y2;
 
-			bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = width;
-			bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = height;
+			bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = x2;
+			bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = y2;
 
 			bufferDataOffset += TiledSprite.TILEDSPRITE_SIZE;
 		}
@@ -103,7 +105,7 @@ public class HighPerformanceTiledSpriteVertexBufferObject extends HighPerformanc
 
 		final int tileCount = pTiledSprite.getTileCount();
 		int bufferDataOffset = 0;
-		for (int i = 0; i < tileCount; i++) {
+		for(int i = 0; i < tileCount; i++) {
 			final ITextureRegion textureRegion = tiledTextureRegion.getTextureRegion(i);
 
 			final float u;
@@ -111,8 +113,8 @@ public class HighPerformanceTiledSpriteVertexBufferObject extends HighPerformanc
 			final float u2;
 			final float v2;
 
-			if (pTiledSprite.isFlippedVertical()) { // TODO Optimize with field access?
-				if (pTiledSprite.isFlippedHorizontal()) { // TODO Optimize with field access?
+			if(pTiledSprite.isFlippedVertical()) { // TODO Optimize with field access?
+				if(pTiledSprite.isFlippedHorizontal()) { // TODO Optimize with field access?
 					u = textureRegion.getU2();
 					u2 = textureRegion.getU();
 					v = textureRegion.getV2();
@@ -124,7 +126,7 @@ public class HighPerformanceTiledSpriteVertexBufferObject extends HighPerformanc
 					v2 = textureRegion.getV();
 				}
 			} else {
-				if (pTiledSprite.isFlippedHorizontal()) { // TODO Optimize with field access?
+				if(pTiledSprite.isFlippedHorizontal()) { // TODO Optimize with field access?
 					u = textureRegion.getU2();
 					u2 = textureRegion.getU();
 					v = textureRegion.getV();
@@ -137,27 +139,9 @@ public class HighPerformanceTiledSpriteVertexBufferObject extends HighPerformanc
 				}
 			}
 
-			if (textureRegion.isRotated()) {
-				bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
+			if(textureRegion.isRotated()) {
+				bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
 				bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
-
-				bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
-				bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
-
-				bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
-				bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
-
-				bufferData[bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
-				bufferData[bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
-
-				bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
-				bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
-
-				bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
-				bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
-			} else {
-				bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
-				bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
 
 				bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
 				bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
@@ -171,8 +155,26 @@ public class HighPerformanceTiledSpriteVertexBufferObject extends HighPerformanc
 				bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
 				bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
 
+				bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
+				bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
+			} else {
+				bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
+				bufferData[bufferDataOffset + 0 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
+
+				bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
+				bufferData[bufferDataOffset + 1 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
+
+				bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
+				bufferData[bufferDataOffset + 2 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
+
+				bufferData[bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
+				bufferData[bufferDataOffset + 3 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
+
+				bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u;
+				bufferData[bufferDataOffset + 4 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
+
 				bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_U] = u2;
-				bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v;
+				bufferData[bufferDataOffset + 5 * TiledSprite.VERTEX_SIZE + Sprite.TEXTURECOORDINATES_INDEX_V] = v2;
 			}
 
 			bufferDataOffset += TiledSprite.TILEDSPRITE_SIZE;

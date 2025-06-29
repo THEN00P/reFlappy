@@ -5,9 +5,9 @@ import java.util.Arrays;
 import org.andengine.util.modifier.IModifier.IModifierListener;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 11:21:22 - 03.09.2010
  * @param <T>
@@ -38,11 +38,11 @@ public class ParallelModifier<T> extends BaseModifier<T> implements IModifierLis
 	public ParallelModifier(final IModifierListener<T> pModifierListener, final IModifier<T> ... pModifiers) throws IllegalArgumentException {
 		super(pModifierListener);
 
-		if (pModifiers.length == 0) {
+		if(pModifiers.length == 0) {
 			throw new IllegalArgumentException("pModifiers must not be empty!");
 		}
 
-		this.assertNoNullModifier(pModifiers);
+		BaseModifier.assertNoNullModifier(pModifiers);
 
 		Arrays.sort(pModifiers, MODIFIER_COMPARATOR_DURATION_DESCENDING);
 		this.mModifiers = pModifiers;
@@ -58,7 +58,7 @@ public class ParallelModifier<T> extends BaseModifier<T> implements IModifierLis
 		this.mModifiers = new IModifier[otherModifiers.length];
 
 		final IModifier<T>[] modifiers = this.mModifiers;
-		for (int i = modifiers.length - 1; i >= 0; i--) {
+		for(int i = modifiers.length - 1; i >= 0; i--) {
 			modifiers[i] = otherModifiers[i].deepCopy();
 		}
 
@@ -68,7 +68,7 @@ public class ParallelModifier<T> extends BaseModifier<T> implements IModifierLis
 	}
 
 	@Override
-	public ParallelModifier<T> deepCopy() throws DeepCopyNotSupportedException {
+	public ParallelModifier<T> deepCopy() throws DeepCopyNotSupportedException{
 		return new ParallelModifier<T>(this);
 	}
 
@@ -92,7 +92,7 @@ public class ParallelModifier<T> extends BaseModifier<T> implements IModifierLis
 
 	@Override
 	public float onUpdate(final float pSecondsElapsed, final T pItem) {
-		if (this.mFinished) {
+		if(this.mFinished){
 			return 0;
 		} else {
 			float secondsElapsedRemaining = pSecondsElapsed;
@@ -100,9 +100,9 @@ public class ParallelModifier<T> extends BaseModifier<T> implements IModifierLis
 			final IModifier<T>[] shapeModifiers = this.mModifiers;
 
 			this.mFinishedCached = false;
-			while (secondsElapsedRemaining > 0 && !this.mFinishedCached) {
+			while(secondsElapsedRemaining > 0 && !this.mFinishedCached) {
 				float secondsElapsedUsed = 0;
-				for (int i = shapeModifiers.length - 1; i >= 0; i--) {
+				for(int i = shapeModifiers.length - 1; i >= 0; i--) {
 					secondsElapsedUsed = Math.max(secondsElapsedUsed, shapeModifiers[i].onUpdate(pSecondsElapsed, pItem));
 				}
 				secondsElapsedRemaining -= secondsElapsedUsed;
@@ -121,7 +121,7 @@ public class ParallelModifier<T> extends BaseModifier<T> implements IModifierLis
 		this.mSecondsElapsed = 0;
 
 		final IModifier<T>[] shapeModifiers = this.mModifiers;
-		for (int i = shapeModifiers.length - 1; i >= 0; i--) {
+		for(int i = shapeModifiers.length - 1; i >= 0; i--) {
 			shapeModifiers[i].reset();
 		}
 	}

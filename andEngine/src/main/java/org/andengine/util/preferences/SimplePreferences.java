@@ -7,9 +7,9 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 18:55:12 - 02.08.2010
  */
@@ -30,14 +30,14 @@ public class SimplePreferences {
 	// ===========================================================
 
 	public static SharedPreferences getInstance(final Context pContext) {
-		if (SimplePreferences.INSTANCE == null) {
+		if(SimplePreferences.INSTANCE == null) {
 			SimplePreferences.INSTANCE = PreferenceManager.getDefaultSharedPreferences(pContext);
 		}
 		return SimplePreferences.INSTANCE;
 	}
 
 	public static Editor getEditorInstance(final Context pContext) {
-		if (SimplePreferences.EDITORINSTANCE == null) {
+		if(SimplePreferences.EDITORINSTANCE == null) {
 			SimplePreferences.EDITORINSTANCE = SimplePreferences.getInstance(pContext).edit();
 		}
 		return SimplePreferences.EDITORINSTANCE;

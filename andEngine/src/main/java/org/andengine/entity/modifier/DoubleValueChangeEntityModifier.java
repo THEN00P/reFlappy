@@ -4,7 +4,7 @@ import org.andengine.entity.IEntity;
 import org.andengine.util.modifier.BaseDoubleValueChangeModifier;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:27:48 - 10.08.2011

@@ -6,9 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:53:13 - 04.01.2011
  */
@@ -32,7 +32,7 @@ public class CircleBitmapTextureAtlasSourceDecoratorShape implements IBitmapText
 	}
 
 	public static CircleBitmapTextureAtlasSourceDecoratorShape getDefaultInstance() {
-		if (sDefaultInstance == null) {
+		if(sDefaultInstance == null) {
 			sDefaultInstance = new CircleBitmapTextureAtlasSourceDecoratorShape();
 		}
 		return sDefaultInstance;
@@ -45,7 +45,7 @@ public class CircleBitmapTextureAtlasSourceDecoratorShape implements IBitmapText
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-
+	
 	@Override
 	public void onDecorateBitmap(final Canvas pCanvas, final Paint pPaint, final TextureAtlasSourceDecoratorOptions pDecoratorOptions) {
 		final float width = pCanvas.getWidth() - pDecoratorOptions.getInsetLeft() - pDecoratorOptions.getInsetRight();

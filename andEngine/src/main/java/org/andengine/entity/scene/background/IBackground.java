@@ -2,13 +2,13 @@ package org.andengine.entity.scene.background;
 
 import org.andengine.engine.handler.IDrawHandler;
 import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.util.adt.color.Color;
+import org.andengine.util.color.Color;
 import org.andengine.util.modifier.IModifier;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 13:47:41 - 19.07.2010
  */

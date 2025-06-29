@@ -3,7 +3,7 @@ package org.andengine.entity.sprite;
 import org.andengine.util.modifier.IModifier.DeepCopyNotSupportedException;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 16:59:57 - 03.05.2012
@@ -18,7 +18,7 @@ public interface IAnimationData {
 	// ===========================================================
 	// Methods
 	// ===========================================================
-
+	
 	public int[] getFrames();
 	public long[] getFrameDurations();
 	public int getLoopCount();
@@ -51,14 +51,14 @@ public interface IAnimationData {
 
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 */
 	public void set(final long[] pFrameDurations, final int[] pFrames);
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 * @param pLoop
@@ -66,7 +66,7 @@ public interface IAnimationData {
 	public void set(final long[] pFrameDurations, final int[] pFrames, final boolean pLoop);
 	/**
 	 * Animate specifics frames.
-	 *
+	 * 
 	 * @param pFrameDurations must have the same length as pFrames.
 	 * @param pFrames indices of the frames to animate.
 	 * @param pLoopCount

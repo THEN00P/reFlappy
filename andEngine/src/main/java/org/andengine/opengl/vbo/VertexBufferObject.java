@@ -7,17 +7,17 @@ import org.andengine.opengl.shader.ShaderProgram;
 import org.andengine.opengl.util.BufferUtils;
 import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
-import org.andengine.util.adt.data.constants.DataConstants;
+import org.andengine.util.adt.DataConstants;
 
 import android.opengl.GLES20;
 
 /**
  * TODO Extract a common base class from {@link VertexBufferObject} and {@link ZeroMemoryVertexBufferObject} (due to significant code duplication).
- * 		For naming, maybe be inspired by the java ByteBuffer naming (i.e. HeapBackedFloatArrayVertexBufferObject, StreamBufferVertexBufferObject, SharedBufferStreamVertexBufferObject).
+ * 		For naming, maybe be inspired by the java ByteBuffer naming (i.e. HeapBackedFloatArrayVertexBufferObject, StreamBufferVertexBufferObject, SharedBufferStreamVertexBufferObject).  
  *
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 14:22:56 - 07.04.2010
  */
@@ -52,7 +52,7 @@ public abstract class VertexBufferObject implements IVertexBufferObject {
 	 * @param pCapacity
 	 * @param pDrawType
 	 * @param pAutoDispose when passing <code>true</code> this {@link VertexBufferObject} loads itself to the active {@link VertexBufferObjectManager}. <b><u>WARNING:</u></b> When passing <code>false</code> one needs to take care of that by oneself!
-	 * @param pVertexBufferObjectAttributes to be automatically enabled on the {@link ShaderProgram} used in {@link #bind(ShaderProgram)}.
+	 * @param pVertexBufferObjectAttributes to be automatically enabled on the {@link ShaderProgram} used in {@link VertexBufferObject#bind(ShaderProgram)}.
 	 */
 	public VertexBufferObject(final VertexBufferObjectManager pVertexBufferObjectManager, final int pCapacity, final DrawType pDrawType, final boolean pAutoDispose, final VertexBufferObjectAttributes pVertexBufferObjectAttributes) {
 		this.mVertexBufferObjectManager = pVertexBufferObjectManager;
@@ -123,7 +123,7 @@ public abstract class VertexBufferObject implements IVertexBufferObject {
 
 	@Override
 	public int getGPUMemoryByteSize() {
-		if (this.isLoadedToHardware()) {
+		if(this.isLoadedToHardware()) {
 			return this.getByteCapacity();
 		} else {
 			return 0;
@@ -138,17 +138,17 @@ public abstract class VertexBufferObject implements IVertexBufferObject {
 
 	@Override
 	public void bind(final GLState pGLState) {
-		if (this.mHardwareBufferID == IVertexBufferObject.HARDWARE_BUFFER_ID_INVALID) {
+		if(this.mHardwareBufferID == IVertexBufferObject.HARDWARE_BUFFER_ID_INVALID) {
 			this.loadToHardware(pGLState);
 
-			if (this.mVertexBufferObjectManager != null) {
+			if(this.mVertexBufferObjectManager != null) {
 				this.mVertexBufferObjectManager.onVertexBufferObjectLoaded(this);
 			}
 		}
 
 		pGLState.bindArrayBuffer(this.mHardwareBufferID);
 
-		if (this.mDirtyOnHardware) {
+		if(this.mDirtyOnHardware) {
 			this.onBufferData();
 
 			this.mDirtyOnHardware = false;
@@ -189,10 +189,10 @@ public abstract class VertexBufferObject implements IVertexBufferObject {
 
 	@Override
 	public void dispose() {
-		if (!this.mDisposed) {
+		if(!this.mDisposed) {
 			this.mDisposed = true;
 
-			if (this.mVertexBufferObjectManager != null) {
+			if(this.mVertexBufferObjectManager != null) {
 				this.mVertexBufferObjectManager.onUnloadVertexBufferObject(this);
 			}
 
@@ -206,7 +206,7 @@ public abstract class VertexBufferObject implements IVertexBufferObject {
 	protected void finalize() throws Throwable {
 		super.finalize();
 
-		if (!this.mDisposed) {
+		if(!this.mDisposed) {
 			this.dispose();
 		}
 	}

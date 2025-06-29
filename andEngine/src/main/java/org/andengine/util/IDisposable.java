@@ -3,7 +3,7 @@ package org.andengine.util;
 import org.andengine.util.exception.AndEngineRuntimeException;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 00:45:48 - 17.01.2012
@@ -40,18 +40,18 @@ public interface IDisposable {
 		// ===========================================================
 
 		public AlreadyDisposedException() {
-
+			
 		}
 
-		public AlreadyDisposedException(final String pMessage) {
+		public AlreadyDisposedException(String pMessage) {
 			super(pMessage);
 		}
 
-		public AlreadyDisposedException(final Throwable pThrowable) {
+		public AlreadyDisposedException(Throwable pThrowable) {
 			super(pThrowable);
 		}
-
-		public AlreadyDisposedException(final String pMessage, final Throwable pThrowable) {
+		
+		public AlreadyDisposedException(String pMessage, Throwable pThrowable) {
 			super(pMessage, pThrowable);
 		}
 

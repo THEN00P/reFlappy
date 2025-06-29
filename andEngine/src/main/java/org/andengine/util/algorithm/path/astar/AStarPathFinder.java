@@ -15,7 +15,7 @@ import org.andengine.util.algorithm.path.Path;
  *
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @author Greg Haynes
  * @since 23:16:17 - 16.08.2010
@@ -53,7 +53,7 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 
 	@Override
 	public Path findPath(final IPathFinderMap<T> pPathFinderMap, final int pXMin, final int pYMin, final int pXMax, final int pYMax, final T pEntity, final int pFromX, final int pFromY, final int pToX, final int pToY, final boolean pAllowDiagonal, final IAStarHeuristic<T> pAStarHeuristic, final ICostFunction<T> pCostFunction, final float pMaxCost, final IPathFinderListener<T> pPathFinderListener) {
-		if (((pFromX == pToX) && (pFromY == pToY)) || pPathFinderMap.isBlocked(pFromX, pFromY, pEntity) || pPathFinderMap.isBlocked(pToX, pToY, pEntity)) {
+		if(((pFromX == pToX) && (pFromY == pToY)) || pPathFinderMap.isBlocked(pFromX, pFromY, pEntity) || pPathFinderMap.isBlocked(pToX, pToY, pEntity)) {
 			return null;
 		}
 
@@ -74,24 +74,24 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		sortedOpenNodes.enter(fromNode);
 
 		Node currentNode = null;
-		while (openNodes.size() > 0) {
+		while(openNodes.size() > 0) {
 			/* The first Node in the open list is the one with the lowest cost. */
 			currentNode = sortedOpenNodes.poll();
 			final long currentNodeID = currentNode.mID;
-			if (currentNodeID == toNodeID) {
+			if(currentNodeID == toNodeID) {
 				break;
 			}
 
 			visitedNodes.put(currentNodeID, currentNode);
 
 			/* Loop over all neighbors of this position. */
-			for (int dX = -1; dX <= 1; dX++) {
-				for (int dY = -1; dY <= 1; dY++) {
-					if ((dX == 0) && (dY == 0)) {
+			for(int dX = -1; dX <= 1; dX++) {
+				for(int dY = -1; dY <= 1; dY++) {
+					if((dX == 0) && (dY == 0)) {
 						continue;
 					}
 
-					if (!allowDiagonalMovement && (dX != 0) && (dY != 0)) {
+					if(!allowDiagonalMovement && (dX != 0) && (dY != 0)) {
 						continue;
 					}
 
@@ -99,18 +99,18 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 					final int neighborNodeY = dY + currentNode.mY;
 					final long neighborNodeID = Node.calculateID(neighborNodeX, neighborNodeY);
 
-					if (!IntBoundsUtils.contains(pXMin, pYMin, pXMax, pYMax, neighborNodeX, neighborNodeY) || pPathFinderMap.isBlocked(neighborNodeX, neighborNodeY, pEntity)) {
+					if(!IntBoundsUtils.contains(pXMin, pYMin, pXMax, pYMax, neighborNodeX, neighborNodeY) || pPathFinderMap.isBlocked(neighborNodeX, neighborNodeY, pEntity)) {
 						continue;
 					}
 
-					if (visitedNodes.indexOfKey(neighborNodeID) >= 0) {
+					if(visitedNodes.indexOfKey(neighborNodeID) >= 0) {
 						continue;
 					}
 
 					Node neighborNode = openNodes.get(neighborNodeID);
 					final boolean neighborNodeIsNew;
 					/* Check if neighbor exists. */
-					if (neighborNode == null) {
+					if(neighborNode == null) {
 						neighborNodeIsNew = true;
 						neighborNode = new Node(neighborNodeX, neighborNodeY, pAStarHeuristic.getExpectedRestCost(pPathFinderMap, pEntity, neighborNodeX, neighborNodeY, pToX, pToY));
 					} else {
@@ -120,14 +120,14 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 					/* Update cost of neighbor as cost of current plus step from current to neighbor. */
 					final float costFromCurrentToNeigbor = pCostFunction.getCost(pPathFinderMap, currentNode.mX, currentNode.mY, neighborNodeX, neighborNodeY, pEntity);
 					final float neighborNodeCost = currentNode.mCost + costFromCurrentToNeigbor;
-					if (neighborNodeCost > pMaxCost) {
+					if(neighborNodeCost > pMaxCost) {
 						/* Too expensive -> remove if isn't a new node. */
-						if (!neighborNodeIsNew) {
+						if(!neighborNodeIsNew) {
 							openNodes.remove(neighborNodeID);
 						}
 					} else {
 						neighborNode.setParent(currentNode, costFromCurrentToNeigbor);
-						if (neighborNodeIsNew) {
+						if(neighborNodeIsNew) {
 							openNodes.put(neighborNodeID, neighborNode);
 						} else {
 							/* Remove so that re-insertion puts it to the correct spot. */
@@ -136,7 +136,7 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 
 						sortedOpenNodes.enter(neighborNode);
 
-						if (pPathFinderListener != null) {
+						if(pPathFinderListener != null) {
 							pPathFinderListener.onVisited(pEntity, neighborNodeX, neighborNodeY);
 						}
 					}
@@ -151,14 +151,14 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		sortedOpenNodes.clear();
 
 		/* Check if a path was found. */
-		if (currentNode.mID != toNodeID) {
+		if(currentNode.mID != toNodeID) {
 			return null;
 		}
 
 		/* Calculate path length. */
 		int length = 1;
 		Node tmp = currentNode;
-		while (tmp.mID != fromNodeID) {
+		while(tmp.mID != fromNodeID) {
 			tmp = tmp.mParent;
 			length++;
 		}
@@ -167,7 +167,7 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		final Path path = new Path(length);
 		int index = length - 1;
 		tmp = currentNode;
-		while (tmp.mID != fromNodeID) {
+		while(tmp.mID != fromNodeID) {
 			path.set(index, tmp.mX, tmp.mY);
 			tmp = tmp.mParent;
 			index--;
@@ -185,7 +185,7 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-	/* package */ static final class Node implements Comparable<Node> {
+	private static final class Node implements Comparable<Node> {
 		// ===========================================================
 		// Constants
 		// ===========================================================
@@ -233,9 +233,9 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		@Override
 		public int compareTo(final Node pNode) {
 			final float diff = this.mTotalCost - pNode.mTotalCost;
-			if (diff > 0) {
+			if(diff > 0) {
 				return 1;
-			} else if (diff < 0) {
+			} else if(diff < 0) {
 				return -1;
 			} else {
 				return 0;
@@ -244,14 +244,14 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 
 		@Override
 		public boolean equals(final Object pOther) {
-			if (this == pOther) {
+			if(this == pOther) {
 				return true;
-			} else if (pOther == null) {
+			} else if(pOther == null) {
 				return false;
-			} else if (this.getClass() != pOther.getClass()) {
+			} else if(this.getClass() != pOther.getClass()) {
 				return false;
 			}
-			return this.equals((Node) pOther);
+			return this.equals((Node)pOther);
 		}
 
 		@Override
@@ -264,7 +264,7 @@ public class AStarPathFinder<T> implements IPathFinder<T> {
 		// ===========================================================
 
 		public static long calculateID(final int pX, final int pY) {
-			return (((long) pX) << 32) | (((long) pY) & 0xFFFFFFFFL);
+			return (((long)pX) << 32) | pY;
 		}
 
 		public boolean equals(final Node pNode) {

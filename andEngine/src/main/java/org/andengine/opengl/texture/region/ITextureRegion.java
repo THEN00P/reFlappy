@@ -1,10 +1,9 @@
 package org.andengine.opengl.texture.region;
 
 import org.andengine.opengl.texture.ITexture;
-import org.andengine.util.modifier.IModifier.DeepCopyNotSupportedException;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 20:07:17 - 07.08.2011
@@ -26,11 +25,11 @@ public interface ITextureRegion {
 	public void setTexturePosition(final float pTextureX, final float pTextureY);
 
 	/**
-	 * Note: Takes {@link #getScale()} into account!
+	 * Note: Takes {@link ITextureRegion#getScale()} into account!
 	 */
 	public float getWidth();
 	/**
-	 * Note: Takes {@link #getScale()} into account!
+	 * Note: Takes {@link ITextureRegion#getScale()} into account!
 	 */
 	public float getHeight();
 
@@ -51,5 +50,5 @@ public interface ITextureRegion {
 
 	public ITexture getTexture();
 
-	public ITextureRegion deepCopy() throws DeepCopyNotSupportedException;
+	public ITextureRegion deepCopy();
 }

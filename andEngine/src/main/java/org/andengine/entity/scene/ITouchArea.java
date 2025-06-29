@@ -4,7 +4,7 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.IMatcher;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 15:01:18 - 27.03.2012
@@ -20,8 +20,8 @@ public interface ITouchArea {
 
 	public boolean contains(final float pX, final float pY);
 
-	public float[] convertSceneCoordinatesToLocalCoordinates(final float pX, final float pY);
-	public float[] convertLocalCoordinatesToSceneCoordinates(final float pX, final float pY);
+	public float[] convertSceneToLocalCoordinates(final float pX, final float pY);
+	public float[] convertLocalToSceneCoordinates(final float pX, final float pY);
 
 	/**
 	 * This method only fires if this {@link ITouchArea} is registered to the {@link Scene} via {@link Scene#registerTouchArea(ITouchArea)}.

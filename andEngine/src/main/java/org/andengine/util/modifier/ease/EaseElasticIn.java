@@ -2,6 +2,8 @@ package org.andengine.util.modifier.ease;
 
 import org.andengine.util.math.MathConstants;
 
+import android.util.FloatMath;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -30,7 +32,7 @@ public class EaseElasticIn implements IEaseFunction {
 	}
 
 	public static EaseElasticIn getInstance() {
-		if (INSTANCE == null) {
+		if(INSTANCE == null) {
 			INSTANCE = new EaseElasticIn();
 		}
 		return INSTANCE;
@@ -54,10 +56,10 @@ public class EaseElasticIn implements IEaseFunction {
 	// ===========================================================
 
 	public static float getValue(final float pSecondsElapsed, final float pDuration, final float pPercentage) {
-		if (pSecondsElapsed == 0) {
+		if(pSecondsElapsed == 0) {
 			return 0;
 		}
-		if (pSecondsElapsed == pDuration) {
+		if(pSecondsElapsed == pDuration) {
 			return 1;
 		}
 
@@ -65,7 +67,7 @@ public class EaseElasticIn implements IEaseFunction {
 		final float s = p / 4;
 
 		final float t = pPercentage - 1;
-		return -(float) Math.pow(2, 10 * t) * (float) Math.sin((t * pDuration - s) * MathConstants.PI_TWICE / p);
+		return -(float)Math.pow(2, 10 * t) * FloatMath.sin((t * pDuration - s) * MathConstants.PI_TWICE / p);
 	}
 
 	// ===========================================================

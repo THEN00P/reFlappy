@@ -6,10 +6,12 @@ import static org.andengine.util.Constants.VERTEX_INDEX_Y;
 import org.andengine.util.math.MathConstants;
 import org.andengine.util.math.MathUtils;
 
+import android.util.FloatMath;
+
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 20:18:41 - 01.10.2010
  */
@@ -45,8 +47,8 @@ public class CircleOutlineParticleEmitter extends BaseCircleParticleEmitter {
 	@Override
 	public void getPositionOffset(final float[] pOffset) {
 		final float random = MathUtils.RANDOM.nextFloat() * MathConstants.PI * 2;
-		pOffset[VERTEX_INDEX_X] = this.mCenterX + (float) Math.cos(random) * this.mRadiusX;
-		pOffset[VERTEX_INDEX_Y] = this.mCenterY + (float) Math.sin(random) * this.mRadiusY;
+		pOffset[VERTEX_INDEX_X] = this.mCenterX + FloatMath.cos(random) * this.mRadiusX;
+		pOffset[VERTEX_INDEX_Y] = this.mCenterY + FloatMath.sin(random) * this.mRadiusY;
 	}
 
 	// ===========================================================

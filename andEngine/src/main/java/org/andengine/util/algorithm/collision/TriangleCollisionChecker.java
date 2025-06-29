@@ -4,12 +4,12 @@ import org.andengine.util.Constants;
 import org.andengine.util.adt.transformation.Transformation;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:47:42 - 30.08.2011
  */
-public final class TriangleCollisionChecker {
+public class TriangleCollisionChecker {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -25,10 +25,6 @@ public final class TriangleCollisionChecker {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
-	private TriangleCollisionChecker() {
-
-	}
 
 	// ===========================================================
 	// Getter & Setter

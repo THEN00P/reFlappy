@@ -1,9 +1,10 @@
 package org.andengine.entity.primitive;
 
 import org.andengine.engine.camera.Camera;
-import org.andengine.entity.IEntity;
 import org.andengine.entity.primitive.vbo.HighPerformanceMeshVertexBufferObject;
 import org.andengine.entity.primitive.vbo.IMeshVertexBufferObject;
+import org.andengine.entity.shape.IShape;
+import org.andengine.entity.shape.RectangularShape;
 import org.andengine.entity.shape.Shape;
 import org.andengine.opengl.shader.PositionColorShaderProgram;
 import org.andengine.opengl.shader.constants.ShaderProgramConstants;
@@ -18,7 +19,7 @@ import org.andengine.util.exception.MethodNotSupportedException;
 import android.opengl.GLES20;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 16:44:50 - 09.02.2012
@@ -55,36 +56,18 @@ public class Mesh extends Shape {
 	 * Uses a default {@link HighPerformanceMeshVertexBufferObject} in {@link DrawType#STATIC} with the {@link VertexBufferObjectAttribute}s: {@link Mesh#VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
 	 */
 	public Mesh(final float pX, final float pY, final float[] pBufferData, final int pVertexCount, final DrawMode pDrawMode, final VertexBufferObjectManager pVertexBufferObjectManager) {
-		this(pX, pY, 0, 0, pBufferData, pVertexCount, pDrawMode, pVertexBufferObjectManager);
-	}
-
-	/**
-	 * Uses a default {@link HighPerformanceMeshVertexBufferObject} in {@link DrawType#STATIC} with the {@link VertexBufferObjectAttribute}s: {@link Mesh#VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
-	 */
-	public Mesh(final float pX, final float pY, final float pWidth, final float pHeight, final float[] pBufferData, final int pVertexCount, final DrawMode pDrawMode, final VertexBufferObjectManager pVertexBufferObjectManager) {
-		this(pX, pY, pWidth, pHeight, pBufferData, pVertexCount, pDrawMode, pVertexBufferObjectManager, DrawType.STATIC);
+		this(pX, pY, pBufferData, pVertexCount, pDrawMode, pVertexBufferObjectManager, DrawType.STATIC);
 	}
 
 	/**
 	 * Uses a default {@link HighPerformanceMeshVertexBufferObject} with the {@link VertexBufferObjectAttribute}s: {@link Mesh#VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
 	 */
 	public Mesh(final float pX, final float pY, final float[] pBufferData, final int pVertexCount, final DrawMode pDrawMode, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
-		this(pX, pY, 0, 0, pBufferData, pVertexCount, pDrawMode, pVertexBufferObjectManager, pDrawType);
-	}
-
-	/**
-	 * Uses a default {@link HighPerformanceMeshVertexBufferObject} with the {@link VertexBufferObjectAttribute}s: {@link Mesh#VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT}.
-	 */
-	public Mesh(final float pX, final float pY, final float pWidth, final float pHeight, final float[] pBufferData, final int pVertexCount, final DrawMode pDrawMode, final VertexBufferObjectManager pVertexBufferObjectManager, final DrawType pDrawType) {
-		this(pX, pY, pWidth, pHeight, pVertexCount, pDrawMode, new HighPerformanceMeshVertexBufferObject(pVertexBufferObjectManager, pBufferData, pVertexCount, pDrawType, true, Mesh.VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT));
+		this(pX, pY, pVertexCount, pDrawMode, new HighPerformanceMeshVertexBufferObject(pVertexBufferObjectManager, pBufferData, pVertexCount, pDrawType, true, Mesh.VERTEXBUFFEROBJECTATTRIBUTES_DEFAULT));
 	}
 
 	public Mesh(final float pX, final float pY, final int pVertexCount, final DrawMode pDrawMode, final IMeshVertexBufferObject pMeshVertexBufferObject) {
-		this(pX, pY, 0, 0, pVertexCount, pDrawMode, pMeshVertexBufferObject);
-	}
-
-	public Mesh(final float pX, final float pY, final float pWidth, final float pHeight, final int pVertexCount, final DrawMode pDrawMode, final IMeshVertexBufferObject pMeshVertexBufferObject) {
-		super(pX, pY, pWidth, pHeight, PositionColorShaderProgram.getInstance());
+		super(pX, pY, PositionColorShaderProgram.getInstance());
 
 		this.mDrawMode = pDrawMode.getDrawMode();
 		this.mMeshVertexBufferObject = pMeshVertexBufferObject;
@@ -156,15 +139,15 @@ public class Mesh extends Shape {
 	}
 
 	@Override
-	public boolean collidesWith(final IEntity pOtherEntity) {
-		if (pOtherEntity instanceof Mesh) {
+	public boolean collidesWith(final IShape pOtherShape) {
+		if(pOtherShape instanceof Line) {
 			// TODO
-			return super.collidesWith(pOtherEntity);
-		} else if (pOtherEntity instanceof Line) {
+			return false;
+		} else if(pOtherShape instanceof RectangularShape) {
 			// TODO
-			return super.collidesWith(pOtherEntity);
+			return false;
 		} else {
-			return super.collidesWith(pOtherEntity);
+			return false;
 		}
 	}
 

@@ -7,9 +7,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:52:55 - 04.01.2011
  */
@@ -50,7 +50,7 @@ public class ArcBitmapTextureAtlasSourceDecoratorShape implements IBitmapTexture
 
 	@Deprecated
 	public static ArcBitmapTextureAtlasSourceDecoratorShape getDefaultInstance() {
-		if (sDefaultInstance == null) {
+		if(sDefaultInstance == null) {
 			sDefaultInstance = new ArcBitmapTextureAtlasSourceDecoratorShape();
 		}
 		return sDefaultInstance;

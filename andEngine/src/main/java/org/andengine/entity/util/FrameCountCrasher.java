@@ -5,9 +5,9 @@ import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.util.debug.Debug;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 19:52:31 - 09.03.2010
  */
@@ -46,11 +46,11 @@ public class FrameCountCrasher implements IUpdateHandler {
 		this.mFramesLeft--;
 
 		final float[] frameLengths = this.mFrameLengths;
-		if (this.mFramesLeft >= 0) {
+		if(this.mFramesLeft >= 0) {
 			frameLengths[this.mFramesLeft] = pSecondsElapsed;
 		} else {
-			if (BuildConfig.DEBUG) {
-				for (int i = frameLengths.length - 1; i >= 0; i--) {
+			if(BuildConfig.DEBUG) {
+				for(int i = frameLengths.length - 1; i >= 0; i--) {
 					Debug.d("Elapsed: " + frameLengths[i]);
 				}
 			}

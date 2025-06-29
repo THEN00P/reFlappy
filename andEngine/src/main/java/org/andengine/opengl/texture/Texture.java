@@ -4,12 +4,11 @@ import java.io.IOException;
 
 import org.andengine.opengl.texture.atlas.source.ITextureAtlasSource;
 import org.andengine.opengl.util.GLState;
-import org.andengine.util.adt.data.constants.DataConstants;
 
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 14:55:02 - 08.03.2010
  */
@@ -89,13 +88,6 @@ public abstract class Texture implements ITexture {
 	}
 
 	@Override
-	public int getTextureMemorySize() {
-		final int pixelCount = this.getWidth() * this.getHeight();
-		final int bytesPerPixel = this.mPixelFormat.getBitsPerPixel() / DataConstants.BITS_PER_BYTE;
-		return pixelCount * bytesPerPixel / DataConstants.BYTES_PER_KILOBYTE;
-	}
-
-	@Override
 	public ITextureStateListener getTextureStateListener() {
 		return this.mTextureStateListener;
 	}
@@ -148,7 +140,7 @@ public abstract class Texture implements ITexture {
 
 		this.mUpdateOnHardwareNeeded = false;
 
-		if (this.mTextureStateListener != null) {
+		if(this.mTextureStateListener != null) {
 			this.mTextureStateListener.onLoadedToHardware(this);
 		}
 	}
@@ -159,7 +151,7 @@ public abstract class Texture implements ITexture {
 
 		this.mHardwareTextureID = Texture.HARDWARE_TEXTURE_ID_INVALID;
 
-		if (this.mTextureStateListener != null) {
+		if(this.mTextureStateListener != null) {
 			this.mTextureStateListener.onUnloadedFromHardware(this);
 		}
 	}

@@ -24,7 +24,7 @@ import android.content.res.Resources;
  * @author Nicolas Gramlich
  * @since 18:15:14 - 09.03.2010
  */
-public final class BitmapTextureAtlasTextureRegionFactory {
+public class BitmapTextureAtlasTextureRegionFactory {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -39,10 +39,6 @@ public final class BitmapTextureAtlasTextureRegionFactory {
 	// Constructors
 	// ===========================================================
 
-	private BitmapTextureAtlasTextureRegionFactory() {
-
-	}
-
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
@@ -51,10 +47,10 @@ public final class BitmapTextureAtlasTextureRegionFactory {
 	 * @param pAssetBasePath must end with '<code>/</code>' or have <code>.length() == 0</code>.
 	 */
 	public static void setAssetBasePath(final String pAssetBasePath) {
-		if (pAssetBasePath.endsWith("/") || pAssetBasePath.length() == 0) {
+		if(pAssetBasePath.endsWith("/") || pAssetBasePath.length() == 0) {
 			BitmapTextureAtlasTextureRegionFactory.sAssetBasePath = pAssetBasePath;
 		} else {
-			throw new IllegalArgumentException("pAssetBasePath must end with '/' or be length zero.");
+			throw new IllegalArgumentException("pAssetBasePath must end with '/' or be lenght zero.");
 		}
 	}
 

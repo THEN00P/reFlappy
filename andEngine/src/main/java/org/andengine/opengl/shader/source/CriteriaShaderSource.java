@@ -5,7 +5,7 @@ import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.util.criteria.IGLCriteria;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 16:30:12 - 10.10.2011
@@ -39,9 +39,9 @@ public class CriteriaShaderSource implements IShaderSource {
 
 	@Override
 	public String getShaderSource(final GLState pGLState) {
-		for (int i = 0; i < this.mCriteriaShaderSourceEntries.length; i++) {
+		for(int i = 0; i < this.mCriteriaShaderSourceEntries.length; i++) {
 			final CriteriaShaderSourceEntry criteriaShaderSourceEntry = this.mCriteriaShaderSourceEntries[i];
-			if (criteriaShaderSourceEntry.isMet(pGLState)) {
+			if(criteriaShaderSourceEntry.isMet(pGLState)) {
 				return criteriaShaderSourceEntry.getShaderSource();
 			}
 		}
@@ -71,7 +71,7 @@ public class CriteriaShaderSource implements IShaderSource {
 		// ===========================================================
 		// Constructors
 		// ===========================================================
-
+		
 		public CriteriaShaderSourceEntry(final String pShaderSource) {
 			this(pShaderSource, (IGLCriteria[]) null);
 		}
@@ -98,9 +98,9 @@ public class CriteriaShaderSource implements IShaderSource {
 		// ===========================================================
 
 		public boolean isMet(final GLState pGLState) {
-			if (this.mGLCriterias != null) {
-				for (IGLCriteria gLCriteria : this.mGLCriterias) {
-					if (!gLCriteria.isMet(pGLState)) {
+			if(this.mGLCriterias != null) {
+				for(IGLCriteria gLCriteria : this.mGLCriterias) {
+					if(!gLCriteria.isMet(pGLState)) {
 						return false;
 					}
 				}

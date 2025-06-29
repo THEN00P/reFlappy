@@ -7,7 +7,7 @@ import org.andengine.util.modifier.ease.IEaseFunction;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 23:24:26 - 16.07.2011
  */
@@ -121,8 +121,8 @@ public class QuadraticBezierCurveMoveModifier extends DurationEntityModifier {
 		final float percentageDone = this.mEaseFunction.getPercentage(this.getSecondsElapsed(), this.mDuration);
 
 		final float u = 1 - percentageDone;
-		final float tt = percentageDone * percentageDone;
-		final float uu = u * u;
+		final float tt = percentageDone*percentageDone;
+		final float uu = u*u;
 
 		final float ut2 = 2 * u * percentageDone;
 

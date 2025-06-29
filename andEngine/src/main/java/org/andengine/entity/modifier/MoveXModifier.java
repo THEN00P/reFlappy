@@ -5,9 +5,9 @@ import org.andengine.util.modifier.ease.EaseLinear;
 import org.andengine.util.modifier.ease.IEaseFunction;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:03:22 - 30.08.2010
  */
@@ -45,7 +45,7 @@ public class MoveXModifier extends SingleValueSpanEntityModifier {
 	}
 
 	@Override
-	public MoveXModifier deepCopy() {
+	public MoveXModifier deepCopy(){
 		return new MoveXModifier(this);
 	}
 

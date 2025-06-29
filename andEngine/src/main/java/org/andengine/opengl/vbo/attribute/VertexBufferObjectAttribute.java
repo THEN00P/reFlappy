@@ -3,7 +3,7 @@ package org.andengine.opengl.vbo.attribute;
 import android.opengl.GLES20;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 13:57:13 - 15.08.2011

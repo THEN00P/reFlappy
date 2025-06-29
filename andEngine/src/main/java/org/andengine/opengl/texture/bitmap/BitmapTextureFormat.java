@@ -5,7 +5,7 @@ import org.andengine.opengl.texture.PixelFormat;
 import android.graphics.Bitmap.Config;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 11:36:45 - 05.04.2012
@@ -41,7 +41,7 @@ public enum BitmapTextureFormat {
 	}
 
 	public static BitmapTextureFormat fromPixelFormat(final PixelFormat pPixelFormat) {
-		switch (pPixelFormat) {
+		switch(pPixelFormat) {
 			case RGBA_8888:
 				return RGBA_8888;
 			case RGBA_4444:

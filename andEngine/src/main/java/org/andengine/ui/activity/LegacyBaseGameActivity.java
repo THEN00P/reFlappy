@@ -1,7 +1,5 @@
 package org.andengine.ui.activity;
 
-import java.io.IOException;
-
 import org.andengine.engine.Engine;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
@@ -13,7 +11,7 @@ import org.andengine.entity.scene.Scene;
  *
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 11:27:06 - 08.03.2010
  */
@@ -56,26 +54,26 @@ public abstract class LegacyBaseGameActivity extends BaseGameActivity {
 	}
 
 	@Override
-	public final void onCreateResources(final OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException {
+	public final void onCreateResources(final OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
 		this.onLoadResources();
 
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
 	@Override
-	public final void onCreateScene(final OnCreateSceneCallback pOnCreateSceneCallback) throws IOException {
+	public final void onCreateScene(final OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
 		final Scene scene = this.onLoadScene();
 
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
 	}
 
 	@Override
-	public final void onPopulateScene(final Scene pScene, final OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
+	public final void onPopulateScene(final Scene pScene, final OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
 	@Override
-	public final void onDestroyResources() throws IOException {
+	public final void onDestroyResources() throws Exception {
 		super.onDestroyResources();
 
 		this.onUnloadResources();

@@ -8,7 +8,7 @@ import android.media.SoundPool;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 13:22:15 - 11.03.2010
  */
@@ -28,7 +28,6 @@ public class Sound extends BaseAudioEntity {
 
 	private int mLoopCount;
 	private float mRate = 1.0f;
-	private int mPriority = 1;
 
 	// ===========================================================
 	// Constructors
@@ -64,7 +63,7 @@ public class Sound extends BaseAudioEntity {
 		this.assertNotReleased();
 
 		this.mLoopCount = pLoopCount;
-		if (this.mStreamID != 0) {
+		if(this.mStreamID != 0) {
 			this.getSoundPool().setLoop(this.mStreamID, pLoopCount);
 		}
 	}
@@ -77,21 +76,8 @@ public class Sound extends BaseAudioEntity {
 		this.assertNotReleased();
 
 		this.mRate = pRate;
-		if (this.mStreamID != 0) {
-			this.getSoundPool().setRate(this.mStreamID, pRate);
-		}
-	}
-
-	public int getPriority() {
-		return this.mPriority;
-	}
-
-	public void setPriority(final int pPriority) throws SoundReleasedException {
-		this.assertNotReleased();
-
-		this.mPriority = pPriority;
 		if(this.mStreamID != 0) {
-			this.getSoundPool().setPriority(this.mStreamID, pPriority);
+			this.getSoundPool().setRate(this.mStreamID, pRate);
 		}
 	}
 
@@ -105,7 +91,7 @@ public class Sound extends BaseAudioEntity {
 
 	@Override
 	protected SoundManager getAudioManager() throws SoundReleasedException {
-		return (SoundManager) super.getAudioManager();
+		return (SoundManager)super.getAudioManager();
 	}
 
 	@Override
@@ -121,14 +107,14 @@ public class Sound extends BaseAudioEntity {
 		final float leftVolume = this.mLeftVolume * masterVolume;
 		final float rightVolume = this.mRightVolume * masterVolume;
 
-		this.mStreamID = this.getSoundPool().play(this.mSoundID, leftVolume, rightVolume, this.mPriority, this.mLoopCount, this.mRate);
+		this.mStreamID = this.getSoundPool().play(this.mSoundID, leftVolume, rightVolume, 1, this.mLoopCount, this.mRate);
 	}
 
 	@Override
 	public void stop() throws SoundReleasedException {
 		super.stop();
 
-		if (this.mStreamID != 0) {
+		if(this.mStreamID != 0) {
 			this.getSoundPool().stop(this.mStreamID);
 		}
 	}
@@ -137,7 +123,7 @@ public class Sound extends BaseAudioEntity {
 	public void resume() throws SoundReleasedException {
 		super.resume();
 
-		if (this.mStreamID != 0) {
+		if(this.mStreamID != 0) {
 			this.getSoundPool().resume(this.mStreamID);
 		}
 	}
@@ -146,7 +132,7 @@ public class Sound extends BaseAudioEntity {
 	public void pause() throws SoundReleasedException {
 		super.pause();
 
-		if (this.mStreamID != 0) {
+		if(this.mStreamID != 0) {
 			this.getSoundPool().pause(this.mStreamID);
 		}
 	}
@@ -175,7 +161,7 @@ public class Sound extends BaseAudioEntity {
 	public void setVolume(final float pLeftVolume, final float pRightVolume) throws SoundReleasedException {
 		super.setVolume(pLeftVolume, pRightVolume);
 
-		if (this.mStreamID != 0) {
+		if(this.mStreamID != 0){
 			final float masterVolume = this.getMasterVolume();
 			final float leftVolume = this.mLeftVolume * masterVolume;
 			final float rightVolume = this.mRightVolume * masterVolume;

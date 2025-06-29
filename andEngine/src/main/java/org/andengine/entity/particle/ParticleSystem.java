@@ -11,13 +11,14 @@ import org.andengine.entity.particle.initializer.IParticleInitializer;
 import org.andengine.entity.particle.modifier.IParticleModifier;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.Constants;
-import org.andengine.util.adt.array.ArrayUtils;
 import org.andengine.util.math.MathUtils;
+
+import android.util.FloatMath;
 
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 19:42:27 - 14.03.2010
  */
@@ -63,7 +64,7 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 
 		this.mEntityFactory = pEntityFactory;
 		this.mParticleEmitter = pParticleEmitter;
-		this.mParticles = (Particle<T>[]) new Particle[pParticlesMaximum];
+		this.mParticles = new Particle[pParticlesMaximum];
 		this.mRateMinimum = pRateMinimum;
 		this.mRateMaximum = pRateMaximum;
 		this.mParticlesMaximum = pParticlesMaximum;
@@ -105,7 +106,7 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 
 	@Override
 	protected void onManagedDraw(final GLState pGLState, final Camera pCamera) {
-		for (int i = this.mParticlesAlive - 1; i >= 0; i--) {
+		for(int i = this.mParticlesAlive - 1; i >= 0; i--) {
 			this.mParticles[i].onDraw(pGLState, pCamera);
 		}
 	}
@@ -114,21 +115,21 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 	protected void onManagedUpdate(final float pSecondsElapsed) {
 		super.onManagedUpdate(pSecondsElapsed);
 
-		if (this.isParticlesSpawnEnabled()) {
+		if(this.isParticlesSpawnEnabled()) {
 			this.spawnParticles(pSecondsElapsed);
 		}
 
 		final int particleModifierCountMinusOne = this.mParticleModifiers.size() - 1;
-		for (int i = this.mParticlesAlive - 1; i >= 0; i--) {
+		for(int i = this.mParticlesAlive - 1; i >= 0; i--) {
 			final Particle<T> particle = this.mParticles[i];
 
 			/* Apply all particleModifiers */
-			for (int j = particleModifierCountMinusOne; j >= 0; j--) {
+			for(int j = particleModifierCountMinusOne; j >= 0; j--) {
 				this.mParticleModifiers.get(j).onUpdateParticle(particle);
 			}
 
 			particle.onUpdate(pSecondsElapsed);
-			if (particle.mExpired) {
+			if(particle.mExpired){
 				this.mParticlesAlive--;
 
 				this.moveParticleToEnd(i);
@@ -140,12 +141,12 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 		final Particle<T> particle = this.mParticles[pIndex];
 
 		final int particlesToCopy = this.mParticlesAlive - pIndex;
-		if (particlesToCopy > 0) {
+		if(particlesToCopy > 0) {
 			System.arraycopy(this.mParticles, pIndex + 1, this.mParticles, pIndex, particlesToCopy);
 		}
 		this.mParticles[this.mParticlesAlive] = particle;
 
-		/* This mode of swapping particles is faster than copying tons of array elements,
+		/* This mode of swapping particles is faster than copying tons of array elements, 
 		 * but it doesn't respect the 'lifetime' of the particles. */
 //		particles[i] = particles[this.mParticlesAlive];
 //		particles[this.mParticlesAlive] = particle;
@@ -177,16 +178,16 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 
 		this.mParticlesDueToSpawn += newParticlesThisFrame;
 
-		final int particlesToSpawnThisFrame = Math.min(this.mParticlesMaximum - this.mParticlesAlive, (int) Math.floor(this.mParticlesDueToSpawn));
+		final int particlesToSpawnThisFrame = Math.min(this.mParticlesMaximum - this.mParticlesAlive, (int)FloatMath.floor(this.mParticlesDueToSpawn));
 		this.mParticlesDueToSpawn -= particlesToSpawnThisFrame;
 
-		for (int i = 0; i < particlesToSpawnThisFrame; i++) {
+		for(int i = 0; i < particlesToSpawnThisFrame; i++){
 			this.spawnParticle();
 		}
 	}
 
 	private void spawnParticle() {
-		if (this.mParticlesAlive < this.mParticlesMaximum) {
+		if(this.mParticlesAlive < this.mParticlesMaximum){
 			Particle<T> particle = this.mParticles[this.mParticlesAlive];
 
 			/* New particle needs to be created. */
@@ -195,7 +196,7 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 			final float x = ParticleSystem.POSITION_OFFSET_CONTAINER[Constants.VERTEX_INDEX_X];
 			final float y = ParticleSystem.POSITION_OFFSET_CONTAINER[Constants.VERTEX_INDEX_Y];
 
-			if (particle == null) {
+			if(particle == null) {
 				particle = new Particle<T>();
 				this.mParticles[this.mParticlesAlive] = particle;
 				particle.setEntity(this.mEntityFactory.create(x, y));
@@ -206,11 +207,11 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 
 			/* Apply particle initializers. */
 			{
-				for (int i = this.mParticleInitializers.size() - 1; i >= 0; i--) {
+				for(int i = this.mParticleInitializers.size() - 1; i >= 0; i--) {
 					this.mParticleInitializers.get(i).onInitializeParticle(particle);
 				}
 
-				for (int i = this.mParticleModifiers.size() - 1; i >= 0; i--) {
+				for(int i = this.mParticleModifiers.size() - 1; i >= 0; i--) {
 					this.mParticleModifiers.get(i).onInitializeParticle(particle);
 				}
 			}
@@ -220,7 +221,7 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 	}
 
 	protected float determineCurrentRate() {
-		if (this.mRateMinimum == this.mRateMaximum) {
+		if(this.mRateMinimum == this.mRateMaximum){
 			return this.mRateMinimum;
 		} else {
 			return MathUtils.random(this.mRateMinimum, this.mRateMaximum);

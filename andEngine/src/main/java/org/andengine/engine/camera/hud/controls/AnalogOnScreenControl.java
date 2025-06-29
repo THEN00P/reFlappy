@@ -8,10 +8,12 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.math.MathUtils;
 
+import android.util.FloatMath;
+
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 00:21:55 - 11.07.2010
  */
@@ -76,11 +78,11 @@ public class AnalogOnScreenControl extends BaseOnScreenControl implements IClick
 
 	@Override
 	protected void onUpdateControlKnob(final float pRelativeX, final float pRelativeY) {
-		if (pRelativeX * pRelativeX + pRelativeY * pRelativeY <= 0.25f) {
+		if(pRelativeX * pRelativeX + pRelativeY * pRelativeY <= 0.25f) {
 			super.onUpdateControlKnob(pRelativeX, pRelativeY);
 		} else {
 			final float angleRad = MathUtils.atan2(pRelativeY, pRelativeX);
-			super.onUpdateControlKnob((float) Math.cos(angleRad) * 0.5f, (float) Math.sin(angleRad) * 0.5f);
+			super.onUpdateControlKnob(FloatMath.cos(angleRad) * 0.5f, FloatMath.sin(angleRad) * 0.5f);
 		}
 	}
 

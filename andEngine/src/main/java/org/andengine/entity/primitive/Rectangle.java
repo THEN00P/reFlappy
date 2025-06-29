@@ -3,7 +3,7 @@ package org.andengine.entity.primitive;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.primitive.vbo.HighPerformanceRectangleVertexBufferObject;
 import org.andengine.entity.primitive.vbo.IRectangleVertexBufferObject;
-import org.andengine.entity.shape.Shape;
+import org.andengine.entity.shape.RectangularShape;
 import org.andengine.opengl.shader.PositionColorShaderProgram;
 import org.andengine.opengl.shader.constants.ShaderProgramConstants;
 import org.andengine.opengl.util.GLState;
@@ -18,11 +18,11 @@ import android.opengl.GLES20;
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 12:18:49 - 13.03.2010
  */
-public class Rectangle extends Shape {
+public class Rectangle extends RectangularShape {
 	// ===========================================================
 	// Constants
 	// ===========================================================

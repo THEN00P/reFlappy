@@ -1,5 +1,6 @@
 package org.andengine.util.modifier.ease;
 
+import android.util.FloatMath;
 
 /**
  * (c) 2010 Nicolas Gramlich
@@ -29,7 +30,7 @@ public class EaseCircularOut implements IEaseFunction {
 	}
 
 	public static EaseCircularOut getInstance() {
-		if (INSTANCE == null) {
+		if(INSTANCE == null) {
 			INSTANCE = new EaseCircularOut();
 		}
 		return INSTANCE;
@@ -54,7 +55,7 @@ public class EaseCircularOut implements IEaseFunction {
 
 	public static float getValue(final float pPercentage) {
 		final float t = pPercentage - 1;
-		return (float) Math.sqrt(1 - t * t);
+		return FloatMath.sqrt(1 - t * t);
 	}
 
 	// ===========================================================

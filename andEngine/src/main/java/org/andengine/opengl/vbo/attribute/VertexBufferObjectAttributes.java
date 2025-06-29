@@ -2,7 +2,7 @@ package org.andengine.opengl.vbo.attribute;
 
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:22:06 - 15.08.2011
@@ -46,7 +46,7 @@ public class VertexBufferObjectAttributes {
 		final int stride = this.mStride;
 
 		final int vertexBufferObjectAttributeCount = vertexBufferObjectAttributes.length;
-		for (int i = 0; i < vertexBufferObjectAttributeCount; i++) {
+		for(int i = 0; i < vertexBufferObjectAttributeCount; i++) {
 			vertexBufferObjectAttributes[i].glVertexAttribPointer(stride);
 		}
 	}

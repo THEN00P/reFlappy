@@ -10,16 +10,16 @@ import org.andengine.util.adt.queue.IQueue;
  * This implementation is particular useful/efficient for enter/poll operations.
  * Its {@link java.util.Queue} like behavior performs better than a plain {@link java.util.ArrayList}, since it automatically shift the contents of its internal Array only when really necessary.
  * Besides sparse allocations to increase the size of the internal Array, {@link ShiftList} is allocation free (unlike the {@link java.util.LinkedList} family).
- *
+ * 
  * Supports <code>null</code> items.
  *
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @author Greg Haynes
  * @since 15:02:40 - 24.02.2012
  */
-public class ShiftList<T> implements IQueue<T>, IList<T> {
+public class ShiftList<T> implements IQueue<T> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -73,15 +73,15 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 
 	@Override
 	public int indexOf(final T pItem) {
-		if (pItem == null) {
-			for (int i = this.mHead; i < this.mTail; i++) {
-				if (this.mItems[i] == null) {
+		if(pItem == null) {
+			for(int i = this.mHead; i < this.mTail; i++) {
+				if(this.mItems[i] == null) {
 					return i - this.mHead;
 				}
 			}
 		} else {
-			for (int i = this.mHead; i < this.mTail; i++) {
-				if (pItem.equals(this.mItems[i])) {
+			for(int i = this.mHead; i < this.mTail; i++) {
+				if(pItem.equals(this.mItems[i])) {
 					return i - this.mHead;
 				}
 			}
@@ -92,7 +92,7 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T peek() {
-		if (this.mHead == this.mTail) {
+		if(this.mHead == this.mTail) {
 			return null;
 		} else {
 			return (T) this.mItems[this.mHead];
@@ -102,13 +102,13 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T poll() {
-		if (this.mHead == this.mTail) {
+		if(this.mHead == this.mTail) {
 			return null;
 		} else {
 			final T item = (T) this.mItems[this.mHead];
 			this.mItems[this.mHead] = null;
 			this.mHead++;
-			if (this.mHead == this.mTail) {
+			if(this.mHead == this.mTail) {
 				this.mHead = 0;
 				this.mTail = 0;
 			}
@@ -127,7 +127,7 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 	public void enter(final int pIndex, final T pItem) throws ArrayIndexOutOfBoundsException {
 		final int size = this.mTail - this.mHead;
 		/* Check which side to shift to is more efficient. */
-		if (pIndex < (size >> 1)) {
+		if(pIndex < (size >> 1)) {
 			/* Shift left. */
 			this.enterShiftingLeft(pIndex, pItem);
 		} else {
@@ -136,12 +136,12 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 		}
 	}
 
-	private void enterShiftingRight(final int pIndex, final T pItem, final int pSize) {
+	private void enterShiftingRight(final int pIndex, final T pItem, final int size) {
 		this.ensureShiftableRight();
 
 		/* Check if items need to be copied. */
-		final int shiftAmount = pSize - pIndex;
-		if (shiftAmount == 0) {
+		final int shiftAmount = size - pIndex;
+		if(shiftAmount == 0) {
 			/* Nothing to shift, we can insert at the tail. */
 			this.mItems[this.mTail] = pItem;
 		} else {
@@ -160,7 +160,7 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 		this.mHead--;
 
 		/* Check if items need to be copied. */
-		if (pIndex == 0) {
+		if(pIndex == 0) {
 			/* Nothing to shift, we can insert at the head. */
 			this.mItems[this.mHead] = pItem;
 		} else {
@@ -185,7 +185,7 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 	public T removeFirst() {
 		return this.remove(0);
 	}
-
+	
 	@Override
 	public T removeLast() {
 		return this.remove(this.size() - 1);
@@ -194,7 +194,7 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 	@Override
 	public boolean remove(final T pItem) {
 		final int index = this.indexOf(pItem);
-		if (index >= 0) {
+		if(index >= 0) {
 			this.remove(index);
 			return true;
 		} else {
@@ -212,9 +212,9 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 
 		/* Determine which side to shift to makes more sense. */
 		final int center = size >> 1;
-		if (pIndex < center) {
+		if(pIndex < center) {
 			/* Shift right. */
-			if (internalIndex > this.mHead) {
+			if(internalIndex > this.mHead) {
 				System.arraycopy(this.mItems, this.mHead, this.mItems, this.mHead + 1, pIndex);
 			}
 			this.mItems[this.mHead] = null;
@@ -222,7 +222,7 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 		} else {
 			/* Shift left. */
 			final int shiftAmount = size - pIndex - 1;
-			if (shiftAmount > 0) {
+			if(shiftAmount > 0) {
 				System.arraycopy(this.mItems, internalIndex + 1, this.mItems, internalIndex, shiftAmount);
 			}
 			this.mTail--;
@@ -244,18 +244,13 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 		this.mTail = 0;
 	}
 
-	@Override
-	public String toString() {
-		return ListUtils.toString(this);
-	}
-
 	// ===========================================================
 	// Methods
 	// ===========================================================
 
 	public void shift() {
 		final int size = this.mTail - this.mHead;
-		if (size == 0) {
+		if(size == 0) {
 			this.mHead = 0;
 			this.mTail = 0;
 		} else {
@@ -265,7 +260,7 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 			/* Null out old item references, ensuring not to overwrite just copied ones. */
 			final int start = Math.max(size, this.mHead);
 			final int end = Math.max(start, this.mTail);
-			if (start < end) {
+			if(start < end) {
 				Arrays.fill(this.mItems, start, end, null);
 			}
 
@@ -277,11 +272,11 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 	private void ensureShiftableRight() {
 		final int currentCapacity = this.mItems.length;
 		/* Check if tail reached the end. */
-		if (this.mTail == currentCapacity) {
+		if(this.mTail == currentCapacity) {
 			final int size = this.mTail - this.mHead;
 
 			/* Check if space problem can be solved by shifting. */
-			if (size != currentCapacity) {
+			if(size != currentCapacity) {
 				this.shift();
 			} else {
 				/* Increase array capacity. */
@@ -295,13 +290,13 @@ public class ShiftList<T> implements IQueue<T>, IList<T> {
 
 	private void ensureShiftableLeft() {
 		/* Check if there is room at the head. */
-		if (this.mHead == 0) {
+		if(this.mHead == 0) {
 			final int size = this.mTail - this.mHead;
 			final int currentCapacity = this.mItems.length;
 
 			/* Check if space problem can be solved by shifting. */
-			if (size < currentCapacity) {
-				if (size == 0) {
+			if(size < currentCapacity) {
+				if(size == 0) {
 					this.mHead = 1;
 					this.mTail = 1;
 				} else {

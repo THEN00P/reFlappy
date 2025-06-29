@@ -9,14 +9,13 @@ import org.andengine.opengl.texture.atlas.buildable.BuildableTextureAtlas.Textur
 import org.andengine.opengl.texture.atlas.source.ITextureAtlasSource;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @author Jim Scott (BlackPawn)
  * @since 16:03:01 - 12.08.2010
- *
- * @see <a href="http://www.blackpawn.com/texts/lightmaps/default.html">blackpawn.com/texts/lightmaps/default.html</a>
+ * @see http://www.blackpawn.com/texts/lightmaps/default.html
  */
 public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A extends ITextureAtlas<T>> implements ITextureAtlasBuilder<T, A> {
 	// ===========================================================
@@ -27,7 +26,7 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 		@Override
 		public int compare(final TextureAtlasSourceWithWithLocationCallback<?> pTextureAtlasSourceWithWithLocationCallbackA, final TextureAtlasSourceWithWithLocationCallback<?> pTextureAtlasSourceWithWithLocationCallbackB) {
 			final int deltaWidth = pTextureAtlasSourceWithWithLocationCallbackB.getTextureAtlasSource().getTextureWidth() - pTextureAtlasSourceWithWithLocationCallbackA.getTextureAtlasSource().getTextureWidth();
-			if (deltaWidth != 0) {
+			if(deltaWidth != 0) {
 				return deltaWidth;
 			} else {
 				return pTextureAtlasSourceWithWithLocationCallbackB.getTextureAtlasSource().getTextureHeight() - pTextureAtlasSourceWithWithLocationCallbackA.getTextureAtlasSource().getTextureHeight();
@@ -48,7 +47,7 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 	// ===========================================================
 
 	/**
-	 * @param pTextureAtlasBorderSpacing the minimum spacing between the border of the texture and the {@link ITextureAtlasSource}s.
+	 * @param pTextureAtlasBorderSpacing the minimum spacing between the border of the texture and the {@link ITextureAtlasSource}s. 
 	 * @param pTextureAtlasSourceSpacing the spacing between the different {@link ITextureAtlasSource}s.
 	 * @param pTextureAtlasSourcePadding the transparent padding around each {@link ITextureAtlasSource} (prevents texture bleeding).
 	 */
@@ -78,19 +77,19 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 
 		final int textureSourceCount = pTextureAtlasSourcesWithLocationCallback.size();
 
-		for (int i = 0; i < textureSourceCount; i++) {
+		for(int i = 0; i < textureSourceCount; i++) {
 			final TextureAtlasSourceWithWithLocationCallback<T> textureSourceWithLocationCallback = pTextureAtlasSourcesWithLocationCallback.get(i);
 			final T textureAtlasSource = textureSourceWithLocationCallback.getTextureAtlasSource();
 
 			final Node inserted = root.insert(textureAtlasSource, rootWidth, rootHeight, this.mTextureAtlasSourceSpacing, this.mTextureAtlasSourcePadding);
 
-			if (inserted == null) {
+			if(inserted == null) {
 				throw new TextureAtlasBuilderException("Could not build: '" + textureAtlasSource.toString() + "' into: '" + pTextureAtlas.getClass().getSimpleName() + "'.");
 			}
 
 			final int textureAtlasSourceLeft = inserted.mRect.mLeft + this.mTextureAtlasBorderSpacing + this.mTextureAtlasSourcePadding;
 			final int textureAtlasSourceTop = inserted.mRect.mTop + this.mTextureAtlasBorderSpacing + this.mTextureAtlasSourcePadding;
-			if (this.mTextureAtlasSourcePadding == 0) {
+			if(this.mTextureAtlasSourcePadding == 0) {
 				pTextureAtlas.addTextureAtlasSource(textureAtlasSource, textureAtlasSourceLeft, textureAtlasSourceTop);
 			} else {
 				pTextureAtlas.addTextureAtlasSource(textureAtlasSource, textureAtlasSourceLeft, textureAtlasSourceTop, this.mTextureAtlasSourcePadding);
@@ -230,15 +229,15 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 		// ===========================================================
 
 		public Node insert(final ITextureAtlasSource pTextureAtlasSource, final int pTextureWidth, final int pTextureHeight, final int pTextureAtlasSourceSpacing, final int pTextureAtlasSourcePadding) throws IllegalArgumentException {
-			if (this.mChildA != null && this.mChildB != null) {
+			if(this.mChildA != null && this.mChildB != null) {
 				final Node newNode = this.mChildA.insert(pTextureAtlasSource, pTextureWidth, pTextureHeight, pTextureAtlasSourceSpacing, pTextureAtlasSourcePadding);
-				if (newNode != null) {
+				if(newNode != null){
 					return newNode;
 				} else {
 					return this.mChildB.insert(pTextureAtlasSource, pTextureWidth, pTextureHeight, pTextureAtlasSourceSpacing, pTextureAtlasSourcePadding);
 				}
 			} else {
-				if (this.mTextureAtlasSource != null) {
+				if(this.mTextureAtlasSource != null) {
 					return null;
 				}
 
@@ -248,7 +247,7 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 				final int rectWidth = this.mRect.getWidth();
 				final int rectHeight = this.mRect.getHeight();
 
-				if (textureSourceWidth > rectWidth || textureSourceHeight > rectHeight) {
+				if(textureSourceWidth > rectWidth || textureSourceHeight > rectHeight) {
 					return null;
 				}
 
@@ -261,40 +260,40 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 				final boolean fitToBottomWithoutSpacing = textureSourceHeight == rectHeight && rectTop + textureSourceHeight == pTextureHeight;
 				final boolean fitToRightWithoutSpacing = textureSourceWidth == rectWidth && rectLeft + textureSourceWidth == pTextureWidth;
 
-				if (textureSourceWidthWithSpacing == rectWidth) {
-					if (textureSourceHeightWithSpacing == rectHeight) { /* Normal case with padding. */
+				if(textureSourceWidthWithSpacing == rectWidth){
+					if(textureSourceHeightWithSpacing == rectHeight) { /* Normal case with padding. */
 						this.mTextureAtlasSource = pTextureAtlasSource;
 						return this;
-					} else if (fitToBottomWithoutSpacing) { /* Bottom edge of the BitmapTexture. */
+					} else if(fitToBottomWithoutSpacing) { /* Bottom edge of the BitmapTexture. */
 						this.mTextureAtlasSource = pTextureAtlasSource;
 						return this;
 					}
 				}
 
-				if (fitToRightWithoutSpacing) { /* Right edge of the BitmapTexture. */
-					if (textureSourceHeightWithSpacing == rectHeight) {
+				if(fitToRightWithoutSpacing) { /* Right edge of the BitmapTexture. */
+					if(textureSourceHeightWithSpacing == rectHeight) {
 						this.mTextureAtlasSource = pTextureAtlasSource;
 						return this;
-					} else if (fitToBottomWithoutSpacing) { /* Bottom edge of the BitmapTexture. */
+					} else if(fitToBottomWithoutSpacing) { /* Bottom edge of the BitmapTexture. */
 						this.mTextureAtlasSource = pTextureAtlasSource;
 						return this;
-					} else if (textureSourceHeightWithSpacing > rectHeight) {
+					} else if(textureSourceHeightWithSpacing > rectHeight) {
 						return null;
 					} else {
 						return this.createChildren(pTextureAtlasSource, pTextureWidth, pTextureHeight, pTextureAtlasSourceSpacing, pTextureAtlasSourcePadding, rectWidth - textureSourceWidth, rectHeight - textureSourceHeightWithSpacing);
 					}
 				}
 
-				if (fitToBottomWithoutSpacing) {
-					if (textureSourceWidthWithSpacing == rectWidth) {
+				if(fitToBottomWithoutSpacing) {
+					if(textureSourceWidthWithSpacing == rectWidth) {
 						this.mTextureAtlasSource = pTextureAtlasSource;
 						return this;
-					} else if (textureSourceWidthWithSpacing > rectWidth) {
+					} else if(textureSourceWidthWithSpacing > rectWidth) {
 						return null;
 					} else {
 						return this.createChildren(pTextureAtlasSource, pTextureWidth, pTextureHeight, pTextureAtlasSourceSpacing, pTextureAtlasSourcePadding, rectWidth - textureSourceWidthWithSpacing, rectHeight - textureSourceHeight);
 					}
-				} else if (textureSourceWidthWithSpacing > rectWidth || textureSourceHeightWithSpacing > rectHeight) {
+				} else if(textureSourceWidthWithSpacing > rectWidth || textureSourceHeightWithSpacing > rectHeight) {
 					return null;
 				} else {
 					return this.createChildren(pTextureAtlasSource, pTextureWidth, pTextureHeight, pTextureAtlasSourceSpacing, pTextureAtlasSourcePadding, rectWidth - textureSourceWidthWithSpacing, rectHeight - textureSourceHeightWithSpacing);
@@ -305,7 +304,7 @@ public class BlackPawnTextureAtlasBuilder<T extends ITextureAtlasSource, A exten
 		private Node createChildren(final ITextureAtlasSource pTextureAtlasSource, final int pTextureWidth, final int pTextureHeight, final int pTextureAtlasSourceSpacing, final int pTextureAtlasSourcePadding, final int pDeltaWidth, final int pDeltaHeight) {
 			final Rect rect = this.mRect;
 
-			if (pDeltaWidth >= pDeltaHeight) {
+			if(pDeltaWidth >= pDeltaHeight) {
 				/* Split using a vertical axis. */
 				this.mChildA = new Node(
 						rect.getLeft(),

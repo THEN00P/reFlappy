@@ -4,8 +4,8 @@ import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.region.TextureRegion;
 
 /**
- *
- * (c) 2011 Zynga Inc.
+ * 
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 16:28:48 - 15.08.2011

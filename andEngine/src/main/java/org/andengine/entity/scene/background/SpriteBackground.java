@@ -3,9 +3,9 @@ package org.andengine.entity.scene.background;
 import org.andengine.entity.sprite.Sprite;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 14:01:43 - 19.07.2010
  */
@@ -33,11 +33,11 @@ public class SpriteBackground extends EntityBackground {
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
-
+	
 	public Sprite getSprite() {
-		return (Sprite) this.mEntity;
+		return (Sprite)this.mEntity;
 	}
-
+	
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================

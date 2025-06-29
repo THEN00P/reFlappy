@@ -6,9 +6,9 @@ import org.andengine.util.modifier.ease.EaseLinear;
 import org.andengine.util.modifier.ease.IEaseFunction;
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 16:10:16 - 04.05.2010
  */
@@ -68,7 +68,7 @@ public abstract class BaseSingleValueSpanParticleModifier<T extends IEntity> imp
 	@Override
 	public void onUpdateParticle(final Particle<T> pParticle) {
 		final float lifeTime = pParticle.getLifeTime();
-		if (lifeTime > this.mFromTime && lifeTime < this.mToTime) {
+		if(lifeTime > this.mFromTime && lifeTime < this.mToTime) {
 			final float percentageDone = this.mEaseFunction.getPercentage((lifeTime - this.mFromTime), this.mDuration);
 			this.onSetValue(pParticle, percentageDone, this.mFromValue + percentageDone * this.mValueSpan);
 		}

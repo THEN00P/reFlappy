@@ -1,18 +1,19 @@
 package org.andengine.opengl.font;
 
 import org.andengine.opengl.texture.ITexture;
-import org.andengine.util.adt.color.Color;
+import org.andengine.util.color.Color;
 
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
+import android.util.FloatMath;
 
 /**
  * TODO Re-implement with Font changes.
  *
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 10:39:33 - 03.04.2010
  */
@@ -32,7 +33,7 @@ public class StrokeFont extends Font {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
+	
 	public StrokeFont(final FontManager pFontManager, final ITexture pTexture, final Typeface pTypeface, final float pSize, final boolean pAntiAlias, final Color pColor, final float pStrokeWidth, final Color pStrokeColor) {
 		this(pFontManager, pTexture, pTypeface, pSize, pAntiAlias, pColor.getARGBPackedInt(), pStrokeWidth, pStrokeColor.getARGBPackedInt());
 	}
@@ -47,7 +48,7 @@ public class StrokeFont extends Font {
 
 	public StrokeFont(final FontManager pFontManager, final ITexture pTexture, final Typeface pTypeface, final float pSize, final boolean pAntiAlias, final int pColorARGBPackedInt, final float pStrokeWidth, final int pStrokeColorARGBPackedInt, final boolean pStrokeOnly) {
 		super(pFontManager, pTexture, pTypeface, pSize, pAntiAlias, pColorARGBPackedInt);
-
+		
 		this.mStrokeWidth = pStrokeWidth;
 
 		this.mStrokePaint = new Paint();
@@ -72,13 +73,13 @@ public class StrokeFont extends Font {
 	@Override
 	protected void updateTextBounds(final String pCharacterAsString) {
 		this.mStrokePaint.getTextBounds(pCharacterAsString, 0, 1, this.mTextBounds);
-		final int inset = -(int)Math.ceil(this.mStrokeWidth * 0.5f);
+		final int inset = -(int)FloatMath.floor(this.mStrokeWidth * 0.5f);
 		this.mTextBounds.inset(inset, inset);
 	}
 
 	@Override
 	protected void drawLetter(final String pCharacterAsString, final float pLeft, final float pTop) {
-		if (!this.mStrokeOnly) {
+		if(!this.mStrokeOnly) {
 			super.drawLetter(pCharacterAsString, pLeft, pTop);
 		}
 		this.mCanvas.drawText(pCharacterAsString, pLeft + Font.LETTER_TEXTURE_PADDING, pTop + Font.LETTER_TEXTURE_PADDING, this.mStrokePaint);

@@ -7,7 +7,7 @@ import org.andengine.opengl.util.GLState;
 import org.andengine.util.IDisposable;
 
 /**
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:32:10 - 15.11.2011

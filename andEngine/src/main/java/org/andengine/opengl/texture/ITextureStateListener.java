@@ -2,7 +2,7 @@ package org.andengine.opengl.texture;
 
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 11:25:58 - 05.04.2012

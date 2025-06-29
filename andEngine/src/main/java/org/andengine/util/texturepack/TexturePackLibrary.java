@@ -3,7 +3,7 @@ package org.andengine.util.texturepack;
 import java.util.HashMap;
 
 /**
- * (c) 2012 Zynga Inc.
+ * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 17:29:37 - 03.05.2012

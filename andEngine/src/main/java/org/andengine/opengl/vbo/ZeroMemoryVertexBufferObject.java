@@ -7,7 +7,7 @@ import org.andengine.opengl.shader.ShaderProgram;
 import org.andengine.opengl.util.BufferUtils;
 import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributes;
-import org.andengine.util.adt.data.constants.DataConstants;
+import org.andengine.util.adt.DataConstants;
 
 import android.opengl.GLES20;
 
@@ -22,7 +22,7 @@ import android.opengl.GLES20;
  * <li>The content (color, vertices, texturecoordinates) of the {@link ZeroMemoryVertexBufferObject} is changed not often, or even better: never.</li>
  * </ol>
  * <p/>
- * (c) 2011 Zynga Inc.
+ * (c) Zynga 2011
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @author Greg Haynes
@@ -128,7 +128,7 @@ public abstract class ZeroMemoryVertexBufferObject implements IVertexBufferObjec
 
 	@Override
 	public int getGPUMemoryByteSize() {
-		if (this.isLoadedToHardware()) {
+		if(this.isLoadedToHardware()) {
 			return this.getByteCapacity();
 		} else {
 			return 0;
@@ -139,27 +139,27 @@ public abstract class ZeroMemoryVertexBufferObject implements IVertexBufferObjec
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected abstract void onPopulateBufferData(final ByteBuffer pByteBuffer);
+	protected abstract void onPopulateBufferData(final ByteBuffer byteBuffer);
 
 	@Override
 	public void bind(final GLState pGLState) {
-		if (this.mHardwareBufferID == IVertexBufferObject.HARDWARE_BUFFER_ID_INVALID) {
+		if(this.mHardwareBufferID == IVertexBufferObject.HARDWARE_BUFFER_ID_INVALID) {
 			this.loadToHardware(pGLState);
 			this.mVertexBufferObjectManager.onVertexBufferObjectLoaded(this);
 		}
 
 		pGLState.bindArrayBuffer(this.mHardwareBufferID);
 
-		if (this.mDirtyOnHardware) {
+		if(this.mDirtyOnHardware) {
 			ByteBuffer byteBuffer = null;
 			try {
 				byteBuffer = this.aquireByteBuffer();
 
 				this.onPopulateBufferData(byteBuffer);
-
+	
 				GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, byteBuffer.limit(), byteBuffer, this.mUsage);
 			} finally {
-				if (byteBuffer != null) {
+				if(byteBuffer != null) {
 					this.releaseByteBuffer(byteBuffer);
 				}
 			}
@@ -201,7 +201,7 @@ public abstract class ZeroMemoryVertexBufferObject implements IVertexBufferObjec
 
 	@Override
 	public void dispose() {
-		if (!this.mDisposed) {
+		if(!this.mDisposed) {
 			this.mDisposed = true;
 
 			this.mVertexBufferObjectManager.onUnloadVertexBufferObject(this);
@@ -214,7 +214,7 @@ public abstract class ZeroMemoryVertexBufferObject implements IVertexBufferObjec
 	protected void finalize() throws Throwable {
 		super.finalize();
 
-		if (!this.mDisposed) {
+		if(!this.mDisposed) {
 			this.dispose();
 		}
 	}
@@ -229,8 +229,8 @@ public abstract class ZeroMemoryVertexBufferObject implements IVertexBufferObjec
 	}
 
 	/**
-	 * When a non <code>null</code> {@link ByteBuffer} is returned by this function, it is guaranteed that {@link #releaseByteBuffer(ByteBuffer)} is called.
-	 * @return a {@link ByteBuffer} to be passed to {@link #onPopulateBufferData(ByteBuffer)}.
+	 * When a non <code>null</code> {@link ByteBuffer} is returned by this function, it is guaranteed that {@link ZeroMemoryVertexBufferObject#releaseByteBuffer(ByteBuffer)} is called.
+	 * @return a {@link ByteBuffer} to be passed to {@link ZeroMemoryVertexBufferObject#onPopulateBufferData(ByteBuffer)}.
 	 */
 	protected ByteBuffer aquireByteBuffer() {
 		final ByteBuffer byteBuffer = BufferUtils.allocateDirectByteBuffer(this.getByteCapacity());
@@ -238,8 +238,8 @@ public abstract class ZeroMemoryVertexBufferObject implements IVertexBufferObjec
 		return byteBuffer;
 	}
 
-	protected void releaseByteBuffer(final ByteBuffer pByteBuffer) {
-		BufferUtils.freeDirectByteBuffer(pByteBuffer);
+	protected void releaseByteBuffer(final ByteBuffer byteBuffer) {
+		BufferUtils.freeDirectByteBuffer(byteBuffer);
 	}
 
 	// ===========================================================

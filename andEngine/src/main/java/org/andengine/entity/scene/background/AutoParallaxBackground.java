@@ -3,9 +3,9 @@ package org.andengine.entity.scene.background;
 
 
 /**
- * (c) 2010 Nicolas Gramlich
+ * (c) 2010 Nicolas Gramlich 
  * (c) 2011 Zynga Inc.
- *
+ * 
  * @author Nicolas Gramlich
  * @since 19:44:31 - 19.07.2010
  */
@@ -26,7 +26,6 @@ public class AutoParallaxBackground extends ParallaxBackground {
 
 	public AutoParallaxBackground(final float pRed, final float pGreen, final float pBlue, final float pParallaxChangePerSecond) {
 		super(pRed, pGreen, pBlue);
-
 		this.mParallaxChangePerSecond = pParallaxChangePerSecond;
 	}
 
