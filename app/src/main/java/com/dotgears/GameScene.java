@@ -63,28 +63,33 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
     public static void drawSprite(int x, int y, int width, int height, float u, float v, float u2, float v2, float alpha) {
         Sprite sprite = sprites[spriteCount];
 
-//        This region was probably compiler optimised or andengine was modified
-//        <editor-fold desc="Unwrapped setTextureCoordinates">
-        float wNew = width - x;
-        float hNew = height - y;
-
-        sprite.setPosition(x, y);
-
-//       TODO: couldn't find a better solution for the upside down stuff so we just flip the camera
-        sprite.setSize(wNew, hNew);
+////        This region implements the weird vertex magic using unmodified andengine
+////        For accuracy we do it like the original (The rotation is slighly different)
+////        <editor-fold desc="Unwrapped setTextureCoordinates">
+//        float wNew = width - x;
+//        float hNew = height - y;
+//
+//        sprite.setPosition(x, y);
+//
 //        sprite.setSize(wNew, hNew);
-
-        sprite.setRotation(0);
+//
+//        sprite.setRotation(0);
+//
+//        float textureX = u*1024;
+//        float textureY = v*1024;
+//        float textureWidth = u2*1024 - textureX;
+//        float textureHeight = v2*1024 - textureY;
+//        sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
+//
+//        sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
+////        </editor-fold>
 
         float textureX = u*1024;
         float textureY = v*1024;
         float textureWidth = u2*1024 - textureX;
         float textureHeight = v2*1024 - textureY;
-        sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
 
-        sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
-//        </editor-fold>
-
+        sprite.setTextureCoordinates(x, y, width, height, textureX, textureY, textureWidth, textureHeight);
 //        sprite.setTextureCoordinates(x, y, width, height, u, v, u2, v2);
         sprite.setAlpha(alpha);
         sprite.setVisible(true);
@@ -105,26 +110,33 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
         float rotY3 = MathHelper.rotatedY - y;
         MathHelper.rotate(width, height, (x + width) * 0.5f, (y + height) * 0.5f, rotation);
 
-//        This region was probably compiler optimised or andengine was modified
-//        <editor-fold desc="Unwrapped setTextureCoordinates">
-        float wNew = width - x;
-        float hNew = height - y;
-
-        sprite.setPosition(x, y);
-
-        sprite.setSize(wNew, hNew);
-        sprite.setRotationCenter(wNew / 2, hNew / 2);
-        sprite.setRotation(rotation);
+////        This region implements the weird vertex magic using unmodified andengine
+////        For accuracy we do it like the original (The rotation is slighly different)
+////        <editor-fold desc="Unwrapped setTextureCoordinates">
+//        float wNew = width - x;
+//        float hNew = height - y;
+//
+//        sprite.setPosition(x, y);
+//
+//        sprite.setSize(wNew, hNew);
+//        sprite.setRotationCenter(wNew / 2, hNew / 2);
+//        sprite.setRotation(rotation);
+//
+//        float textureX = u*1024;
+//        float textureY = v*1024;
+//        float textureWidth = u2*1024 - textureX;
+//        float textureHeight = v2*1024 - textureY;
+//        sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
+//
+//        sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
+////        </editor-fold>
 
         float textureX = u*1024;
         float textureY = v*1024;
         float textureWidth = u2*1024 - textureX;
         float textureHeight = v2*1024 - textureY;
-        sprite.getTextureRegion().set(textureX, textureY, textureWidth, textureHeight);
 
-        sprite.getVertexBufferObject().onUpdateTextureCoordinates(sprite);
-//        </editor-fold>
-
+        sprite.setTextureCoordinates(x, y, width, height, textureX, textureY, textureWidth, textureHeight, rotX1, rotY1, rotX2, rotY2, rotX3, rotY3, MathHelper.rotatedX - x, MathHelper.rotatedY - y);
 //        sprite.setTextureCoordinates(x, y, width, height, u, v, u2, v2, rotX1, rotY1, rotX2, rotY2, rotX3, rotY3, MathHelper.rotatedX - x, MathHelper.rotatedY - y);
         sprite.setAlpha(alpha);
         sprite.setVisible(true);

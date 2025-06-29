@@ -52,6 +52,26 @@ public class HighPerformanceSpriteVertexBufferObject extends HighPerformanceVert
 		this.setDirtyOnHardware();
 	}
 
+	@Override // org.andengine.entity.sprite.vbo.ISpriteVertexBufferObject
+	/* renamed from: a */
+	public void onUpdateVertices(Sprite pSprite, float pX, float pY, float pX1, float pY1, float pX2, float pY2, float width, float height) {
+		final float[] bufferData = this.mBufferData;
+
+		bufferData[0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = pX;
+		bufferData[0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = pY;
+
+		bufferData[1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = pX1;
+		bufferData[1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = pY1;
+
+		bufferData[2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = pX2;
+		bufferData[2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = pY2;
+
+		bufferData[3 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X] = width;
+		bufferData[3 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y] = height;
+
+		this.setDirtyOnHardware();
+	}
+
 	@Override
 	public void onUpdateVertices(final Sprite pSprite) {
 		final float[] bufferData = this.mBufferData;

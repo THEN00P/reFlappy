@@ -199,9 +199,37 @@ public class Sprite extends RectangularShape {
 		this.mSpriteVertexBufferObject.onUpdateVertices(this);
 	}
 
+	/* renamed from: a */
+	protected void onUpdateVertices(float pX, float pY, float pX1, float pY1, float pX2, float pY2, float pX3, float pY3) {
+		this.mSpriteVertexBufferObject.onUpdateVertices(this, pX, pY, pX1, pY1, pX2, pY2, pX3, pY3);
+	}
+
+
+	/* renamed from: a */
+	public void setTextureCoordinates(float x, float y, float width, float height, float pTextrueX, float pTextureY, float pTextureWidth, float pTextureHeight, float f, float f2, float f3, float f4, float f5, float f6, float f7, float f8) {
+		this.mX = x;
+		this.mY = y;
+		this.mWidth = width - x;
+		this.mHeight = height - y;
+		onUpdateVertices(f, f2, f3, f4, f5, f6, f7, f8);
+		this.mTextureRegion.set(pTextrueX, pTextureY, pTextureWidth, pTextureHeight);
+		onUpdateTextureCoordinates();
+	}
+
 	@Override
 	protected void onUpdateColor() {
 		this.mSpriteVertexBufferObject.onUpdateColor(this);
+	}
+
+	/* renamed from: b */
+	public void setTextureCoordinates(float x, float y, float width, float height, float pTextureX, float pTextureY, float pTextrueWidth, float pTextureHeight) {
+		this.mX = x;
+		this.mY = y;
+		this.mWidth = width - x;
+		this.mHeight = height - y;
+		onUpdateVertices();
+		this.mTextureRegion.set(pTextureX, pTextureY, pTextrueWidth, pTextureHeight);
+		onUpdateTextureCoordinates();
 	}
 
 	protected void onUpdateTextureCoordinates() {

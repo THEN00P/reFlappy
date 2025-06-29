@@ -44,6 +44,25 @@ public class HighPerformanceUniformColorSpriteVertexBufferObject extends HighPer
 		/* Nothing to do, since color is applied as a uniform. */
 	}
 
+	@Override // org.andengine.entity.sprite.vbo.ISpriteVertexBufferObject
+	/* renamed from: a */
+	public void onUpdateVertices(Sprite pSprite, float pX, float pY, float pX1, float pY1, float pX2, float pY2, float width, float height) {
+		float[] mBufferData = this.mBufferData;
+		mBufferData[0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X] = pX;
+		mBufferData[0 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y] = pY;
+
+		mBufferData[1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X] = pX1;
+		mBufferData[1 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y] = pY1;
+
+		mBufferData[2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X] = pX2;
+		mBufferData[2 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y] = pY2;
+
+		mBufferData[3 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_X] = width;
+		mBufferData[3 * UniformColorSprite.VERTEX_SIZE + UniformColorSprite.VERTEX_INDEX_Y] = height;
+
+		this.setDirtyOnHardware();
+	}
+
 	@Override
 	public void onUpdateVertices(final Sprite pSprite) {
 		final float[] bufferData = this.mBufferData;

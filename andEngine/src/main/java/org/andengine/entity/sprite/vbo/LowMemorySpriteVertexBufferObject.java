@@ -55,6 +55,25 @@ public class LowMemorySpriteVertexBufferObject extends LowMemoryVertexBufferObje
 	}
 
 	@Override
+	public void onUpdateVertices(Sprite pSprite, float pX, float pY, float pX1, float pY1, float pX2, float pY2, float width, float height) {
+		final FloatBuffer bufferData = this.mFloatBuffer;
+
+		bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, pX);
+		bufferData.put(0 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, pY);
+
+		bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, pX1);
+		bufferData.put(1 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, pY1);
+
+		bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, pX2);
+		bufferData.put(2 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, pY2);
+
+		bufferData.put(3 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_X, width);
+		bufferData.put(3 * Sprite.VERTEX_SIZE + Sprite.VERTEX_INDEX_Y, height);
+
+		this.setDirtyOnHardware();
+	}
+
+	@Override
 	public void onUpdateVertices(final Sprite pSprite) {
 		final FloatBuffer bufferData = this.mFloatBuffer;
 
