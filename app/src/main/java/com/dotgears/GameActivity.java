@@ -1,5 +1,7 @@
 package com.dotgears;
 
+import androidx.core.splashscreen.SplashScreen;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
 import com.google.android.gms.games.GamesClient;
 import com.google.example.games.basegameutils.GameHelper;
 import java.io.IOException;
@@ -34,10 +33,6 @@ import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 /* loaded from: classes.dex */
 public class GameActivity extends SimpleBaseGameActivity implements GameHelper.GameHelperListener {
-
-    /* renamed from: a */
-    public AdView adView;
-
     /* renamed from: b */
     public Sound soundPoint;
 
@@ -102,21 +97,8 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
         layoutParams2.addRule(RelativeLayout.CENTER_IN_PARENT);
         relativeLayout.addView(this.mRenderSurfaceView, layoutParams2);
         FrameLayout frameLayout = new FrameLayout(this);
-        this.adView = new AdView(this, AdSize.SMART_BANNER, "a152df006159b75");
-        this.adView.refreshDrawableState();
-        frameLayout.addView(this.adView, new FrameLayout.LayoutParams(-2, -2, 49));
         relativeLayout.addView(frameLayout);
-        this.adView.loadAd(new AdRequest());
         setContentView(relativeLayout, layoutParams);
-    }
-
-    public void hideAd() {
-        runOnUiThread(new GameAdHideRunnable(this));
-    }
-
-    /* renamed from: d */
-    public void showAd() {
-        runOnUiThread(new GameAdShowRunnable(this));
     }
 
     /* renamed from: e */
@@ -196,6 +178,7 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
 
     @Override // org.andengine.ui.activity.BaseGameActivity, android.app.Activity
     protected void onCreate(Bundle bundle) {
+        SplashScreen.installSplashScreen(this);
         super.onCreate(bundle);
 		View decorView = getWindow().getDecorView();
 		decorView.setSystemUiVisibility(

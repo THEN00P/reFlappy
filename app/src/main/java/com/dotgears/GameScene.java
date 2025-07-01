@@ -194,15 +194,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
                     intent.setData(Uri.parse("http://www.amazon.com/gp/mas/dl/android?p=com.dotgears.flappybird"));
                     this.gameActivity.startActivity(intent);
                     break;
-                case com.google.android.gms.e.MapAttrs_uiCompass /* 6 */:
-                    this.gameActivity.showAd();
-                    break;
-                case com.google.android.gms.e.MapAttrs_uiRotateGestures /* 7 */:
-                    this.gameActivity.hideAd();
-                    break;
-                case com.google.android.gms.e.MapAttrs_uiScrollGestures /* 8 */:
-                    this.gameActivity.showAd();
-                    break;
                 case com.google.android.gms.e.MapAttrs_uiTiltGestures /* 9 */:
                     this.gameActivity.playSoundPoint();
                     break;

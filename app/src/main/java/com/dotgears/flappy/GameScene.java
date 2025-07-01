@@ -165,7 +165,6 @@ public class GameScene extends GameManager {
                 this.isGameOver = true;
                 registerCallback(0, this.gameState);
                 this.gameOverScreen.run();
-                registerCallback(8, 0);
                 break;
             case com.google.android.gms.e.MapAttrs_cameraTargetLng /* 3 */:
                 registerCallback(11, 0);
@@ -187,12 +186,10 @@ public class GameScene extends GameManager {
                 this.gameState = 0;
                 this.readyScreen.run();
                 this.currentScore++;
-                registerCallback(7, 0);
                 break;
             case com.google.android.gms.e.MapAttrs_uiCompass /* 6 */:
                 resetGameState();
                 startFade(false, 0, 0.5f);
-                registerCallback(6, 0);
                 break;
             case com.google.android.gms.e.MapAttrs_uiRotateGestures /* 7 */:
                 registerCallback(3, 0);

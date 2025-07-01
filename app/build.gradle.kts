@@ -48,7 +48,6 @@ dependencies {
 //    implementation("com.google.android.gms:play-services-plus:6.5.87")
 //    implementation("com.google.android.gms:play-services-appstate:6.5.87")
 
-    implementation(files("./lib/GoogleAdMobAdsSdk-6.4.1.jar"))
     implementation(files("./lib/google-play-services.jar"))
     implementation(files("./lib/android-support-v4.jar"))
 
@@ -56,4 +55,5 @@ dependencies {
 //    implementation(libs.activity)
 
     implementation(projects.andEngine)
+    implementation(libs.splashscreen)
 }
