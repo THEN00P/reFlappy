@@ -35,8 +35,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
@@ -48,7 +48,8 @@ dependencies {
 //    implementation("com.google.android.gms:play-services-plus:6.5.87")
 //    implementation("com.google.android.gms:play-services-appstate:6.5.87")
 
-    implementation(files("./lib/google-play-services.jar"))
+//    implementation(files("./lib/google-play-services.jar"))
+    implementation("com.google.android.gms:play-services-games-v2:21.0.0")
     implementation(files("./lib/android-support-v4.jar"))
 
     // optional replacement for android-support-v4.jar

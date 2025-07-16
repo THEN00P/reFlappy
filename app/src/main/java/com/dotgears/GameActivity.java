@@ -2,6 +2,7 @@ package com.dotgears;
 
 import androidx.core.splashscreen.SplashScreen;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import com.google.android.gms.games.GamesClient;
-import com.google.example.games.basegameutils.GameHelper;
+
+import com.dotgears.flappybird.R;
+import com.google.android.gms.games.PlayGames;
+import com.google.android.gms.games.PlayGamesSdk;
+
 import java.io.IOException;
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
@@ -32,7 +36,7 @@ import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 /* loaded from: classes.dex */
-public class GameActivity extends SimpleBaseGameActivity implements GameHelper.GameHelperListener {
+public class GameActivity extends SimpleBaseGameActivity {
     /* renamed from: b */
     public Sound soundPoint;
 
@@ -48,12 +52,6 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
     /* renamed from: f */
     public Sound soundWing;
 
-    /* renamed from: g */
-    protected GameHelper gameHelper;
-
-    /* renamed from: h */
-    protected int gameHelperClientCount = 1;
-
     /* renamed from: i */
     protected String logTag = "BaseGameActivity";
 
@@ -67,7 +65,7 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
     private TextureRegion textureRegion;
 
     /* renamed from: o */
-    private String[] gameHelperScopes;
+    private boolean isSignedIn = false;
 
     @Override // org.andengine.ui.activity.BaseGameActivity
     /* renamed from: a */
@@ -126,16 +124,6 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
         this.soundWing.play();
     }
 
-    @Override // com.google.example.games.basegameutils.GameHelperListener
-    /* renamed from: j */
-    public void onSignInFailed() {
-    }
-
-    @Override // com.google.example.games.basegameutils.GameHelperListener
-    /* renamed from: k */
-    public void onSignInSucceeded() {
-    }
-
     @Override // org.andengine.ui.activity.SimpleBaseGameActivity
     /* renamed from: l */
     protected void onCreateResources() {
@@ -160,20 +148,14 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
         return new GameScene(this, this.textureRegion);
     }
 
-    /* renamed from: n */
-    protected GamesClient getGamesClient() {
-        return this.gameHelper.getGamesClient();
-    }
-
     /* renamed from: o */
     public boolean isSignedIn() {
-        return this.gameHelper.isSignedIn();
+        return isSignedIn;
     }
 
     @Override // android.app.Activity
     protected void onActivityResult(int i, int i2, Intent intent) {
         super.onActivityResult(i, i2, intent);
-        this.gameHelper.onActivityResult(i, i2, intent);
     }
 
     @Override // org.andengine.ui.activity.BaseGameActivity, android.app.Activity
@@ -189,11 +171,8 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
 						| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 						| View.SYSTEM_UI_FLAG_FULLSCREEN
 		);
-        this.gameHelper = new GameHelper(this);
-        if (this.debugLog) {
-            this.gameHelper.enableDebugLog(this.debugLog, this.logTag);
-        }
-        this.gameHelper.setup(this, this.gameHelperClientCount, this.gameHelperScopes);
+
+        PlayGamesSdk.initialize(this);
     }
 
     @Override // org.andengine.ui.activity.BaseGameActivity, android.app.Activity
@@ -214,17 +193,26 @@ public class GameActivity extends SimpleBaseGameActivity implements GameHelper.G
     @Override // android.app.Activity
     protected void onStart() {
         super.onStart();
-        this.gameHelper.onStart(this);
     }
 
     @Override // android.app.Activity
     protected void onStop() {
         super.onStop();
-        this.gameHelper.onStop();
     }
 
     /* renamed from: p */
     public void beginUserInitiatedSignIn() {
-        this.gameHelper.beginUserInitiatedSignIn();
+        PlayGames.getGamesSignInClient(this)
+                .signIn()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult().isAuthenticated())
+                        isSignedIn = true;
+                    else
+                        new AlertDialog.Builder(this)
+                                .setMessage(R.string.sign_in_failed)
+                                .setNeutralButton(android.R.string.ok, null)
+                                .create()
+                                .show();
+                });
     }
 }

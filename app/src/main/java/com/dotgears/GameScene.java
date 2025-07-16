@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import com.dotgears.flappybird.R;
+import com.google.android.gms.games.PlayGames;
+
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
@@ -169,7 +171,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
                 case com.google.android.gms.e.MapAttrs_mapType /* 0 */:
                     int score = (int) GameManager.instance.callbackParams[i];
                     if (this.gameActivity.isSignedIn()) {
-                        this.gameActivity.gameHelper.getGamesClient().submitScore("CgkI5J2sk6QXEAIQAA", score);
+                        PlayGames.getLeaderboardsClient(this.gameActivity)
+                                .submitScore(this.gameActivity.getString(R.string.leaderboard_id), score);
                     }
                     if (score > this.highScore) {
                         SharedPreferences.Editor edit = this.gameActivity.getSharedPreferences("FlappyBird", 0).edit();
@@ -183,7 +186,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
                     }
                 case com.google.android.gms.e.MapAttrs_cameraBearing /* 1 */:
                     if (this.gameActivity.isSignedIn()) {
-                        this.gameActivity.startActivityForResult(this.gameActivity.getGamesClient().getLeaderboardIntent("CgkI5J2sk6QXEAIQAA"), 1);
+                        PlayGames.getLeaderboardsClient(this.gameActivity)
+                                .getLeaderboardIntent(this.gameActivity.getString(R.string.leaderboard_id))
+                                .addOnSuccessListener(result -> {
+                                    this.gameActivity.startActivityForResult(result, 1);
+                                });
                         break;
                     } else {
                         this.gameActivity.beginUserInitiatedSignIn();
