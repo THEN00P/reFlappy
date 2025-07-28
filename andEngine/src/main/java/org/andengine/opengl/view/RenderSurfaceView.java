@@ -32,12 +32,16 @@ public class RenderSurfaceView extends GLSurfaceView {
 	public RenderSurfaceView(final Context pContext) {
 		super(pContext);
 
+		this.setFocusable(true);
+		this.setFocusableInTouchMode(true);
 		this.setEGLContextClientVersion(2);
 	}
 
 	public RenderSurfaceView(final Context pContext, final AttributeSet pAttrs) {
 		super(pContext, pAttrs);
 
+		this.setFocusable(true);
+		this.setFocusableInTouchMode(true);
 		this.setEGLContextClientVersion(2);
 	}
 

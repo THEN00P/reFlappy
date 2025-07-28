@@ -90,6 +90,7 @@ public class GameActivity extends SimpleBaseGameActivity {
         RelativeLayout relativeLayout = new RelativeLayout(this);
         ViewGroup.LayoutParams layoutParams = new FrameLayout.LayoutParams(-1, -1);
         this.mRenderSurfaceView = new RenderSurfaceView(this);
+		this.mRenderSurfaceView.requestFocus();
         this.mRenderSurfaceView.setRenderer(this.mEngine, this);
         RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams((ViewGroup.MarginLayoutParams) BaseGameActivity.createSurfaceViewLayoutParams());
         layoutParams2.addRule(RelativeLayout.CENTER_IN_PARENT);
