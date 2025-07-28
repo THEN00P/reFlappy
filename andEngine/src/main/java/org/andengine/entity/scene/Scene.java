@@ -106,6 +106,14 @@ public class Scene extends Entity {
 		this.mBackgroundEnabled  = pEnabled;
 	}
 
+	public void setOnSceneKeyListener(final IOnSceneKeyListener pOnSceneKeyListener) {
+		this.mOnSceneKeyListener = pOnSceneKeyListener;
+	}
+
+	public IOnSceneKeyListener getOnSceneKeyListener() {
+		return this.mOnSceneKeyListener;
+	}
+
 	public void setOnSceneTouchListener(final IOnSceneTouchListener pOnSceneTouchListener) {
 		this.mOnSceneTouchListener = pOnSceneTouchListener;
 	}

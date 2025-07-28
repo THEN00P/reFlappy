@@ -624,6 +624,7 @@ public class Engine implements SensorEventListener, OnKeyListener, OnTouchListen
 		this.mSecondsElapsedTotal += pSecondsElapsed;
 		this.mLastTick += pNanosecondsElapsed;
 
+		this.mKeyController.onUpdate(pSecondsElapsed);
 		this.mTouchController.onUpdate(pSecondsElapsed);
 		this.onUpdateUpdateHandlers(pSecondsElapsed);
 		this.onUpdateScene(pSecondsElapsed);
