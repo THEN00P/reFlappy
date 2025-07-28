@@ -3,6 +3,8 @@ package com.dotgears;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Log;
+
 import com.dotgears.flappybird.R;
 import com.google.android.gms.games.PlayGames;
 
@@ -35,6 +37,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener, IOnSceneK
 
     /* renamed from: f */
     boolean[] pressedKeys = new boolean[android.view.KeyEvent.getMaxKeyCode()];
+    int pressedKeyCode = 0;
+    boolean isKeyed = false;
 
     float[] touchX = new float[10];
 
@@ -63,6 +67,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener, IOnSceneK
             attachChild(sprites[i]);
         }
         setOnSceneTouchListener((IOnSceneTouchListener) this);
+        setOnSceneKeyListener((IOnSceneKeyListener) this);
     }
 
     /* renamed from: a */
@@ -163,8 +168,16 @@ public class GameScene extends Scene implements IOnSceneTouchListener, IOnSceneK
     protected void onManagedUpdate(float deltaTime) {
         super.onManagedUpdate(deltaTime);
         allocateChildren();
-        GameManager.instance.processTouchInput(this.touchX, this.touchY);
+
+        // Mirrors the logic of the original touch input
+        // The game is simple enough for it not to be an issue
         GameManager.instance.processKeyInput(this.pressedKeys);
+        if(this.isKeyed) {
+            GameManager.instance.handleKey(this.pressedKeyCode);
+            this.isKeyed = false;
+        }
+
+        GameManager.instance.processTouchInput(this.touchX, this.touchY);
         if (this.isTouched) {
             GameManager.instance.handleTouch(this.touchPointX, this.touchPointY);
             GameManager.instance.handleTouchAt(this.touchPointX, this.touchPointY, this.touchPointX, this.touchPointY);
@@ -229,6 +242,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener, IOnSceneK
     public boolean onSceneKeyEvent(Scene scene, KeyEvent pSceneKeyEvent) {
         if (pSceneKeyEvent.isActionDown()) {
             if (GameManager.instance != null) {
+                this.isKeyed = true;
+                this.pressedKeyCode = pSceneKeyEvent.getKeyCode();
+
                 this.pressedKeys[pSceneKeyEvent.getKeyCode()] = true;
             }
         }

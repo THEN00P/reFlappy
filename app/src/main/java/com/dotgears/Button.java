@@ -1,5 +1,7 @@
 package com.dotgears;
 
+import android.view.KeyEvent;
+
 /* renamed from: com.dotgears.f */
 /* loaded from: classes.dex */
 public class Button extends GameObject {
@@ -31,6 +33,8 @@ public class Button extends GameObject {
     /* renamed from: i */
     public boolean isTouched;
 
+    public int[] acceptedKeyCodes;
+
     @Override // com.dotgears.GameObject
     /* renamed from: a */
     public void update(float f) {
@@ -38,12 +42,24 @@ public class Button extends GameObject {
         int[] touchX = GameManager.instance.touchX;
         int[] touchY = GameManager.instance.touchY;
         this.isTouched = false;
+
+        boolean[] pressedKeys = GameManager.instance.pressedKeys;
+        boolean handleKey = false;
+
         int i = 0;
         while (true) {
             if (i >= touchCount) {
                 break;
             }
-            if (touchX[i] > this.posX && touchX[i] < this.posX + this.width && touchY[i] > this.posY && touchY[i] < this.posY + this.height) {
+            if(acceptedKeyCodes != null) {
+                for (int acceptedKeyCode : this.acceptedKeyCodes) {
+                    if(pressedKeys[acceptedKeyCode]) {
+                        handleKey = true;
+                        break;
+                    }
+                }
+            }
+            if (handleKey || (touchX[i] > this.posX && touchX[i] < this.posX + this.width && touchY[i] > this.posY && touchY[i] < this.posY + this.height)) {
                 this.isTouched = true;
                 break;
             }
@@ -72,6 +88,10 @@ public class Button extends GameObject {
         this.isJustPressed = false;
         this.isJustReleased = false;
         this.isPressed = false;
+    }
+
+    public void setHandledKeyCodes(int[] keyCodes) {
+        this.acceptedKeyCodes = keyCodes;
     }
 
     @Override // com.dotgears.GameObject

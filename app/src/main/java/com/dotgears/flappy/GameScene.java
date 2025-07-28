@@ -1,5 +1,8 @@
 package com.dotgears.flappy;
 
+import android.util.Log;
+import android.view.KeyEvent;
+
 import com.dotgears.AtlasSprite;
 import com.dotgears.Button;
 import com.dotgears.FontRenderer;
@@ -129,22 +132,39 @@ public class GameScene extends GameManager {
     }
 
     @Override // com.dotgears.GameManager
+    public void handleKey(int keyCode) {
+        if (this.isInMenu) {
+            return;
+        }
+
+        Log.d("GameScene", "pressedKeyCode: " + keyCode);
+
+        if(keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
+            tryFlap();
+        }
+    }
+
+    @Override // com.dotgears.GameManager
     /* renamed from: a */
     public void handleTouch(int x, int y) {
         if (this.isInMenu) {
             return;
         }
         if (x < this.pauseButton.posX - 20 || x > this.pauseButton.posX + this.pauseButton.width + 20 || y < this.pauseButton.posY - 20 || y > this.pauseButton.posY + this.pauseButton.height + 20) {
-            if (!this.bird.isReady) {
-                if (this.gameSpeed > 0) {
-                    this.bird.b();
-                }
-            } else if (this.readyScreen.isActive && this.readyScreen.state == 1) {
-                this.readyScreen.state = 2;
-                this.readyScreen.transition.start(1.0f, 0.0f, 0, 0.5f);
-                this.bird.isReady = false;
-                this.bird.b();
+            tryFlap();
+        }
+    }
+
+    private void tryFlap() {
+        if (!this.bird.isReady) {
+            if (this.gameSpeed > 0) {
+                this.bird.flap();
             }
+        } else if (this.readyScreen.isActive && this.readyScreen.state == 1) {
+            this.readyScreen.state = 2;
+            this.readyScreen.transition.start(1.0f, 0.0f, 0, 0.5f);
+            this.bird.isReady = false;
+            this.bird.flap();
         }
     }
 
@@ -340,8 +360,10 @@ public class GameScene extends GameManager {
         this.scoreFont = new ScoreFont();
         this.playButton = new Button();
         this.playButton.setSprite("button_play");
+        this.playButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_BUTTON_A, KeyEvent.KEYCODE_BUTTON_START});
         this.scoreButton = new Button();
         this.scoreButton.setSprite("button_score");
+        this.scoreButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_BUTTON_SELECT});
         this.okButton = new Button();
         this.okButton.setSprite("button_ok");
         this.menuButton = new Button();

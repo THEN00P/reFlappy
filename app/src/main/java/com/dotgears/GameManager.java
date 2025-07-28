@@ -167,6 +167,9 @@ public class GameManager extends GameObject {
     public void handleTouch(int x, int y) {
     }
 
+    public void handleKey(int keyCode) {
+    }
+
     /* renamed from: a */
     public void drawRotatedSprite(int spriteId, int x, int y, float scaleX, float scaleY, float alpha) {
         AtlasSprite atlasSprite = this.sprites[spriteId];
