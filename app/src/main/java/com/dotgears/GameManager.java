@@ -82,7 +82,8 @@ public class GameManager extends GameObject {
     /* renamed from: q */
     public int gameSpeed = 1;
 
-    /* renamed from: s */
+    protected boolean[] pressedKeys = new boolean[android.view.KeyEvent.getMaxKeyCode()];
+
     protected int[] touchX = new int[10];
 
     /* renamed from: t */
@@ -228,6 +229,10 @@ public class GameManager extends GameObject {
             this.fadeTrans.update(0.0f);
             this.fadeCallbackId = callbackId;
         }
+    }
+
+    public void processKeyInput(boolean[] pressedKeysArr) {
+        this.pressedKeys = pressedKeysArr;
     }
 
     /* renamed from: a */

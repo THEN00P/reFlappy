@@ -6,15 +6,17 @@ import android.net.Uri;
 import com.dotgears.flappybird.R;
 import com.google.android.gms.games.PlayGames;
 
+import org.andengine.entity.scene.IOnSceneKeyListener;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.key.KeyEvent;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.TextureRegion;
 
 /* renamed from: com.dotgears.c */
 /* loaded from: classes.dex */
-public class GameScene extends Scene implements IOnSceneTouchListener {
+public class GameScene extends Scene implements IOnSceneTouchListener, IOnSceneKeyListener {
 
     /* renamed from: a */
     public static Sprite[] sprites;
@@ -32,6 +34,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
     public final int MAX_SPRITES = 50;
 
     /* renamed from: f */
+    boolean[] pressedKeys = new boolean[android.view.KeyEvent.getMaxKeyCode()];
+
     float[] touchX = new float[10];
 
     /* renamed from: g */
@@ -160,6 +164,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
         super.onManagedUpdate(deltaTime);
         allocateChildren();
         GameManager.instance.processTouchInput(this.touchX, this.touchY);
+        GameManager.instance.processKeyInput(this.pressedKeys);
         if (this.isTouched) {
             GameManager.instance.handleTouch(this.touchPointX, this.touchPointY);
             GameManager.instance.handleTouchAt(this.touchPointX, this.touchPointY, this.touchPointX, this.touchPointY);
@@ -218,6 +223,20 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onSceneKeyEvent(Scene scene, KeyEvent pSceneKeyEvent) {
+        if (pSceneKeyEvent.isActionDown()) {
+            if (GameManager.instance != null) {
+                this.pressedKeys[pSceneKeyEvent.getKeyCode()] = true;
+            }
+        }
+        if (pSceneKeyEvent.isActionUp()) {
+            this.pressedKeys[pSceneKeyEvent.getKeyCode()] = false;
+        }
+
+        return true;
     }
 
     @Override // org.andengine.entity.b.IOnSceneTouchListener

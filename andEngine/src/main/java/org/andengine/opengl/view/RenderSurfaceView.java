@@ -84,6 +84,7 @@ public class RenderSurfaceView extends GLSurfaceView {
 		this.setEGLConfigChooser(this.mConfigChooser);
 
 		this.setOnTouchListener(pEngine);
+		this.setOnKeyListener(pEngine);
 		this.mEngineRenderer = new EngineRenderer(pEngine, this.mConfigChooser, pRendererListener);
 		this.setRenderer(this.mEngineRenderer);
 	}
