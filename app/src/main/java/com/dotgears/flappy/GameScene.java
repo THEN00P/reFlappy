@@ -79,6 +79,15 @@ public class GameScene extends GameManager {
     /* renamed from: ab */
     AtlasSprite copyrightSprite;
 
+    int showButtonHelper = 0; // 0 = none, 1 = keyboard, 2 = gamepad
+
+    AtlasSprite xbxASprite;
+    AtlasSprite xbxBSprite;
+    AtlasSprite xbxYSprite;
+    AtlasSprite keyboardSpaceSprite;
+    AtlasSprite keyboardSSprite;
+    AtlasSprite keyboardRSprite;
+
     /* renamed from: ac */
     int landOffset;
 
@@ -133,11 +142,19 @@ public class GameScene extends GameManager {
 
     @Override // com.dotgears.GameManager
     public void handleKey(int keyCode) {
+        // isGamepad button doesn't register dpad
+        // looks like the codes are the same as for dpads on the device (think keypad or pda)
+        // because of that we just don't recognize it
+        if(keyCode != KeyEvent.KEYCODE_DPAD_UP && keyCode != KeyEvent.KEYCODE_DPAD_DOWN && keyCode != KeyEvent.KEYCODE_DPAD_LEFT && keyCode != KeyEvent.KEYCODE_DPAD_RIGHT) {
+            if(KeyEvent.isGamepadButton(keyCode))
+                this.showButtonHelper = 2; // gamepad
+            else if(keyCode > KeyEvent.KEYCODE_BACK)
+                this.showButtonHelper = 1; // keyboard
+        }
+
         if (this.isInMenu) {
             return;
         }
-
-        Log.d("GameScene", "pressedKeyCode: " + keyCode);
 
         if(keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
             tryFlap();
@@ -147,6 +164,8 @@ public class GameScene extends GameManager {
     @Override // com.dotgears.GameManager
     /* renamed from: a */
     public void handleTouch(int x, int y) {
+        this.showButtonHelper = 0; // remove button helpers from ui
+
         if (this.isInMenu) {
             return;
         }
@@ -327,6 +346,14 @@ public class GameScene extends GameManager {
         if (this.readyScreen.isActive) {
             this.readyScreen.update(deltaTime);
             this.readyScreen.draw(this);
+
+            // Not perfect, but safes us from moving key handling into the gamemanager
+            if(this.showButtonHelper == 1) {
+                this.drawSprite(this.keyboardSpaceSprite, 288 / 2 - this.keyboardSpaceSprite.width / 2, 220+this.readyScreen.tutorialText.height+10, this.readyScreen.transition.value);
+            }
+            if(this.showButtonHelper == 2) {
+                this.drawSprite(this.xbxASprite, 288 / 2 - this.xbxASprite.width / 2, 220+this.readyScreen.tutorialText.height+10, this.readyScreen.transition.value);
+            }
         }
         if (this.isInMenu) {
             drawSprite(this.copyrightSprite, (288 - this.copyrightSprite.width) >> 1, 432 - this.copyrightSprite.height, 1.0f);
@@ -334,8 +361,12 @@ public class GameScene extends GameManager {
         if (this.playButton.isActive) {
             this.playButton.update(deltaTime);
             this.playButton.draw(this);
+            drawButtonHelper(playButton, this.keyboardSpaceSprite, this.xbxASprite);
+
             this.scoreButton.update(deltaTime);
             this.scoreButton.draw(this);
+            drawButtonHelper(scoreButton, this.keyboardSSprite, this.xbxBSprite);
+
             if (this.playButton.isJustReleased) {
                 startFade(true, 5, 0.5f);
                 registerCallback(10, 0);
@@ -350,6 +381,23 @@ public class GameScene extends GameManager {
                 if (this.rateButton.isJustReleased) {
                     registerCallback(2, 0);
                 }
+                drawButtonHelper(rateButton, this.keyboardRSprite, this.xbxYSprite);
+            }
+        }
+    }
+
+    public void drawButtonHelper(Button pButton, AtlasSprite pKeyboardSprite, AtlasSprite pControllerSprite) {
+        if(this.showButtonHelper > 0) {
+            // buttons have 6 pixel of drop shadow * 2 for atlas scale
+            int buttonShadowOffset = 12;
+            int helperX = pButton.posX + pButton.width / 2;
+            int helperY = 2 + pButton.posY + pButton.height - buttonShadowOffset;
+
+            if(this.showButtonHelper == 1) {
+                drawSprite(pKeyboardSprite, helperX - pKeyboardSprite.width / 2, helperY - pKeyboardSprite.height / 2, 1.0f);
+            }
+            if(this.showButtonHelper == 2) {
+                drawSprite(pControllerSprite, helperX - pControllerSprite.width / 2, helperY - pControllerSprite.height / 2, 1.0f);
             }
         }
     }
@@ -360,10 +408,10 @@ public class GameScene extends GameManager {
         this.scoreFont = new ScoreFont();
         this.playButton = new Button();
         this.playButton.setSprite("button_play");
-        this.playButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_BUTTON_A, KeyEvent.KEYCODE_BUTTON_START});
+        this.playButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_BUTTON_A, KeyEvent.KEYCODE_BUTTON_START});
         this.scoreButton = new Button();
         this.scoreButton.setSprite("button_score");
-        this.scoreButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_BUTTON_SELECT});
+        this.scoreButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_ESCAPE, KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_BUTTON_B, KeyEvent.KEYCODE_BUTTON_SELECT});
         this.okButton = new Button();
         this.okButton.setSprite("button_ok");
         this.menuButton = new Button();
@@ -376,6 +424,7 @@ public class GameScene extends GameManager {
         this.shareButton.setSprite("button_share");
         this.rateButton = new Button();
         this.rateButton.setSprite("button_rate");
+        this.rateButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_R, KeyEvent.KEYCODE_BUTTON_Y});
         this.scoreNumberRenderer = new ScoreRenderer("number_score");
         this.bgDaySprite = findSpriteByName("bg_day");
         this.bgNightSprite = findSpriteByName("bg_night");
@@ -385,6 +434,12 @@ public class GameScene extends GameManager {
         this.pipeDownSprite = findSpriteByName("pipe_down");
         this.titleSprite = findSpriteByName("title");
         this.copyrightSprite = findSpriteByName("brand_copyright");
+        this.xbxASprite = findSpriteByName("xbx_a");
+        this.xbxBSprite = findSpriteByName("xbx_b");
+        this.xbxYSprite = findSpriteByName("xbx_y");
+        this.keyboardSpaceSprite = findSpriteByName("keyboard_space");
+        this.keyboardRSprite = findSpriteByName("keyboard_r");
+        this.keyboardSSprite = findSpriteByName("keyboard_s");
         this.pipeSpacing = (288 - ((this.pipeUpSprite.width * 3) / 2)) / 2;
         this.pipe1X = this.pipeSpacing - (this.pipeUpSprite.width >> 1);
         this.pipe1Height = 274;
