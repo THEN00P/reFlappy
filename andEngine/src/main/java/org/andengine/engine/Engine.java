@@ -423,12 +423,11 @@ public class Engine implements SensorEventListener, OnKeyListener, OnTouchListen
 
 	@Override
 	public boolean onKey(final View pView, final int keyCode, final android.view.KeyEvent pSurfaceKeyEvent) {
-		if(this.mRunning) {
+		if(this.mRunning && !pSurfaceKeyEvent.isSystem()) {
 			this.mKeyController.onHandleKeyEvent(pSurfaceKeyEvent);
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
