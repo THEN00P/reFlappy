@@ -241,6 +241,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener, IOnSceneK
     @Override
     public boolean onSceneKeyEvent(Scene scene, KeyEvent pSceneKeyEvent) {
         if (pSceneKeyEvent.isActionDown()) {
+            if (this.pressedKeys[pSceneKeyEvent.getKeyCode()]) {
+                return true;
+            }
             if (GameManager.instance != null) {
                 this.isKeyed = true;
                 this.pressedKeyCode = pSceneKeyEvent.getKeyCode();
