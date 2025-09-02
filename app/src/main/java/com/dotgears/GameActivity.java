@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import android.content.res.Configuration;
+import android.app.UiModeManager;
+
 import com.dotgears.flappybird.R;
 import com.google.android.gms.games.PlayGames;
 import com.google.android.gms.games.PlayGamesSdk;
@@ -77,7 +80,18 @@ public class GameActivity extends SimpleBaseGameActivity {
     /* renamed from: a */
     public EngineOptions onCreateEngineOptions() {
         this.camera = new Camera(0.0f, 0.0f, 288.0f, 512.0f);
-        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new MaxCropResolutionPolicy(288.0f, 512.0f), this.camera);
+
+        // weird specific tv fix (most new ones work with portrait just fine)
+        final UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        ScreenOrientation screenOrientation;
+
+        if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION) {
+            screenOrientation = ScreenOrientation.LANDSCAPE_FIXED;
+        } else {
+            screenOrientation = ScreenOrientation.PORTRAIT_FIXED;
+        }
+
+        EngineOptions engineOptions = new EngineOptions(true, screenOrientation, new MaxCropResolutionPolicy(288.0f, 512.0f), this.camera);
         engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
         engineOptions.getRenderOptions().setDithering(true);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
