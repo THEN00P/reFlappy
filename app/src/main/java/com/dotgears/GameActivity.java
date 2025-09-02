@@ -25,7 +25,7 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
-import org.andengine.engine.options.resolutionpolicy.CropResolutionPolicy;
+import org.andengine.engine.options.resolutionpolicy.MaxCropResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
@@ -77,7 +77,7 @@ public class GameActivity extends SimpleBaseGameActivity {
     /* renamed from: a */
     public EngineOptions onCreateEngineOptions() {
         this.camera = new Camera(0.0f, 0.0f, 288.0f, 512.0f);
-        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new CropResolutionPolicy(288.0f, 512.0f), this.camera);
+        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new MaxCropResolutionPolicy(288.0f, 512.0f), this.camera);
         engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
         engineOptions.getRenderOptions().setDithering(true);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
