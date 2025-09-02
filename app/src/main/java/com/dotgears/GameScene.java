@@ -3,18 +3,22 @@ package com.dotgears;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Log;
+
 import com.dotgears.flappybird.R;
 import com.google.android.gms.games.PlayGames;
 
+import org.andengine.entity.scene.IOnSceneKeyListener;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.key.KeyEvent;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.TextureRegion;
 
 /* renamed from: com.dotgears.c */
 /* loaded from: classes.dex */
-public class GameScene extends Scene implements IOnSceneTouchListener {
+public class GameScene extends Scene implements IOnSceneTouchListener, IOnSceneKeyListener {
 
     /* renamed from: a */
     public static Sprite[] sprites;
@@ -32,6 +36,10 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
     public final int MAX_SPRITES = 50;
 
     /* renamed from: f */
+    boolean[] pressedKeys = new boolean[android.view.KeyEvent.getMaxKeyCode()];
+    int pressedKeyCode = 0;
+    boolean isKeyed = false;
+
     float[] touchX = new float[10];
 
     /* renamed from: g */
@@ -59,6 +67,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
             attachChild(sprites[i]);
         }
         setOnSceneTouchListener((IOnSceneTouchListener) this);
+        setOnSceneKeyListener((IOnSceneKeyListener) this);
     }
 
     /* renamed from: a */
@@ -159,6 +168,15 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
     protected void onManagedUpdate(float deltaTime) {
         super.onManagedUpdate(deltaTime);
         allocateChildren();
+
+        // Mirrors the logic of the original touch input
+        // The game is simple enough for it not to be an issue
+        GameManager.instance.processKeyInput(this.pressedKeys);
+        if(this.isKeyed) {
+            GameManager.instance.handleKey(this.pressedKeyCode);
+            this.isKeyed = false;
+        }
+
         GameManager.instance.processTouchInput(this.touchX, this.touchY);
         if (this.isTouched) {
             GameManager.instance.handleTouch(this.touchPointX, this.touchPointY);
@@ -218,6 +236,23 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onSceneKeyEvent(Scene scene, KeyEvent pSceneKeyEvent) {
+        if (pSceneKeyEvent.isActionDown()) {
+            if (GameManager.instance != null) {
+                this.isKeyed = true;
+                this.pressedKeyCode = pSceneKeyEvent.getKeyCode();
+
+                this.pressedKeys[pSceneKeyEvent.getKeyCode()] = true;
+            }
+        }
+        if (pSceneKeyEvent.isActionUp()) {
+            this.pressedKeys[pSceneKeyEvent.getKeyCode()] = false;
+        }
+
+        return true;
     }
 
     @Override // org.andengine.entity.b.IOnSceneTouchListener

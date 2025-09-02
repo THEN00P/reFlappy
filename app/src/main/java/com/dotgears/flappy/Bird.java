@@ -123,7 +123,8 @@ public class Bird extends AnimatedSprite {
         }
     }
 
-    public void b() {
+    /* renamed from: b */
+    public void flap() {
         if (this.isReady) {
             this.isReady = false;
         }

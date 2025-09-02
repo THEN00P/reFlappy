@@ -17,6 +17,10 @@ import org.andengine.engine.handler.UpdateHandlerList;
 import org.andengine.engine.handler.runnable.RunnableHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
+import org.andengine.input.key.KeyEvent;
+import org.andengine.input.key.controller.IKeyController;
+import org.andengine.input.key.controller.IKeyEventCallback;
+import org.andengine.input.key.controller.KeyController;
 import org.andengine.input.sensor.SensorDelay;
 import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.AccelerationSensorOptions;
@@ -57,6 +61,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.View.OnKeyListener;
 import android.view.WindowManager;
 
 /**
@@ -66,7 +71,7 @@ import android.view.WindowManager;
  * @author Nicolas Gramlich
  * @since 12:21:31 - 08.03.2010
  */
-public class Engine implements SensorEventListener, OnTouchListener, ITouchEventCallback, LocationListener {
+public class Engine implements SensorEventListener, OnKeyListener, OnTouchListener, IKeyEventCallback, ITouchEventCallback, LocationListener {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -93,6 +98,7 @@ public class Engine implements SensorEventListener, OnTouchListener, ITouchEvent
 	private final EngineOptions mEngineOptions;
 	protected final Camera mCamera;
 
+	private IKeyController mKeyController;
 	private ITouchController mTouchController;
 
 	private final VertexBufferObjectManager mVertexBufferObjectManager = new VertexBufferObjectManager();
@@ -152,6 +158,8 @@ public class Engine implements SensorEventListener, OnTouchListener, ITouchEvent
 		} else {
 			this.setTouchController(new SingleTouchController());
 		}
+
+		this.setKeyController(new KeyController());
 
 		/* Audio. */
 		if(this.mEngineOptions.getAudioOptions().needsSound()) {
@@ -244,6 +252,15 @@ public class Engine implements SensorEventListener, OnTouchListener, ITouchEvent
 
 	public int getSurfaceHeight() {
 		return this.mSurfaceHeight;
+	}
+
+	public void setKeyController(final IKeyController pKeyController) {
+		this.mKeyController = pKeyController;
+		this.mKeyController.setKeyEventCallback(this);
+	}
+
+	public IKeyController getKeyController() {
+		return this.mKeyController;
 	}
 
 	public ITouchController getTouchController() {
@@ -401,6 +418,31 @@ public class Engine implements SensorEventListener, OnTouchListener, ITouchEvent
 			case LocationProvider.TEMPORARILY_UNAVAILABLE:
 				this.mLocationListener.onLocationProviderStatusChanged(LocationProviderStatus.TEMPORARILY_UNAVAILABLE, pExtras);
 				break;
+		}
+	}
+
+	@Override
+	public boolean onKey(final View pView, final int keyCode, final android.view.KeyEvent pSurfaceKeyEvent) {
+		if(this.mRunning && !pSurfaceKeyEvent.isSystem()) {
+			this.mKeyController.onHandleKeyEvent(pSurfaceKeyEvent);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onKeyEvent(final KeyEvent pSurfaceKeyEvent) {
+		final Scene scene = this.getScene();
+		final Camera camera = this.getCamera();
+
+		return this.onKeyScene(scene, pSurfaceKeyEvent);
+	}
+
+	protected boolean onKeyScene(final Scene pScene, final KeyEvent pSceneKeyEvent) {
+		if(pScene != null) {
+			return pScene.onSceneKeyEvent(pSceneKeyEvent);
+		} else {
+			return false;
 		}
 	}
 
@@ -581,6 +623,7 @@ public class Engine implements SensorEventListener, OnTouchListener, ITouchEvent
 		this.mSecondsElapsedTotal += pSecondsElapsed;
 		this.mLastTick += pNanosecondsElapsed;
 
+		this.mKeyController.onUpdate(pSecondsElapsed);
 		this.mTouchController.onUpdate(pSecondsElapsed);
 		this.onUpdateUpdateHandlers(pSecondsElapsed);
 		this.onUpdateScene(pSecondsElapsed);

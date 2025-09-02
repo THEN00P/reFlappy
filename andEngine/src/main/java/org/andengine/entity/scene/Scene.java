@@ -9,6 +9,7 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.background.IBackground;
 import org.andengine.entity.shape.IShape;
 import org.andengine.entity.shape.Shape;
+import org.andengine.input.key.KeyEvent;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.Constants;
@@ -47,12 +48,16 @@ public class Scene extends Entity {
 
 	private final RunnableHandler mRunnableHandler = new RunnableHandler();
 
+	private IOnSceneKeyListener mOnSceneKeyListener;
 	private IOnSceneTouchListener mOnSceneTouchListener;
 
 	private IOnAreaTouchListener mOnAreaTouchListener;
 
 	private IBackground mBackground = new Background(Color.BLACK);
 	private boolean mBackgroundEnabled = true;
+
+	private boolean mOnSceneKeyListenerBindingOnActionDownEnabled = false;
+	private final SparseArray<IOnSceneKeyListener> mOnSceneKeyListenerBindings = new SparseArray<IOnSceneKeyListener>();
 
 	private boolean mOnAreaTouchTraversalBackToFront = true;
 
@@ -99,6 +104,14 @@ public class Scene extends Entity {
 
 	public void setBackgroundEnabled(final boolean pEnabled) {
 		this.mBackgroundEnabled  = pEnabled;
+	}
+
+	public void setOnSceneKeyListener(final IOnSceneKeyListener pOnSceneKeyListener) {
+		this.mOnSceneKeyListener = pOnSceneKeyListener;
+	}
+
+	public IOnSceneKeyListener getOnSceneKeyListener() {
+		return this.mOnSceneKeyListener;
 	}
 
 	public void setOnSceneTouchListener(final IOnSceneTouchListener pOnSceneTouchListener) {
@@ -287,6 +300,57 @@ public class Scene extends Entity {
 		if(childScene != null) {
 			childScene.onUpdate(pSecondsElapsed);
 		}
+	}
+
+	public boolean onSceneKeyEvent(final KeyEvent pSceneKeyEvent) {
+		final int action = pSceneKeyEvent.getAction();
+		final boolean isActionDown = pSceneKeyEvent.isActionDown();
+
+		if(!isActionDown) {
+			if(this.mOnSceneKeyListenerBindingOnActionDownEnabled) {
+				final IOnSceneKeyListener boundOnSceneKeyListener = this.mOnSceneKeyListenerBindings.get(pSceneKeyEvent.getKeyCode());
+				if (boundOnSceneKeyListener != null) {
+					/* Check if boundKeyArea needs to be removed. */
+					switch(action) {
+						case KeyEvent.ACTION_UP:
+							this.mOnSceneKeyListenerBindings.remove(pSceneKeyEvent.getKeyCode());
+					}
+					final Boolean handled = this.mOnSceneKeyListener.onSceneKeyEvent(this, pSceneKeyEvent);
+					if(handled != null && handled) {
+						return true;
+					}
+				}
+			}
+		}
+
+		final Scene childScene = this.mChildScene;
+		if(childScene != null) {
+			final boolean handledByChild = this.onChildSceneKeyEvent(pSceneKeyEvent);
+			if(handledByChild) {
+				return true;
+			}
+		}
+
+		/* If no area was keyed, the Scene itself was keyed as a fallback. */
+		if(this.mOnSceneKeyListener != null){
+			final Boolean handled = this.mOnSceneKeyListener.onSceneKeyEvent(this, pSceneKeyEvent);
+			if(handled != null && handled) {
+				/* If binding of IKeyAreas is enabled and this is an ACTION_DOWN event,
+				 *  bind the active OnSceneKeyListener to the KeyCode. */
+				if(this.mOnSceneKeyListenerBindingOnActionDownEnabled && isActionDown) {
+					this.mOnSceneKeyListenerBindings.put(pSceneKeyEvent.getKeyCode(), this.mOnSceneKeyListener);
+				}
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	protected boolean onChildSceneKeyEvent(final KeyEvent pSceneKeyEvent) {
+		return this.mChildScene.onSceneKeyEvent(pSceneKeyEvent);
 	}
 
 	public boolean onSceneTouchEvent(final TouchEvent pSceneTouchEvent) {
