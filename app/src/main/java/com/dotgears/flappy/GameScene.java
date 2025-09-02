@@ -145,7 +145,13 @@ public class GameScene extends GameManager {
         // isGamepad button doesn't register dpad
         // looks like the codes are the same as for dpads on the device (think keypad or pda)
         // because of that we just don't recognize it
-        if(keyCode != KeyEvent.KEYCODE_DPAD_UP && keyCode != KeyEvent.KEYCODE_DPAD_DOWN && keyCode != KeyEvent.KEYCODE_DPAD_LEFT && keyCode != KeyEvent.KEYCODE_DPAD_RIGHT) {
+        if(
+                keyCode != KeyEvent.KEYCODE_DPAD_CENTER &&
+                keyCode != KeyEvent.KEYCODE_DPAD_UP &&
+                keyCode != KeyEvent.KEYCODE_DPAD_DOWN &&
+                keyCode != KeyEvent.KEYCODE_DPAD_LEFT &&
+                keyCode != KeyEvent.KEYCODE_DPAD_RIGHT
+        ) {
             if(KeyEvent.isGamepadButton(keyCode))
                 this.showButtonHelper = 2; // gamepad
             else if(keyCode > KeyEvent.KEYCODE_BACK)
@@ -156,7 +162,12 @@ public class GameScene extends GameManager {
             return;
         }
 
-        if(keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
+        if(
+                keyCode == KeyEvent.KEYCODE_ENTER ||
+                keyCode == KeyEvent.KEYCODE_DPAD_CENTER ||
+                keyCode == KeyEvent.KEYCODE_SPACE ||
+                keyCode == KeyEvent.KEYCODE_BUTTON_A
+        ) {
             tryFlap();
         }
     }
@@ -408,10 +419,21 @@ public class GameScene extends GameManager {
         this.scoreFont = new ScoreFont();
         this.playButton = new Button();
         this.playButton.setSprite("button_play");
-        this.playButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_BUTTON_A, KeyEvent.KEYCODE_BUTTON_START});
+        this.playButton.setHandledKeyCodes(new int[] {
+                KeyEvent.KEYCODE_SPACE,
+                KeyEvent.KEYCODE_ENTER,
+                KeyEvent.KEYCODE_DPAD_CENTER,
+                KeyEvent.KEYCODE_BUTTON_A,
+                KeyEvent.KEYCODE_BUTTON_START
+        });
         this.scoreButton = new Button();
         this.scoreButton.setSprite("button_score");
-        this.scoreButton.setHandledKeyCodes(new int[] {KeyEvent.KEYCODE_ESCAPE, KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_BUTTON_B, KeyEvent.KEYCODE_BUTTON_SELECT});
+        this.scoreButton.setHandledKeyCodes(new int[] {
+                KeyEvent.KEYCODE_ESCAPE,
+                KeyEvent.KEYCODE_S,
+                KeyEvent.KEYCODE_BUTTON_B,
+                KeyEvent.KEYCODE_BUTTON_SELECT
+        });
         this.okButton = new Button();
         this.okButton.setSprite("button_ok");
         this.menuButton = new Button();
