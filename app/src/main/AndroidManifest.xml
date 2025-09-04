@@ -21,6 +21,7 @@
         <activity
             android:name="com.dotgears.GameActivity"
             android:exported="true"
+            android:screenOrientation="sensorPortrait"
 
             android:configChanges="orientation|screenSize">
             <intent-filter>
